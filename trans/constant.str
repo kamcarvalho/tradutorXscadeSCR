@@ -1,0 +1,41 @@
+module constant
+
+imports
+	include/Entity
+rules
+	to-constant:
+  	[] -> []
+  	
+  to-constant:
+  	[head | []] -> $[[resolvedHead]]
+  	with resolvedHead := <resolve-constant> head
+  	
+  to-constant:
+  	[head | tail] -> 
+  		$[[resolvedHead]
+  		[resolvedTail]
+  		]
+  	with resolvedHead := <resolve-constant> head
+  	with resolvedTail := <to-constant> tail
+  	
+  resolve-constant:
+  	Constant(name, type, value, pragmaId) -> $[[name]= [value]: [typeString];]
+  	with typeString := <write-constant-type> type
+  	
+  resolve-constant:
+  	Constant2(name, type, value, pragmaId) -> $[[name]= [value]: [typeString];]
+  	with typeString := <write-constant-type> type
+  	
+  write-constant-type:
+  	Int() -> "integer"
+  
+  write-constant-type:
+  	Bool() -> "boolean"
+  	
+  	write-constant-type:
+  	Real() -> "real"
+  	
+  write-constant-type:
+  	CustomType(name, ignoredSpace) -> $[[name]]
+  	
+ //TODO: resolver constant para enum

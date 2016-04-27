@@ -1,0 +1,64 @@
+module Common
+
+lexical syntax
+
+	ID             = [a-zA-Z] [a-zA-Z0-9]*
+	MVAR		   = "m" [A-Z] [a-zA-Z0-9]*
+	Time 		   = "time"
+	DUR            = "dur_tDesiredSpeed_true_time_1"
+	CVAR		   = "c" [A-Z\_] [a-zA-Z0-9\_]*
+	MCVAR		   = "mc" [A-Z\_] [a-zA-Z0-9]*
+	TVAR		   = "t" [A-Z\_] [a-zA-Z0-9]*
+	OPNAME		   = MVAR | CVAR | MCVAR | TVAR | Time | DUR
+	OPKIND		   = "node" | "function" | "assume"
+	INT            = "-"? [0-9]+ 
+	Number		   = [0-9]*
+	STRING         = [a-zA-Z\']*
+	Booleano	   = "true" | "false"
+	Float		   = [0-9\.\-]*
+	TYPE           = INT | Booleano
+	StringChar     = ~[\"\n] 
+	StringChar     = "\\\"" 
+	StringChar     = BackSlashChar 
+	BackSlashChar  = "\\" 
+	LAYOUT         = [\ \t\n\r] 
+	CommentChar    = [\*] 
+	LAYOUT         = "/*" InsideComment* "*/" 
+	InsideComment  = ~[\*] 
+	InsideComment  = CommentChar 
+	LAYOUT         = "//" ~[\n\r]* NewLineEOF 
+	NewLineEOF     = [\n\r] 
+	NewLineEOF     = EOF
+	PragmaId	   = [a-zA-Z] [a-zA-Z0-9\_\:\.\']*
+	IgnoreSpace	   = [\ ]*
+ 	PresentableId  = "!" [a-zA-Z] [a-zA-Z0-9\_\/]*
+	Value		   = INT | STRING | Booleano | Float
+	BinaryName	   = "&"[a-zA-Z]";" "="
+	EOF            =  
+	
+	
+
+lexical restrictions
+
+	// Ensure greedy matching for lexicals
+	
+	CommentChar   -/- [\/]
+	INT           -/- [0-9]
+	ID            -/- [a-zA-Z0-9\_]
+	
+	// EOF may not be followed by any char
+	
+	EOF           -/- ~[]
+	
+	// Backslash chars in strings may not be followed by " 
+	
+	BackSlashChar -/- [\"]
+
+context-free restrictions
+
+	// Ensure greedy matching for comments
+	
+	LAYOUT? -/- [\ \t\n\r]
+	LAYOUT? -/- [\/].[\/]
+	LAYOUT? -/- [\/].[\*]
+

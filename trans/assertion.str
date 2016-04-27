@@ -1,0 +1,256 @@
+module assertion
+
+imports
+	include/Entity
+	
+rules		
+	resolve-assertions-given-operators:
+  		[] -> []
+  		
+  	resolve-assertions-given-operators:
+  		[head | []] -> <resolve-assertion> head
+  	
+  	resolve-assertions-given-operators:
+  		[head | tail] -> <resolve-assertions-given-operators> tail
+  		
+  	resolve-assertion:
+  		MainOperator(opkind, opname, inputs, outputs, locals, data, pragmas)-> $[[resolvedassertions]]
+  		with resolvedassertions := <resolve-assertion-data> (data, inputs, outputs,locals)
+  		
+	resolve-assertion-data:
+  		(Data(equations, assumptionOrAssertion), inputs, outputs,locals) -> $[[resolvedAssumptionOrAssertion]]
+  		with resolvedAssumptionOrAssertion := <resolve-assertions> (assumptionOrAssertion, inputs, outputs,locals)
+  		
+  	resolve-assertion-or-assumption:
+  		(AssumptionOperator(assumption), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion-or-assumption:
+  		(AssertionOperator(assertion), inputs, outputs,locals) -> $[[resolvedAssertions]]
+  		with resolvedAssertions := <resolve-assertion> (assertion, inputs, outputs,locals)
+  		
+  	resolve-assertions:
+  		([], inputs, outputs,locals) -> []
+  		
+  	resolve-assertions:
+  		([head | tail], inputs, outputs,locals) -> $[
+  			[resolvedHead]
+  			[resolvedTail]]
+  		with resolvedHead := <resolve-assertion-or-assumption> (head, inputs, outputs,locals)
+  		with resolvedTail := <resolve-assertions> (tail, inputs, outputs,locals)
+  			
+  	resolve-assertion:
+  		(Assertion(assertionName, mainOperand, pragmas), inputs, outputs,locals)-> $[[assertionName] : [resolvedOperand];]
+  		with resolvedOperand := <resolve-operand-assertion> (mainOperand, inputs, outputs,locals)
+  		
+  	resolve-assertion:
+  		(Assertion2(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion3(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion4(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion5(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion2(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion6(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion7(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion8(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion9(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion10(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  		
+  	resolve-assertion:
+  		(Assertion11(mainOperand, pragmas), inputs, outputs,locals) -> $[]
+  			 	
+  	resolve-operand-assertion:
+  		(NotOperand ([]), inputs, outputs,locals) -> []
+  		
+  	resolve-operand-assertion:
+  		(NotOperand (Operand), inputs, outputs,locals) -> $[NOT([resolveNotOperand])]
+  		with resolveNotOperand := <resolve-operand-assertion> (Operand, inputs, outputs,locals)
+  		
+  	resolve-operand-assertion:
+  		(And([]), inputs, outputs,locals) -> []
+  		
+  	resolve-operand-assertion:
+  		(And([head | []]), inputs, outputs,locals) -> $[[resolvedHead]]
+  		with resolvedHead := <resolve-operand-assertion> (head, inputs, outputs,locals)
+  		
+  	resolve-operand-assertion:
+  		(And([head | tail]), inputs, outputs,locals) -> $[([resolvedHead]) AND ([resolvedTail])]
+  		with resolvedHead := <resolve-operand-assertion> (head, inputs, outputs,locals)
+  		with resolvedTail := <resolve-operand-assertion> (And(tail), inputs, outputs,locals)
+  		
+  		
+  	resolve-operand-assertion:
+  		(Or([]), inputs, outputs,locals) -> []
+  		
+  	resolve-operand-assertion:
+  		(Or([head | []]), inputs, outputs,locals) -> $[[resolvedHead]]
+  		with resolvedHead := <resolve-operand-assertion> (head, inputs, outputs,locals)
+  		
+  	resolve-operand-assertion:
+  		(Or([head | tail]), inputs, outputs,locals) -> $[[resolvedHead] OR ([resolvedTail])]
+  		with resolvedHead := <resolve-operand-assertion> (head, inputs, outputs,locals)
+  		with resolvedTail := <resolve-operand-assertion> (Or(tail), inputs, outputs,locals)
+  		
+    resolve-operand-assertion:
+  		(Imply(leftOperand, rightOperand), inputs, outputs,locals) -> $[([resolvedLeftOp]) => ([resolvedRightOp])]
+  		with resolvedLeftOp := <resolve-operand-assertion> (leftOperand, inputs, outputs,locals)
+  		with resolvedRightOp := <resolve-operand-assertion> (rightOperand, inputs, outputs,locals)
+  		
+  	  resolve-operand-assertion:
+  		(Negative(operand), inputs, outputs,locals) -> $[-[resolveOperand]]
+  		with resolveOperand := <resolve-operand-assertion> (operand, inputs, outputs,locals)
+  		
+    resolve-operand-assertion:
+  		(Xor(leftOperand, rightOperand), inputs, outputs,locals) -> $[([resolvedLeftOp]) <=> [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assertion> (leftOperand, inputs, outputs,locals)
+  		with resolvedRightOp := <resolve-operand-assertion> (rightOperand, inputs, outputs,locals)
+  		
+  	 resolve-operand-assertion:
+  		(Event(firstOperand, secondOperand), inputs, outputs,locals) ->
+  		$[@T[resolvedSecondOperandNoApostrophe]]
+  		with resolvedSecondOperand := <resolve-operand-assertion> (secondOperand, inputs, outputs,locals)
+  		with resolvedSecondOperandNoApostrophe := <string-replace(|"'", "")> resolvedSecondOperand
+  		
+  	resolve-operand-assertion:
+  		(EventOp(firstOperand), inputs, outputs,locals) -> $[[resolvedFirstOperand]]
+  		with resolvedFirstOperand := <resolve-operand-assertion> (firstOperand, inputs, outputs,locals) 
+  		
+  	resolve-operand-assertion:
+  		(GreaterThan(leftOperand, rightOperand), inputs, outputs,locals) -> $[[resolvedLeftOp] > [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assertion> (leftOperand, inputs, outputs,locals)
+  		with resolvedRightOp := <resolve-operand-assertion> (rightOperand, inputs, outputs,locals)
+  		
+  	resolve-operand-assertion:
+  		(GreaterThanOrEqual(leftOperand, rightOperand), inputs, outputs,locals) -> $[[resolvedLeftOp] >= [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assertion> (leftOperand, inputs, outputs,locals)
+  		with resolvedRightOp := <resolve-operand-assertion> (rightOperand, inputs, outputs,locals)
+  		
+  	resolve-operand-assertion:
+  		(LessThan(leftOperand, rightOperand), inputs, outputs,locals) -> $[[resolvedLeftOp] < [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assertion> (leftOperand, inputs, outputs,locals)
+  		with resolvedRightOp := <resolve-operand-assertion> (rightOperand, inputs, outputs,locals)
+  		
+  	resolve-operand-assertion:
+  		(LessThanOrEqual(leftOperand, rightOperand), inputs, outputs,locals) -> $[[resolvedLeftOp] <= [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assertion> (leftOperand, inputs, outputs,locals)
+  		with resolvedRightOp := <resolve-operand-assertion> (rightOperand, inputs, outputs,locals)
+  		
+  	resolve-operand-assertion:
+  		(Equal(firstOperand, secondOperand), inputs, outputs,locals) -> $[[resolvedFirstOperand] = [resolvedSecondOperand]]
+  		with resolvedFirstOperand := <resolve-operand-assertion> (firstOperand, inputs, outputs,locals)
+  		with resolvedSecondOperand := <resolve-operand-assertion> (secondOperand, inputs, outputs,locals)
+  		
+  	resolve-operand-assertion:
+  		(Different(firstOperand, secondOperand), inputs, outputs,locals) -> $[[resolvedFirstOperand] =! [resolvedSecondOperand]]
+  		with resolvedFirstOperand := <resolve-operand-assertion> (firstOperand, inputs, outputs,locals)
+  		with resolvedSecondOperand := <resolve-operand-assertion> (secondOperand, inputs, outputs,locals) 
+  		
+  	resolve-operand-assertion:
+  		(Subtraction(leftOperand, rightOperand), inputs, outputs,locals) -> $[([resolvedLeftOp] - [resolvedRightOp])]
+  		with resolvedLeftOp := <resolve-operand-assertion> (leftOperand, inputs, outputs,locals)
+  		with resolvedRightOp := <resolve-operand-assertion> (rightOperand, inputs, outputs,locals)
+  	
+  	resolve-operand-assertion:
+  		(IdExpressionOp(idExpression), inputs, outputs,locals) -> $[[idExpressionResolved]]
+  		with idExpressionResolved := <resolve-operand-assertion> (idExpression, inputs, outputs,locals)
+  			
+  	resolve-operand-assertion:
+  		(IdExpression(expressionName), inputs, outputs,locals) -> $[[expressionNameResolved]]
+  		where
+  			if <eq> ("true", <within-inputs-outputs-locals> (expressionName, inputs, outputs, locals))
+  			then expressionNameResolved := $[[expressionName]']
+  			else expressionNameResolved := $[[expressionName]]
+  			end
+  			
+  	within-inputs-outputs-locals:
+  		(expressionName, Inputs(inputVariables), Outputs(outputVariables), Locals(localVariables)) -> $[[isVariable]]
+  		where
+  			if <eq> ("true", <within-variables> (expressionName, inputVariables))
+  			then isVariable := $[true]
+  			else if <eq> ("true", <within-variables> (expressionName, outputVariables))
+	  			then isVariable := $[true]
+	  			else if <eq> ("true", <within-variables> (expressionName, localVariables))
+		  			then isVariable := $[true]
+		  			else isVariable := $[false]
+		  			end
+	  			end
+  			end
+
+	within-variables:
+		(expressionName, variables) -> $[[isVariable]]
+		with isVariable := <is-variable> (expressionName, variables)
+		
+	is-variable:
+		(expressionName, []) -> $[false]
+		
+	is-variable:
+		(expressionName, [head | []]) -> $[[isVariable]]
+		with isVariable := <expression-name-matches-variable> (expressionName, head)
+		
+	is-variable:
+		(expressionName, [head | tail]) -> $[[isVariable]]
+		with isHeadVariable := <expression-name-matches-variable> (expressionName, head)
+		where
+			if <eq> ("true", isHeadVariable)
+			then isVariable := $[true]
+			else isVariable := <is-variable> (expressionName, tail)
+			end
+			
+	expression-name-matches-variable:
+		(expressionName, MonitoredVariable(variableName, type, lasts, pragmas)) -> $[[isVariable]]
+		with isVariable := <expression-name-matches-variable> (expressionName, variableName)
+		
+	expression-name-matches-variable:
+		(expressionName, MonitoredVariable2(variableName, type, lasts, pragmas)) -> $[[isVariable]]
+		with isVariable := <expression-name-matches-variable> (expressionName, variableName)
+		
+	expression-name-matches-variable:
+		(expressionName, ControlledVariable(variableName, type, lasts, pragmas)) -> $[[isVariable]]
+		with isVariable := <expression-name-matches-variable> (expressionName, variableName)
+		
+	expression-name-matches-variable:
+		(expressionName, TermVariable(variableName, type, lasts, pragmas)) -> $[[isVariable]]
+		with isVariable := <expression-name-matches-variable> (expressionName, variableName)
+		
+	expression-name-matches-variable:
+		(expressionName, TermVariable2(variableName, type, lasts, pragmas)) -> $[[isVariable]]
+		with isVariable := <expression-name-matches-variable> (expressionName, variableName)
+		
+	expression-name-matches-variable:
+		(expressionName, ModeClassVariable(variableName, type, lasts, pragmas)) -> $[[isVariable]]
+		with isVariable := <expression-name-matches-variable> (expressionName, variableName)
+		
+	expression-name-matches-variable:
+		(expressionName, GenericVariable(variableName, type, lasts, pragmas)) -> $[[isVariable]]
+		with isVariable := <expression-name-matches-variable> (expressionName, variableName)
+		
+	expression-name-matches-variable:
+		(expressionName, variableName) -> $[[isVariable]]
+		where
+			if <eq> (expressionName, variableName)
+			then isVariable := $[true]
+			else isVariable := $[false]
+			end	   	
+  		
+  	resolve-operand-assertion:
+  		(LastVariable(lastName), inputs, outputs,locals) -> $[[lastName]]
+  		
+  	resolve-operand-assertion:
+  		(ConstValue(value), inputs, outputs,locals) -> $[[value]]
+  		  		

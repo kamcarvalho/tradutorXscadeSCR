@@ -1,0 +1,12 @@
+
+module src-gen/completions/Assumption-esv
+
+imports
+  src-gen/completions/Common-esv
+  src-gen/completions/Operand-esv
+
+completions
+  completion template Assumption : "<Assertion kind=\"assume\" name=\"A_PragmaId\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"assume\" name=\"A_" <PragmaId:PragmaId> "\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Pragmas : "<pragmas> <ed:Assertion oid=\"!ed/assume/PragmaId\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Assertion oid=\"!ed/assume/" <PragmaId:PragmaId> "\"/>\n</pragmas>" (blank)  

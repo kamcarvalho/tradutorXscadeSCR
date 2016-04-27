@@ -1,0 +1,24 @@
+module src-gen/signatures/Variable-sig
+
+imports
+  src-gen/signatures/Common-sig
+  src-gen/signatures/NamedType-sig
+
+
+signature
+  constructors
+    MonitoredVariable  : MVAR * Type * List(Last) * Pragma -> Variable
+    MonitoredVariable2 : Time * Type * List(Last) * Pragma -> Variable
+    ControlledVariable : CVAR * Type * List(Last) * Pragma -> Variable
+    TermVariable       : TVAR * Type * List(Last) * Pragma -> Variable
+    TermVariable2      : DUR * Type * List(Last) * Pragma -> Variable
+    ModeClassVariable  : MCVAR * Type * List(Last) * Pragma -> Variable
+    GenericVariable    : PragmaId * Type * List(Last) * Pragma -> Variable
+    Type               : NamedType -> Type
+    LastInt            : Value -> Last
+    LastIdExpression   : PragmaId -> Last
+    LastConstruct      : Value -> Last
+    Pragma1            : PragmaId * PragmaId -> Pragma
+    Pragma2            : PragmaId * PragmaId * PragmaId -> Pragma
+    Pragma3            : PragmaId * PragmaId * INT -> Pragma
+    Pragma4            : PragmaId * PragmaId -> Pragma

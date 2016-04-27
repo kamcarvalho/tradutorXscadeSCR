@@ -1,0 +1,295 @@
+module variable
+
+imports
+	include/Entity
+	operator
+	
+rules	
+  	
+  	resolve-controlled-given-operators:
+  		[] -> []
+  		
+  	resolve-controlled-given-operators:
+  		[head | []] -> <resolve-controlled> head	
+  		
+  	resolve-controlled-given-operators:
+  		[head | tail] -> <resolve-controlled-given-operators> tail
+  		
+  	resolve-controlled:
+  		MainOperator(opkind, opname, inputs, outputs, locals, data, pragmas) -> $[
+  			[resolved-controlled-inputs]
+  			[resolved-controlled-outputs]
+  			[resolved-controlled-locals]
+  		]
+  		with resolved-controlled-inputs := <resolve-controlled-inputs> inputs
+  		with resolved-controlled-outputs := <resolve-controlled-outputs> outputs
+  		with resolved-controlled-locals := <resolve-controlled-locals> locals
+  		
+  	resolve-controlled-inputs:
+  		Inputs(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-controlled-variables> variables
+  		
+  	resolve-controlled-outputs:
+  		Outputs(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-controlled-variables> variables
+  		
+  	resolve-controlled-locals:
+  		Locals(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-controlled-variables> variables
+  		
+  	resolve-controlled-variables:
+  		[] -> []
+  		
+  	resolve-controlled-variables:
+  		[head | tail] -> $[[resolvedHead][resolvedTail]]
+  		with resolvedHead := <resolve-controlled-variable> head
+  		with resolvedTail := <resolve-controlled-variables> tail
+  	
+  	resolve-controlled-variable:
+  		ControlledVariable(variableName, type, lasts, pragma) -> $[[variableName]: [typeName], initially [initValue];["\r"]]
+  		with typeName := <resolve-type> type
+  		with initValue := <resolve-init-value> lasts
+  		
+  	resolve-controlled-variable:
+  		MonitoredVariable(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-controlled-variable:
+  		MonitoredVariable2(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-controlled-variable:
+  		TermVariable(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-controlled-variable:
+  		TermVariable2(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-controlled-variable:
+  		ModeClassVariable(variableName, type, lasts, pragma) -> $[]
+  	
+  	resolve-controlled-variable:
+  		GenericVariable(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-term-given-operators:
+  		[] -> []
+  		
+  	resolve-term-given-operators:
+  		[head | []] -> <resolve-term> head
+  	
+  	resolve-term-given-operators:
+  		[head | tail] -> <resolve-term-given-operators> tail
+  	
+  	resolve-term:
+  		MainOperator(opkind, opname, inputs, outputs, locals, data, pragmas) -> $[
+  			[resolved-term-inputs]
+  			[resolved-term-outputs]
+  			[resolved-term-locals]
+  		]
+  		with resolved-term-inputs := <resolve-term-inputs> inputs
+  		with resolved-term-outputs := <resolve-term-outputs> outputs
+  		with resolved-term-locals := <resolve-term-locals> locals
+		
+  	resolve-term-inputs:
+  		Inputs(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-term-variables> variables
+  		
+  	resolve-term-outputs:
+  		Outputs(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-term-variables> variables
+  		
+  	resolve-term-locals:
+  		Locals(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-term-variables> variables
+  		
+  	resolve-term-variables:
+  		[] -> []
+  		
+  	resolve-term-variables:
+  		[head | tail] -> $[[resolvedHead][resolvedTail]]
+  		with resolvedHead := <resolve-term-variable> head
+  		with resolvedTail := <resolve-term-variables> tail
+  	
+  	resolve-term-variable:
+  		TermVariable(variableName, type, lasts, pragma) -> $[[variableName]: [typeName], initially [initValue];["\r"]]
+  		with typeName := <resolve-type> type
+  		with initValue := <resolve-init-value> lasts
+  		
+  	resolve-term-variable:
+  		TermVariable2(variableName, type, lasts, pragma) -> $[[variableName]: [typeName], initially [initValue];["\r"]]
+  		with typeName := <resolve-type> type
+  		with initValue := <resolve-init-value> lasts
+  	
+  	resolve-term-variable:
+  		MonitoredVariable(variableName, type, lasts, pragma) -> $[]
+  		
+    resolve-term-variable:
+  		MonitoredVariable2(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-term-variable:
+  		ControlledVariable(variableName, type, lasts, pragma) -> $[] 		
+  		
+  	resolve-term-variable:
+  		ModeClassVariable(variableName, type, lasts, pragma) -> $[]
+  	
+  	resolve-term-variable:
+  		GenericVariable(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-mode-class-given-operators:
+  		[] -> []
+  			
+  	resolve-mode-class-given-operators:
+  		[head | []] -> <resolve-mode-class> head
+  	
+  	resolve-mode-class-given-operators:
+  		[head | tail] -> <resolve-mode-class-given-operators> tail
+  	
+  	resolve-mode-class:
+  		MainOperator(opkind, opname, inputs, outputs, locals, data, pragmas) -> $[
+  			[resolved-mode-class-inputs]
+  			[resolved-mode-class-outputs]
+  			[resolved-mode-class-locals]
+  		]
+  		with resolved-mode-class-inputs := <resolve-mode-class-inputs> inputs
+  		with resolved-mode-class-outputs := <resolve-mode-class-outputs> outputs
+  		with resolved-mode-class-locals := <resolve-mode-class-locals> locals
+  		
+  	resolve-mode-class-inputs:
+  		Inputs(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-mode-class-variables> variables
+  		
+  	resolve-mode-class-outputs:
+  		Outputs(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-mode-class-variables> variables
+  		
+  	resolve-mode-class-locals:
+  		Locals(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-mode-class-variables> variables
+  		
+  	resolve-mode-class-variables:
+  		[] -> []
+  		
+  	resolve-mode-class-variables:
+  		[head | tail] -> $[[resolvedHead][resolvedTail]]
+  		with resolvedHead := <resolve-mode-class-variable> head
+  		with resolvedTail := <resolve-mode-class-variables> tail
+  	
+  	resolve-mode-class-variable:
+  		ModeClassVariable(variableName, type, lasts, pragma) -> $[[variableName]: [typeName], initially [initValue];["\r"]]
+  		with typeName := <resolve-type> type
+  		with initValue := <resolve-init-value> lasts
+  		
+  	resolve-mode-class-variable:
+  		MonitoredVariable(variableName, type, lasts, pragma) -> $[]
+  		
+    resolve-mode-class-variable:
+  		MonitoredVariable2(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-mode-class-variable:
+  		ControlledVariable(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-mode-class-variable:
+  		TermVariable(variableName, type, lasts, pragma) ->$[]
+  		
+    resolve-mode-class-variable:
+  		TermVariable2(variableName, type, lasts, pragma) ->$[]
+  	
+  	resolve-mode-class-variable:
+  		GenericVariable(variableName, type, lasts, pragma) -> $[]  		
+  	
+  	resolve-monitored-given-operators:
+  		[] -> []
+  		
+  	resolve-monitored-given-operators:
+  		[head | []] -> <resolve-monitored> head
+  	
+  	resolve-monitored-given-operators:
+  		[head | tail] -> <resolve-monitored-given-operators> tail
+  	
+  	resolve-monitored:
+  		MainOperator(opkind, opname, inputs, outputs, locals, data, pragmas) -> $[
+  			[resolved-monitored-inputs]
+  			[resolved-monitored-outputs]
+  			[resolved-monitored-locals]
+  		]
+  		with resolved-monitored-inputs := <resolve-monitored-inputs> inputs
+  		with resolved-monitored-outputs := <resolve-monitored-outputs> outputs
+  		with resolved-monitored-locals := <resolve-monitored-locals> locals
+  		  		
+  	resolve-monitored-inputs:
+  		Inputs(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-monitored-variables> variables
+  		
+  	resolve-monitored-outputs:
+  		Outputs(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-monitored-variables> variables
+  		
+  	resolve-monitored-locals:
+  		Locals(variables) -> $[[resolvedVariables]]
+  		with resolvedVariables := <resolve-monitored-variables> variables
+  		
+  	resolve-monitored-variables:
+  		[] -> []
+  		
+  	resolve-monitored-variables:
+  		[head | tail] -> $[[resolvedHead][resolvedTail]]
+  		with resolvedHead := <resolve-monitored-variable> head
+  		with resolvedTail := <resolve-monitored-variables> tail
+  	
+  	resolve-monitored-variable:
+  		MonitoredVariable(variableName, type, lasts, pragma) -> $[[variableName]: [typeName], initially [initValue];["\r"]]
+  		with typeName := <resolve-type> type
+  		with initValue := <resolve-init-value> lasts
+  		
+  	resolve-monitored-variable:
+  		MonitoredVariable2(variableName, type, lasts, pragma) -> $[[variableName]: [typeName], initially [initValue];["\r"]]
+  		with typeName := <resolve-type> type
+  		with initValue := <resolve-init-value> lasts
+  		
+  	resolve-monitored-variable:
+  		ControlledVariable(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-monitored-variable:
+  		TermVariable(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-monitored-variable:
+  		TermVariable2(variableName, type, lasts, pragma) -> $[]
+  		
+  	resolve-monitored-variable:
+  		ModeClassVariable(variableName, type, lasts, pragma) -> $[]
+  	
+  	resolve-monitored-variable:
+  		GenericVariable(variableName, type, lasts, pragma) -> $[]  		
+  		
+   	resolve-init-value:
+  		[] -> []
+  		
+  	resolve-init-value:
+  		[head | tail] -> $[[resolvedHead][resolvedTail]]
+  		with resolvedHead := <resolve-last> head
+  		with resolvedTail := <resolve-init-value> tail
+
+	resolve-last:
+		LastInt(intValue) -> $[[intValue]]
+		
+	resolve-last:
+		LastIdExpression(idValue) -> $[[idValue]]
+		
+	resolve-last:
+		LastConstruct(idValue) -> $[[idValue]]
+	  		
+  	resolve-type:
+  		Type(namedType) -> $[[namedTypeName]]
+  		with namedTypeName := <resolve-named-type> namedType
+  		
+  	resolve-named-type:
+  		Int() -> $[int]
+  		
+  	resolve-named-type:
+  		Bool() -> $[bool]
+  		
+  	resolve-named-type:
+  		Real() -> $[real]
+  		
+  	resolve-named-type:
+  		CustomType(customTypeName, ignoredSpace) -> $[[customTypeName]]
+  		
+  	resolve-named-type:
+  		Enum(enumValues) -> $[enum]

@@ -1,0 +1,13 @@
+module Package
+imports Common Type Constant Operator Assumption Assertion
+
+exports
+  context-free syntax
+    "<?xml" "version=\"1.0\"" "encoding=\"UTF-8\"?>" "<File" "xmlns=\"http://www.esterel-technologies.com/ns/scade/3\"" "xmlns:ed=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\"" "xmlns:kcg=\"http://www.esterel-technologies.com/ns/scade/pragmas/codegen/1\">" "<declarations>" "<Package" "name=\"" PragmaId "\">" Declarations Pragmas "</Package>" "</declarations>" "</File>"                                                                                                                                                                                                                                                   -> Package      {cons("Package")}
+    "<declarations>" Type* Constant* Operator* "</declarations>"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          -> Declarations {cons("Declarations")}
+    "<pragmas>" "<ed:Package" "oid=\"!ed/package/" PragmaId "\"" "xmlns=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\">" "<diagrams>" "<TreeDiagram" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/package/constants/" PragmaId "\"" "blockKind=\"constants\"" "/>" "<TreeDiagram" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/package/types/" PragmaId "\"" "blockKind=\"types\"" "/>" "<TreeDiagram" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/package/sensors/" PragmaId "\"" "blockKind=\"sensors\"/>" "</diagrams>" "</ed:Package>" "</pragmas>" -> Pragmas      {cons("Pragmas")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Package      {cons("COMPLETION-Package")}
+    CONTENTCOMPLETE -> Declarations {cons("COMPLETION-Declarations")}
+    CONTENTCOMPLETE -> Pragmas      {cons("COMPLETION-Pragmas")}

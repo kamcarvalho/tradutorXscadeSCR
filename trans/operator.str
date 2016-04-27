@@ -1,0 +1,46 @@
+module operator
+
+imports
+	include/Entity
+	variable
+	assumption
+	assertion
+	function
+	
+rules
+  to-operator:
+  	[] -> $[
+  		monitored variables
+  		controlled variables
+  		term variables
+  		mode classes
+  		assumptions
+  		assertions
+  		function definitions
+  	]
+  	
+  	to-operator: 
+  		[head | tail] -> $[
+  		monitored variables
+  			[resolvedMonitored]
+  		controlled variables
+  			[resolvedControlled]
+  		term variables
+  			[resolvedTerm]
+  		mode classes
+  			[resolvedModeClass]
+  		assumptions
+  			[resolvedAssumptions]
+  		assertions
+  			[resolvedAssertions]
+  		function definitions
+  			[resolvedFunctions]
+  		]
+  		
+  		with resolvedMonitored := <resolve-monitored-given-operators> [head | tail]
+  		with resolvedControlled := <resolve-controlled-given-operators> [head | tail]
+  		with resolvedTerm := <resolve-term-given-operators> [head | tail]
+  		with resolvedModeClass := <resolve-mode-class-given-operators> [head | tail]
+  		with resolvedAssumptions := <resolve-assumptions-given-operators> [head | tail]
+  		with resolvedAssertions := <resolve-assertions-given-operators> [head | tail]
+  		with resolvedFunctions := <resolve-functions-given-operators> [head | tail]

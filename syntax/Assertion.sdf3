@@ -1,0 +1,118 @@
+module Assertion
+
+imports
+	Common
+	Operand
+
+context-free syntax
+	Assertion.Assertion = [
+		<Assertion kind="guarantee" name="G_[PragmaId]">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]{avoid}
+	
+	Assertion.Assertion2 = [
+		<Assertion kind="guarantee" name="G_mSpeed_min">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	Assertion.Assertion3 = [
+		<Assertion kind="guarantee" name="G_mSpeed_max">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	Assertion.Assertion4 = [
+		<Assertion kind="guarantee" name="G_tDesiredSpeed_min">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	Assertion.Assertion5 = [
+		<Assertion kind="guarantee" name="G_tDesiredSpeed_max">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	Assertion.Assertion6 = [
+		<Assertion kind="guarantee" name="G_L_in_mSpeed_min">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	Assertion.Assertion7 = [
+		<Assertion kind="guarantee" name="G_L_in_mSpeed_max">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	Assertion.Assertion8 = [
+		<Assertion kind="guarantee" name="G_L_last_tDesiredSpeed_min">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	Assertion.Assertion9 = [
+		<Assertion kind="guarantee" name="G_L_last_tDesiredSpeed_max">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	Assertion.Assertion10 = [
+		<Assertion kind="guarantee" name="G_L_in_tDesiredSpeed_min">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	
+	Assertion.Assertion11 = [
+		<Assertion kind="guarantee" name="G_L_in_tDesiredSpeed_max">
+			<definition>
+				[Operand]
+			</definition>
+				[Pragmas]
+		</Assertion>
+	]
+	
+	
+	Pragmas.pragma = [
+		<pragmas>
+			<ed:Assertion oid="!ed/guarantee/min/[PragmaId]/[PragmaId]"/>
+		</pragmas>
+	]
+	
+	Pragmas.pragma1 = [
+		<pragmas>
+			<ed:Assertion oid="!ed/guarantee/max/[PragmaId]/[PragmaId]"/>
+		</pragmas>
+	]
+	
+	Pragmas.pragma2 = [
+		<pragmas>
+			<ed:Assertion oid="!ed/guarantee/[PragmaId]"/>
+		</pragmas>
+	]
+	
+	

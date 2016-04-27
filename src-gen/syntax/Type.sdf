@@ -1,0 +1,9 @@
+module Type
+imports Common NamedType
+
+exports
+  context-free syntax
+    "<Type" "name=\"" PragmaId "\">" "<definition>" NamedType "</definition>" "<pragmas>" "<ed:Type" "oid=\"!ed/type/" PragmaId "\"" "/>" "</pragmas>" "</Type>" -> Type {cons("Type")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Type {cons("COMPLETION-Type")}

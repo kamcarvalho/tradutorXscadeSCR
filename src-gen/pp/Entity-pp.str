@@ -1,0 +1,42 @@
+module src-gen/pp/Entity-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  src-gen/signatures/Entity-sig
+
+
+imports
+  src-gen/signatures/Common-sig
+  src-gen/signatures/Package-sig
+  src-gen/signatures/Java-sig
+
+
+imports
+  src-gen/pp/Common-pp
+  src-gen/pp/Package-pp
+  src-gen/pp/Java-pp
+
+
+strategies
+  prettyprint-SDF-start-symbols =
+    prettyprint-Start
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Start
+
+  prettyprint-Start :
+    Main(t1__) -> [ H(
+                      [SOpt(HS(), "0")]
+                    , [t1__']
+                    )
+                  ]
+    with t1__' := <pp-one-Z(prettyprint-Package)> t1__
+
+  is-Start =
+    ?Main(_)
+
+  is-Start =
+    fail

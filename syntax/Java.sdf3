@@ -1,0 +1,25 @@
+module Java
+
+imports
+ Common
+ 
+ context-free syntax
+ 	Start.Module = <
+		module <ID> 
+		
+		<{Definition "\n\n"}*>
+	>
+
+	
+	Definition.Entity = <
+		entity <ID> {
+			<{Property "\n"}*>
+		}
+	>
+	
+  	
+	Property.Property = <<ID> : <Type>>
+	
+	Type.Type = <<ID>>
+	
+	Start.Declare = <<ID> : <Type>>

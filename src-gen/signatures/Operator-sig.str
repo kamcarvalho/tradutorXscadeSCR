@@ -1,0 +1,33 @@
+module src-gen/signatures/Operator-sig
+
+imports
+  src-gen/signatures/Common-sig
+  src-gen/signatures/Variable-sig
+  src-gen/signatures/Equation-sig
+  src-gen/signatures/Assumption-sig
+  src-gen/signatures/Assertion-sig
+
+
+signature
+  constructors
+    Monitored            : OPKIND * MVAR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    Controlled           : OPKIND * CVAR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    Term                 : OPKIND * TVAR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    Term2                : OPKIND * DUR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    ModeClass            : OPKIND * MCVAR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    MainOperator         : OPKIND * PragmaId * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    Inputs               : List(Variable) -> Inputs
+    Outputs              : List(Variable) -> Outputs
+    Locals               : List(Variable) -> Locals
+    Data                 : List(Equation) * List(AssumptionOrAssertion) -> Data
+    AssumptionOperator   : Assumption -> AssumptionOrAssertion
+    AssertionOperator    : Assertion -> AssumptionOrAssertion
+    Pragmas              : EdOperator -> Pragmas
+    EdOperator           : PragmaId * Diagrams -> EdOperator
+    EdOperator2          : PragmaId * Diagrams -> EdOperator
+    Diagrams             : TextDiagram -> Diagrams
+    TextDiagram          : PragmaId * PragmaId * PresentationElements -> TextDiagram
+    TextDiagram2         : PragmaId * PragmaId * PresentationElements -> TextDiagram
+    PresentationElements : List(FlowTE) -> PresentationElements
+    FlowTE               : PresentableId -> FlowTE
+    FlowTE2              : PresentableId -> FlowTE

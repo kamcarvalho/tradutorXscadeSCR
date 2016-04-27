@@ -1,0 +1,54 @@
+module type
+
+imports
+	include/Entity
+rules
+  to-type:
+  	[] -> $[]
+  	
+  to-type:
+  	[head | []] -> $[[resolvedHead]]
+  	with resolvedHead := <resolve-type> head
+  	
+  to-type:
+  	[head | tail] -> 
+  		$[[resolvedHead]
+  		[resolvedTail]
+  		]
+  	with resolvedHead := <resolve-type> head
+  	with resolvedTail := <to-type> tail
+	
+  resolve-type:
+  	Type(name, namedType, pragmaId) -> $[[name]: [typeString]]
+  	with typeString := <write-type-named-type> namedType
+
+  write-type-named-type:
+  	Int() -> "integer in [0, 2000]"
+  
+  write-type-named-type:
+  	Bool() -> "boolean"
+  	
+  write-type-named-type:
+  	Real() -> "real: in [0.0, 180.0];"
+  	
+  write-type-named-type:
+  	CustomType(name, ignoredSpace) -> $[[name]]
+  	
+  write-type-named-type:
+  	Enum(enumValues*) -> $[ enum in {[valores]}; ]
+  	with valores := <to-enum-value> enumValues*
+  	
+  to-enum-value:
+  	[] -> $[]
+  			
+  to-enum-value:
+   	[head | []] -> $[ [headResolvido] ]
+   	with headResolvido  := <resolve-enum-value> head
+   	
+  to-enum-value:
+   	[head | tail] -> $[ [headResolvido], [tailResolvido]]
+   	with headResolvido  := <resolve-enum-value> head
+   	with tailResolvido := <to-enum-value> tail
+   	 
+  resolve-enum-value:
+  	EnumValue(valor, pragmaId) -> $[ [valor] ]

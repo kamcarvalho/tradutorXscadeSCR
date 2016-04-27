@@ -1,0 +1,6288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<File xmlns="http://www.esterel-technologies.com/ns/scade/3" xmlns:ed="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3" xmlns:kcg="http://www.esterel-technologies.com/ns/scade/pragmas/codegen/1">
+<declarations>
+	<Package name="Cruise_Control_System">
+	<declarations>
+		<Type name="yLever">
+			<definition> 
+				<Enum>
+					<values>
+						<Value name="yLever_const_">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/yLever_yLever_const_"/>
+						</pragmas>
+						</Value>
+						<Value name="yLever_release">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/yLever_yLever_release"/>
+						</pragmas>
+						</Value>
+						<Value name="yLever_off">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/yLever_yLever_off"/>
+						</pragmas>
+						</Value>
+						<Value name="yLever_resume">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/yLever_yLever_resume"/>
+						</pragmas>
+						</Value>					
+					</values>
+				</Enum>
+			</definition>
+			<pragmas>
+				<ed:Type oid="!ed/type/yLever"/>
+			</pragmas>
+		</Type>
+		<Type name="ySpeed">
+			<definition> 
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</definition>
+			<pragmas>
+				<ed:Type oid="!ed/type/ySpeed"/>
+			</pragmas>
+		</Type>
+				<Type name="yThrottle">
+			<definition> 
+				<Enum>
+					<values>
+						<Value name="yThrottle_accel">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/yThrottle_yThrottle_accel"/>
+						</pragmas>
+						</Value>
+						<Value name="yThrottle_maintain">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/yThrottle_yThrottle_maintain"/>
+						</pragmas>
+						</Value>
+						<Value name="yThrottle_decel">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/yThrottle_yThrottle_decel"/>
+						</pragmas>
+						</Value>
+						<Value name="yThrottle_off">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/yThrottle_yThrottle_off"/>
+						</pragmas>
+						</Value>
+						
+					</values>
+				</Enum>
+			</definition>
+			<pragmas>
+				<ed:Type oid="!ed/type/yThrottle"/>
+			</pragmas>
+		</Type>
+				<Type name="type_mcCruise">
+			<definition> 
+				<Enum>
+					<values>
+						<Value name="type_mcCruise_Off">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/type_mcCruise_type_mcCruise_Off"/>
+						</pragmas>
+						</Value>
+						<Value name="type_mcCruise_Inactive">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/type_mcCruise_type_mcCruise_Inactive"/>
+						</pragmas>
+						</Value>
+						<Value name="type_mcCruise_Cruise">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/type_mcCruise_type_mcCruise_Cruise"/>
+						</pragmas>
+						</Value>
+						<Value name="type_mcCruise_Override">
+							<pragmas>
+							<ed:Value oid="!ed/enumValue/type_mcCruise_type_mcCruise_Override"/>
+						</pragmas>
+						</Value>
+						
+					</values>
+				</Enum>
+			</definition>
+			<pragmas>
+				<ed:Type oid="!ed/type/type_mcCruise"/>
+			</pragmas>
+		</Type>
+			<Constant name="kMaxAccel">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</type>
+			<value>
+				<ConstValue value="6.0"/>
+			</value>
+			<pragmas>
+				<ed:Constant oid="!ed/Constant/kMaxAccel"/>
+			</pragmas>
+		</Constant>
+		<Constant name="kMaxDecel">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</type>
+			<value>
+				<UnaryOp operator="-">
+					<operand>
+					<ConstValue value="20.0"/>
+				</operand>
+				</UnaryOp>
+			</value>
+			<pragmas>
+				<ed:Constant oid="!ed/Constant/kMaxDecel"/>
+			</pragmas>
+		</Constant>
+				<Constant name="kMaxSpeed">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</type>
+			<value>
+				<ConstValue value="180.0"/>
+			</value>
+			<pragmas>
+				<ed:Constant oid="!ed/Constant/kMaxSpeed"/>
+			</pragmas>
+		</Constant>
+				<Constant name="kStartIncr">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</type>
+			<value>
+				<ConstValue value="500.0"/>
+			</value>
+			<pragmas>
+				<ed:Constant oid="!ed/Constant/kStartIncr"/>
+			</pragmas>
+		</Constant>
+				<Constant name="kTolerance">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="ySpeed"/>
+					</type>
+				</NamedType>
+			</type>
+			<value>
+				<ConstValue value="2.0"/>
+			</value>
+			<pragmas>
+				<ed:Constant oid="!ed/Constant/kTolerance"/>
+			</pragmas>
+		</Constant>
+		<Operator kind="node" name="mcCruise">
+			<inputs>
+							<Variable name="mLever"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="yLever"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="yLever_release"/>
+						</path>
+						</IdExpression>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/mcCruise_mLever"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mIgnOn"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="false"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/mcCruise_mIgnOn"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mEngRunning"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="false"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/mcCruise_mEngRunning"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mBrake"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="false"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/mcCruise_mBrake"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mcCruise"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="type_mcCruise"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Off"/>
+						</path>
+						</IdExpression>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/mcCruise_mcCruise"/>
+					</pragmas>
+				</Variable>
+			</inputs>
+			<outputs>
+							<Variable name="out_mcCruise"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="type_mcCruise"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Off"/>
+						</path>
+						</IdExpression>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/mcCruise_out_mcCruise"/>
+					</pragmas>
+				</Variable>
+			</outputs>
+			<locals>
+							<Variable name="L_mcCruise_CaseOut_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/mcCruise/CaseOut/0"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_mcCruise_CaseIn_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/mcCruise/CaseIn/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Off_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Off/IF/0"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Off_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Off/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Off_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Off/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Off_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Off/IF/1"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Inactive_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/True/0"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Inactive_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_Choice_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/Choice/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_True_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/True/1"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Inactive_IF_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/IF/2"/>
+				</pragmas>
+				</Variable>
+				
+				
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/Choice/0"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Cruise_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_Choice_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/Choice/1"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Cruise_True_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/True/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_Choice_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/Choice/2"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Cruise_True_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/True/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_3">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/3"/>
+				</pragmas>
+				</Variable>
+				
+				
+				
+				
+				<Variable name="L_type_mcCruise_Override_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/IF/0"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Override_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Override_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Override_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Override_Choice_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/Choice/1"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Override_True_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/True/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Override_IF_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/IF/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Override_Choice_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/Choice/2"/>
+				</pragmas>
+				</Variable>
+								<Variable name="L_type_mcCruise_Override_True_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/True/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Override_IF_3">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Override/IF/3"/>
+				</pragmas>
+				</Variable>
+			</locals>
+			<data>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_mcCruise_CaseIn_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mcCruise"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/mcCruise/CaseIn/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_mcCruise_CaseOut_0"/>
+					</lefts>
+				<right>
+					<CaseOp name="casemcCruise">
+						<switch>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_mcCruise_CaseIn_0"/>
+								</path>
+							</IdExpression>
+						</switch>
+						<cases>
+							<Case pattern="type_mcCruise_Off">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Off_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							
+							 
+							<Case pattern="type_mcCruise_Inactive">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Inactive_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							
+							 
+							<Case pattern="type_mcCruise_Cruise">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Cruise_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							
+							 
+							<Case pattern="type_mcCruise_Override">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Override_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>				 
+						</cases>
+					</CaseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/mcCruise/Case/0"/>
+				</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Off_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Off_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Off_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Off_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Off_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Off/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Off_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+						  	<UnaryOp operator="not">
+								<operand>
+									<Last>
+										<variable>
+											<ConstVarRef name="mIgnOn"/>
+										</variable>
+									</Last>
+								</operand>
+							</UnaryOp>	
+							<IdExpression>
+								<path>
+									<ConstVarRef name="mIgnOn"/>
+							</path>
+							</IdExpression>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Off/Choice/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Off_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Inactive"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Off/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Off_IF_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mcCruise"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Off/IF/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Inactive_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Inactive_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Inactive_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Inactive_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Inactive_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+						  	<UnaryOp operator="not">
+								<operand>
+									<UnaryOp operator="not">
+										<operand>
+										<Last>
+											<variable>
+												<ConstVarRef name="mIgnOn"/>
+											</variable>
+										</Last>
+									</operand>
+									</UnaryOp>
+								</operand>
+							</UnaryOp>	
+							<UnaryOp operator="not">
+								<operand>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="mIgnOn"/>
+								</path>
+								</IdExpression>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/Choice/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Off"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/True/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Inactive_IF_1"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Inactive_1">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Inactive_Choice_1"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Inactive_True_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Inactive_IF_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/ifThenElse/1"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_Choice_1"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands> 
+						  	<NAryOp operator="and">
+						  		<operands>
+						  	  	<UnaryOp operator="not">
+						  			<operand>
+						  				<BinaryOp operator="=">
+						  					<operands>
+						  						<Last>
+						  							<variable>
+						  								<ConstVarRef name="mLever"/>
+						  							</variable>
+						  						</Last>
+						  					<IdExpression>
+						  						<path>
+						  							<ConstVarRef name="yLever_const_"/>
+						  					</path>
+						  					</IdExpression>
+						  				</operands>
+						  				</BinaryOp>
+						  			</operand>
+						  		</UnaryOp>	
+						  		<BinaryOp operator="=">
+						  			<operands>
+						  				<IdExpression>
+						  					<path>
+						  						<ConstVarRef name="mLever"/>
+						  				</path>
+						  				</IdExpression>
+						  			<IdExpression>
+						  				<path>
+						  					<ConstVarRef name="yLever_const_"/>
+						  			</path>
+						  			</IdExpression>
+						  		</operands>
+						  		</BinaryOp>
+						  	</operands>
+						  	</NAryOp>
+							<NAryOp operator="and">
+								<operands>
+								<NAryOp operator="and">
+									<operands>
+									<Last>
+										<variable>
+											<ConstVarRef name="mIgnOn"/>
+										</variable>
+									</Last>
+									<Last>
+										<variable>
+											<ConstVarRef name="mEngRunning"/>
+										</variable>
+									</Last>
+								</operands>
+								</NAryOp>
+								<UnaryOp operator="not">
+									<operand>
+									<Last>
+										<variable>
+											<ConstVarRef name="mBrake"/>
+										</variable>
+									</Last>
+								</operand>
+								</UnaryOp>
+							</operands>
+							</NAryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/Choice/1"/>
+					</pragmas>
+				</Equation>
+							<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_True_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Cruise"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/True/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_IF_2"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mcCruise"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/IF/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Cruise_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Cruise_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Cruise_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+						  	<UnaryOp operator="not">
+								<operand>
+									<UnaryOp operator="not">
+										<operand>
+										<Last>
+											<variable>
+												<ConstVarRef name="mIgnOn"/>
+											</variable>
+										</Last>
+									</operand>
+									</UnaryOp>
+								</operand>
+							</UnaryOp>	
+							<UnaryOp operator="not">
+								<operand>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="mIgnOn"/>
+								</path>
+								</IdExpression>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/Choice/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Off"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Cruise_IF_1"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Cruise_1">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Cruise_Choice_1"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_True_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_IF_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/ifThenElse/1"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_Choice_1"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+						  	<UnaryOp operator="not">
+								<operand>
+									<UnaryOp operator="not">
+										<operand>
+										<Last>
+											<variable>
+												<ConstVarRef name="mEngRunning"/>
+											</variable>
+										</Last>
+									</operand>
+									</UnaryOp>
+								</operand>
+							</UnaryOp>	
+							<UnaryOp operator="not">
+								<operand>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="mEngRunning"/>
+								</path>
+								</IdExpression>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/Choice/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_True_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Inactive"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/True/1"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Cruise_IF_2"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Cruise_2">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Cruise_Choice_2"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_True_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_IF_3"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/ifThenElse/2"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_Choice_2"/>
+					</lefts>
+					<right>
+						<NAryOp operator="or">
+							<operands> 
+						  	<NAryOp operator="and">
+						  		<operands>
+						  	  	<UnaryOp operator="not">
+						  			<operand>
+						  				<Last>
+						  					<variable>
+						  						<ConstVarRef name="mBrake"/>
+						  					</variable>
+						  				</Last>
+						  			</operand>
+						  		</UnaryOp>	
+						  		<IdExpression>
+						  			<path>
+						  				<ConstVarRef name="mBrake"/>
+						  		</path>
+						  		</IdExpression>
+						  	</operands>
+						  	</NAryOp>
+							<NAryOp operator="and">
+								<operands>
+							  	<UnaryOp operator="not">
+									<operand>
+										<BinaryOp operator="=">
+											<operands>
+												<Last>
+													<variable>
+														<ConstVarRef name="mLever"/>
+													</variable>
+												</Last>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="yLever_off"/>
+											</path>
+											</IdExpression>
+										</operands>
+										</BinaryOp>
+									</operand>
+								</UnaryOp>	
+								<BinaryOp operator="=">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="mLever"/>
+										</path>
+										</IdExpression>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="yLever_off"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/Choice/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_True_2"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Override"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/True/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_IF_3"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mcCruise"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/IF/3"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Override_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Override_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Override_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Override_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Override_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Override/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Override_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+						  	<UnaryOp operator="not">
+								<operand>
+									<UnaryOp operator="not">
+										<operand>
+										<Last>
+											<variable>
+												<ConstVarRef name="mIgnOn"/>
+											</variable>
+										</Last>
+									</operand>
+									</UnaryOp>
+								</operand>
+							</UnaryOp>	
+							<UnaryOp operator="not">
+								<operand>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="mIgnOn"/>
+								</path>
+								</IdExpression>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Override/Choice/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Override_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Off"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Override/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Override_IF_1"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Override_1">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Override_Choice_1"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Override_True_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Override_IF_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Override/ifThenElse/1"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Override_Choice_1"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+						  	<UnaryOp operator="not">
+								<operand>
+									<UnaryOp operator="not">
+										<operand>
+										<Last>
+											<variable>
+												<ConstVarRef name="mEngRunning"/>
+											</variable>
+										</Last>
+									</operand>
+									</UnaryOp>
+								</operand>
+							</UnaryOp>	
+							<UnaryOp operator="not">
+								<operand>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="mEngRunning"/>
+								</path>
+								</IdExpression>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Override/Choice/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Override_True_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Inactive"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Override/True/1"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Override_IF_2"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Override_2">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Override_Choice_2"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Override_True_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Override_IF_3"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Override/ifThenElse/2"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Override_Choice_2"/>
+					</lefts>
+					<right>
+						<NAryOp operator="or">
+							<operands> 
+						  	<NAryOp operator="and">
+						  		<operands> 
+						  	  	<NAryOp operator="and">
+						  	  		<operands>
+						  	  	  	<UnaryOp operator="not">
+						  	  			<operand>
+						  	  				<BinaryOp operator="=">
+						  	  					<operands>
+						  	  						<Last>
+						  	  							<variable>
+						  	  								<ConstVarRef name="mLever"/>
+						  	  							</variable>
+						  	  						</Last>
+						  	  					<IdExpression>
+						  	  						<path>
+						  	  							<ConstVarRef name="yLever_resume"/>
+						  	  					</path>
+						  	  					</IdExpression>
+						  	  				</operands>
+						  	  				</BinaryOp>
+						  	  			</operand>
+						  	  		</UnaryOp>	
+						  	  		<BinaryOp operator="=">
+						  	  			<operands>
+						  	  				<IdExpression>
+						  	  					<path>
+						  	  						<ConstVarRef name="mLever"/>
+						  	  				</path>
+						  	  				</IdExpression>
+						  	  			<IdExpression>
+						  	  				<path>
+						  	  					<ConstVarRef name="yLever_resume"/>
+						  	  			</path>
+						  	  			</IdExpression>
+						  	  		</operands>
+						  	  		</BinaryOp>
+						  	  	</operands>
+						  	  	</NAryOp>
+						  		<NAryOp operator="and">
+						  			<operands>
+						  			<NAryOp operator="and">
+						  				<operands>
+						  				<Last>
+						  					<variable>
+						  						<ConstVarRef name="mIgnOn"/>
+						  					</variable>
+						  				</Last>
+						  				<Last>
+						  					<variable>
+						  						<ConstVarRef name="mEngRunning"/>
+						  					</variable>
+						  				</Last>
+						  			</operands>
+						  			</NAryOp>
+						  			<UnaryOp operator="not">
+						  				<operand>
+						  				<Last>
+						  					<variable>
+						  						<ConstVarRef name="mBrake"/>
+						  					</variable>
+						  				</Last>
+						  			</operand>
+						  			</UnaryOp>
+						  		</operands>
+						  		</NAryOp>
+						  	</operands>
+						  	</NAryOp>
+							<NAryOp operator="and">
+								<operands> 
+							  	<NAryOp operator="and">
+							  		<operands>
+							  	  	<UnaryOp operator="not">
+							  			<operand>
+							  				<BinaryOp operator="=">
+							  					<operands>
+							  						<Last>
+							  							<variable>
+							  								<ConstVarRef name="mLever"/>
+							  							</variable>
+							  						</Last>
+							  					<IdExpression>
+							  						<path>
+							  							<ConstVarRef name="yLever_const_"/>
+							  					</path>
+							  					</IdExpression>
+							  				</operands>
+							  				</BinaryOp>
+							  			</operand>
+							  		</UnaryOp>	
+							  		<BinaryOp operator="=">
+							  			<operands>
+							  				<IdExpression>
+							  					<path>
+							  						<ConstVarRef name="mLever"/>
+							  				</path>
+							  				</IdExpression>
+							  			<IdExpression>
+							  				<path>
+							  					<ConstVarRef name="yLever_const_"/>
+							  			</path>
+							  			</IdExpression>
+							  		</operands>
+							  		</BinaryOp>
+							  	</operands>
+							  	</NAryOp>
+								<NAryOp operator="and">
+									<operands>
+									<NAryOp operator="and">
+										<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="mIgnOn"/>
+											</variable>
+										</Last>
+										<Last>
+											<variable>
+												<ConstVarRef name="mEngRunning"/>
+											</variable>
+										</Last>
+									</operands>
+									</NAryOp>
+									<UnaryOp operator="not">
+										<operand>
+										<Last>
+											<variable>
+												<ConstVarRef name="mBrake"/>
+											</variable>
+										</Last>
+									</operand>
+									</UnaryOp>
+								</operands>
+								</NAryOp>
+							</operands>
+							</NAryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Override/Choice/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Override_True_2"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Cruise"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Override/True/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Override_IF_3"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mcCruise"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Override/IF/3"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="out_mcCruise"/>
+				</lefts>
+				<right>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="L_mcCruise_CaseOut_0"/>
+						</path>
+					</IdExpression>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/mcCruise/CaseOut/0"/>
+				</pragmas>
+				</Equation>
+			</data>
+			<pragmas>
+				<ed:Operator oid="!ed/op_mcCruise">
+					<diagrams> 
+						<TextDiagram name="diagram_mcCruise" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/mcCruise">
+							<presentationElements>
+								<FlowTE presentable="!ed/Expr/mcCruise/Case/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Off/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Off/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Off/True/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Off/IF/1"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/True/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/ifThenElse/1"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/Choice/1"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/True/1"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/IF/2"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/True/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/ifThenElse/1"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/Choice/1"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/True/1"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/ifThenElse/2"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/Choice/2"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/True/2"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/IF/3"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/True/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/ifThenElse/1"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/Choice/1"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/True/1"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/ifThenElse/2"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/Choice/2"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/True/2"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Override/IF/3"/>
+								
+								<FlowTE presentable="!ed/Expr/mcCruise/CaseIn/0"/> 
+								<FlowTE presentable="!ed/Expr/mcCruise/CaseOut/0"/>
+							</presentationElements>
+						</TextDiagram>
+					</diagrams>
+				</ed:Operator>
+			</pragmas>
+		</Operator>
+		<Operator kind="node" name="CLOCK">
+		<inputs>
+						<Variable name="time"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0.0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/CLOCK_time"/>
+					</pragmas>
+				</Variable>
+				<Variable name="CLOCK"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0.0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/CLOCK_CLOCK"/>
+					</pragmas>
+				</Variable>
+		</inputs>
+		<outputs>
+						<Variable name="out_CLOCK"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0.0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/CLOCK_out_CLOCK"/>
+					</pragmas>
+				</Variable>
+		</outputs>
+		<locals>
+						<Variable name="L_CLOCK_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/CLOCK/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_CLOCK_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/CLOCK/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_CLOCK_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/CLOCK/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_CLOCK_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/CLOCK/IF/1"/>
+				</pragmas>
+				</Variable>
+		</locals>
+		<data>
+						<Equation>
+					<lefts>
+					<VariableRef name="L_CLOCK_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_CLOCK_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_CLOCK_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_CLOCK_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_CLOCK_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/CLOCK/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_CLOCK_Choice_0"/>
+					</lefts>
+					<right>
+						<BinaryOp operator="&lt;&gt;">
+							<operands> 
+						  	<Last>
+						  		<variable>
+						  			<ConstVarRef name="time"/>
+						  		</variable>
+						  	</Last>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="time"/>
+							</path>
+							</IdExpression>
+						</operands>
+						</BinaryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/CLOCK/Choice/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_CLOCK_True_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="+">
+							<operands>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="CLOCK"/>
+								</path>
+								</IdExpression>
+							<BinaryOp operator="-">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="time"/>
+									</path>
+									</IdExpression>
+								<Last>
+									<variable>
+										<ConstVarRef name="time"/>
+									</variable>
+								</Last>
+							</operands>
+							</BinaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/CLOCK/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_CLOCK_IF_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="CLOCK"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/CLOCK/IF/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="out_CLOCK"/>
+				</lefts>
+				<right>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="L_CLOCK_IF_0"/>
+						</path>
+					</IdExpression>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/CLOCK/IF/0"/>
+				</pragmas>
+				</Equation>
+		</data>
+		<pragmas>
+				<ed:Operator oid="!ed/op_CLOCK">
+					<diagrams> 
+						<TextDiagram name="diagram_CLOCK" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/CLOCK">
+							<presentationElements>
+								<FlowTE presentable="!ed/Expr/CLOCK/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/CLOCK/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/CLOCK/True/0"/> 
+								<FlowTE presentable="!ed/Expr/CLOCK/IF/1"/>
+								<FlowTE presentable="!ed/Expr/CLOCK/IF/0"/>
+							</presentationElements>
+						</TextDiagram>
+					</diagrams>
+				</ed:Operator>
+			</pragmas>
+		</Operator>
+				<Operator kind="node" name="dur_tDesiredSpeed_true_time_1">
+			<inputs> 
+				<Variable name="mLever"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="yLever"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="yLever_release"/>
+						</path>
+						</IdExpression>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/dur_tDesiredSpeed_true_time_1_mLever"/>
+					</pragmas>
+				</Variable>
+				<Variable name="CLOCK"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0.0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/dur_tDesiredSpeed_true_time_1_CLOCK"/>
+					</pragmas>
+				</Variable>
+				<Variable name="dur_tDesiredSpeed_true_time_1"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<UnaryOp operator="-">
+							<operand>
+							<ConstValue value="1.0"/>
+						</operand>
+						</UnaryOp>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/dur_tDesiredSpeed_true_time_1_dur_tDesiredSpeed_true_time_1"/>
+					</pragmas>
+				</Variable>
+				
+			</inputs>
+			<outputs>
+				<Variable name="out_dur_tDesiredSpeed_true_time_1"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<UnaryOp operator="-">
+							<operand>
+							<ConstValue value="1.0"/>
+						</operand>
+						</UnaryOp>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/dur_tDesiredSpeed_true_time_1_out_dur_tDesiredSpeed_true_time_1"/>
+					</pragmas>
+				</Variable>
+				
+			</outputs>
+			<locals> 
+				<Variable name="L_dur_tDesiredSpeed_true_time_1_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/dur_tDesiredSpeed_true_time_1/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_dur_tDesiredSpeed_true_time_1_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/dur_tDesiredSpeed_true_time_1/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_dur_tDesiredSpeed_true_time_1_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/dur_tDesiredSpeed_true_time_1/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_dur_tDesiredSpeed_true_time_1_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/dur_tDesiredSpeed_true_time_1/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_dur_tDesiredSpeed_true_time_1_Choice_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/dur_tDesiredSpeed_true_time_1/Choice/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_dur_tDesiredSpeed_true_time_1_True_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/dur_tDesiredSpeed_true_time_1/True/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_dur_tDesiredSpeed_true_time_1_IF_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/dur_tDesiredSpeed_true_time_1/IF/2"/>
+				</pragmas>
+				</Variable>
+				
+				
+				
+			</locals>
+			<data> 
+				<Equation>
+					<lefts>
+					<VariableRef name="L_dur_tDesiredSpeed_true_time_1_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_dur_tDesiredSpeed_true_time_1_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_dur_tDesiredSpeed_true_time_1_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_dur_tDesiredSpeed_true_time_1_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_dur_tDesiredSpeed_true_time_1_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/dur_tDesiredSpeed_true_time_1/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_dur_tDesiredSpeed_true_time_1_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+						  	<UnaryOp operator="not">
+								<operand>
+									<BinaryOp operator="=">
+										<operands>
+											<Last>
+												<variable>
+													<ConstVarRef name="mLever"/>
+												</variable>
+											</Last>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="yLever_const_"/>
+										</path>
+										</IdExpression>
+									</operands>
+									</BinaryOp>
+								</operand>
+							</UnaryOp>	
+							<BinaryOp operator="=">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="mLever"/>
+									</path>
+									</IdExpression>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="yLever_const_"/>
+								</path>
+								</IdExpression>
+							</operands>
+							</BinaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/dur_tDesiredSpeed_true_time_1/Choice/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_dur_tDesiredSpeed_true_time_1_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="CLOCK"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/dur_tDesiredSpeed_true_time_1/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_dur_tDesiredSpeed_true_time_1_IF_1"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_dur_tDesiredSpeed_true_time_1_1">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_dur_tDesiredSpeed_true_time_1_Choice_1"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_dur_tDesiredSpeed_true_time_1_True_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_dur_tDesiredSpeed_true_time_1_IF_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/dur_tDesiredSpeed_true_time_1/ifThenElse/1"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_dur_tDesiredSpeed_true_time_1_Choice_1"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+						  	<UnaryOp operator="not">
+								<operand>
+									<UnaryOp operator="not">
+										<operand>
+										<BinaryOp operator="=">
+											<operands>
+												<Last>
+													<variable>
+														<ConstVarRef name="mLever"/>
+													</variable>
+												</Last>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="yLever_const_"/>
+											</path>
+											</IdExpression>
+										</operands>
+										</BinaryOp>
+									</operand>
+									</UnaryOp>
+								</operand>
+							</UnaryOp>	
+							<UnaryOp operator="not">
+								<operand>
+								<BinaryOp operator="=">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="mLever"/>
+										</path>
+										</IdExpression>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="yLever_const_"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/dur_tDesiredSpeed_true_time_1/Choice/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_dur_tDesiredSpeed_true_time_1_True_1"/>
+					</lefts>
+					<right>
+						<UnaryOp operator="-">
+							<operand>
+							<ConstValue value="1.0"/>
+						</operand>
+						</UnaryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/dur_tDesiredSpeed_true_time_1/True/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_dur_tDesiredSpeed_true_time_1_IF_2"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/dur_tDesiredSpeed_true_time_1/IF/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="out_dur_tDesiredSpeed_true_time_1"/>
+				</lefts>
+				<right>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="L_dur_tDesiredSpeed_true_time_1_IF_0"/>
+						</path>
+					</IdExpression>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/dur_tDesiredSpeed_true_time_1/IF/0"/>
+				</pragmas>
+				</Equation>
+				
+			</data>
+			<pragmas>
+				<ed:Operator oid="!ed/op_dur_tDesiredSpeed_true_time_1">
+					<diagrams> 
+						<TextDiagram name="diagram_dur_tDesiredSpeed_true_time_1" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/dur_tDesiredSpeed_true_time_1">
+							<presentationElements>
+								<FlowTE presentable="!ed/Expr/dur_tDesiredSpeed_true_time_1/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/dur_tDesiredSpeed_true_time_1/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/dur_tDesiredSpeed_true_time_1/True/0"/> 
+								<FlowTE presentable="!ed/Expr/dur_tDesiredSpeed_true_time_1/ifThenElse/1"/> 
+								<FlowTE presentable="!ed/Expr/dur_tDesiredSpeed_true_time_1/Choice/1"/>
+								<FlowTE presentable="!ed/Expr/dur_tDesiredSpeed_true_time_1/True/1"/> 
+								<FlowTE presentable="!ed/Expr/dur_tDesiredSpeed_true_time_1/IF/2"/>
+								<FlowTE presentable="!ed/Expr/dur_tDesiredSpeed_true_time_1/IF/0"/>
+							</presentationElements>
+						</TextDiagram>
+					</diagrams>
+				</ed:Operator>
+			</pragmas>
+		</Operator>
+				<Operator kind="node" name="tDesiredSpeed">
+			<inputs> 
+				<Variable name="mcCruise"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="type_mcCruise"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="type_mcCruise_Off"/>
+						</path>
+						</IdExpression>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_mcCruise"/>
+					</pragmas>
+				</Variable>
+				<Variable name="CLOCK"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0.0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_CLOCK"/>
+					</pragmas>
+				</Variable>
+				<Variable name="dur_tDesiredSpeed_true_time_1"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<UnaryOp operator="-">
+							<operand>
+							<ConstValue value="1.0"/>
+						</operand>
+						</UnaryOp>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_dur_tDesiredSpeed_true_time_1"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mLever"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="yLever"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="yLever_release"/>
+						</path>
+						</IdExpression>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_mLever"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mIgnOn"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="false"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_mIgnOn"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mEngRunning"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="false"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_mEngRunning"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mBrake"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="false"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_mBrake"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mSpeed"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="ySpeed"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0.0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_mSpeed"/>
+					</pragmas>
+				</Variable>
+				<Variable name="tDesiredSpeed"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="ySpeed"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0.0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_tDesiredSpeed"/>
+					</pragmas>
+				</Variable>
+				
+			</inputs>
+			<outputs>
+				<Variable name="out_tDesiredSpeed"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="ySpeed"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0.0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/tDesiredSpeed_out_tDesiredSpeed"/>
+					</pragmas>
+				</Variable>
+				
+			</outputs>
+			<locals> 
+				<Variable name="L_mcCruise_CaseOut_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/mcCruise/CaseOut/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_mcCruise_CaseIn_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/mcCruise/CaseIn/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				
+				<Variable name="L_type_mcCruise_Inactive_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				
+				<Variable name="L_type_mcCruise_Off_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Off/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Off_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Off/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Off_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Off/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Off_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Off/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				
+				
+				
+				
+				
+				
+			</locals>
+			<data> 
+		<Equation>
+						<lefts>
+						<VariableRef name="L_mcCruise_CaseIn_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mcCruise"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/mcCruise/CaseIn/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_mcCruise_CaseOut_0"/>
+					</lefts>
+				<right>
+					<CaseOp name="casemcCruise">
+						<switch>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_mcCruise_CaseIn_0"/>
+								</path>
+							</IdExpression>
+						</switch>
+						<cases>
+							<Case pattern="type_mcCruise_Cruise">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Cruise_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							
+							 
+							<Case pattern="type_mcCruise_Inactive">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Inactive_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							
+							 
+							<Case pattern="type_mcCruise_Off">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Off_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							<Case pattern="type_mcCruise_Override">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Off_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							
+							
+							 
+							
+							
+							
+							
+						</cases>
+					</CaseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/mcCruise/Case/0"/>
+				</pragmas>
+				</Equation>
+				
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Cruise_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Cruise_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Cruise_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+						  	<UnaryOp operator="not">
+								<operand>
+									<UnaryOp operator="not">
+										<operand>
+										<NAryOp operator="and">
+											<operands>
+											<BinaryOp operator="&gt;">
+												<operands>
+													<BinaryOp operator="-">
+														<operands>
+															<Last>
+																<variable>
+																	<ConstVarRef name="CLOCK"/>
+																</variable>
+															</Last>
+														<Last>
+															<variable>
+																<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+															</variable>
+														</Last>
+													</operands>
+													</BinaryOp>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="kStartIncr"/>
+												</path>
+												</IdExpression>
+											</operands>
+											</BinaryOp>
+											<BinaryOp operator="&lt;&gt;">
+												<operands>
+													<Last>
+														<variable>
+															<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+														</variable>
+													</Last>
+												<UnaryOp operator="-">
+													<operand>
+													<ConstValue value="1.0"/>
+												</operand>
+												</UnaryOp>
+											</operands>
+											</BinaryOp>
+										</operands>
+										</NAryOp>
+									</operand>
+									</UnaryOp>
+								</operand>
+							</UnaryOp>	
+							<UnaryOp operator="not">
+								<operand>
+								<NAryOp operator="and">
+									<operands>
+									<BinaryOp operator="&gt;">
+										<operands>
+											<BinaryOp operator="-">
+												<operands>
+													<IdExpression>
+														<path>
+															<ConstVarRef name="CLOCK"/>
+													</path>
+													</IdExpression>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+												</path>
+												</IdExpression>
+											</operands>
+											</BinaryOp>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="kStartIncr"/>
+										</path>
+										</IdExpression>
+									</operands>
+									</BinaryOp>
+									<BinaryOp operator="&lt;&gt;">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+											</path>
+											</IdExpression>
+										<UnaryOp operator="-">
+											<operand>
+											<ConstValue value="1.0"/>
+										</operand>
+										</UnaryOp>
+									</operands>
+									</BinaryOp>
+								</operands>
+								</NAryOp>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/Choice/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mSpeed"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_IF_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="tDesiredSpeed"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/IF/1"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_IF_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="tDesiredSpeed"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/IF/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Inactive_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Inactive_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Inactive_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Inactive_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Inactive_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands> 
+						  	<NAryOp operator="and">
+						  		<operands>
+						  	  	<UnaryOp operator="not">
+						  			<operand>
+						  				<BinaryOp operator="=">
+						  					<operands>
+						  						<Last>
+						  							<variable>
+						  								<ConstVarRef name="mLever"/>
+						  							</variable>
+						  						</Last>
+						  					<IdExpression>
+						  						<path>
+						  							<ConstVarRef name="yLever_const_"/>
+						  					</path>
+						  					</IdExpression>
+						  				</operands>
+						  				</BinaryOp>
+						  			</operand>
+						  		</UnaryOp>	
+						  		<BinaryOp operator="=">
+						  			<operands>
+						  				<IdExpression>
+						  					<path>
+						  						<ConstVarRef name="mLever"/>
+						  				</path>
+						  				</IdExpression>
+						  			<IdExpression>
+						  				<path>
+						  					<ConstVarRef name="yLever_const_"/>
+						  			</path>
+						  			</IdExpression>
+						  		</operands>
+						  		</BinaryOp>
+						  	</operands>
+						  	</NAryOp>
+							<NAryOp operator="and">
+								<operands>
+								<NAryOp operator="and">
+									<operands>
+									<Last>
+										<variable>
+											<ConstVarRef name="mIgnOn"/>
+										</variable>
+									</Last>
+									<Last>
+										<variable>
+											<ConstVarRef name="mEngRunning"/>
+										</variable>
+									</Last>
+								</operands>
+								</NAryOp>
+								<UnaryOp operator="not">
+									<operand>
+									<Last>
+										<variable>
+											<ConstVarRef name="mBrake"/>
+										</variable>
+									</Last>
+								</operand>
+								</UnaryOp>
+							</operands>
+							</NAryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/Choice/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mSpeed"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/True/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_IF_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="tDesiredSpeed"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/IF/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Off_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Off_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Off_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Off_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Off_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Off/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Off_Choice_0"/>
+					</lefts>
+					<right>
+						<ConstValue value="false"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Off/Choice/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Off_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mSpeed"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Off/True/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Off_IF_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="tDesiredSpeed"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Off/IF/1"/>
+					</pragmas>
+				</Equation>
+					
+					
+					
+				
+				<Equation>
+					<lefts>
+						<VariableRef name="out_tDesiredSpeed"/>
+				</lefts>
+				<right>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="L_mcCruise_CaseOut_0"/>
+						</path>
+					</IdExpression>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/mcCruise/CaseOut/0"/>
+				</pragmas>
+				</Equation>
+			</data>
+			<pragmas>
+				<ed:Operator oid="!ed/op_tDesiredSpeed">
+					<diagrams> 
+						<TextDiagram name="diagram_tDesiredSpeed" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/tDesiredSpeed">
+							<presentationElements>
+								<FlowTE presentable="!ed/Expr/mcCruise/Case/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/True/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/IF/1"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/True/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/IF/1"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Off/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Off/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Off/True/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Off/IF/1"/>
+								
+								<FlowTE presentable="!ed/Expr/mcCruise/CaseIn/0"/> 
+								<FlowTE presentable="!ed/Expr/mcCruise/CaseOut/0"/>
+							</presentationElements>
+						</TextDiagram>
+					</diagrams>
+				</ed:Operator>
+			</pragmas>
+		</Operator>
+		
+		<Operator kind="function" name="cThrottle">
+		<inputs>
+						<Variable name="mcCruise"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="type_mcCruise"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/cThrottle_mcCruise"/>
+					</pragmas>
+				</Variable>
+				<Variable name="tDesiredSpeed"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="ySpeed"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/cThrottle_tDesiredSpeed"/>
+					</pragmas>
+				</Variable>
+				<Variable name="mSpeed"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="ySpeed"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/cThrottle_mSpeed"/>
+					</pragmas>
+				</Variable>
+				<Variable name="CLOCK"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/cThrottle_CLOCK"/>
+					</pragmas>
+				</Variable>
+				<Variable name="dur_tDesiredSpeed_true_time_1"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="real"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/cThrottle_dur_tDesiredSpeed_true_time_1"/>
+					</pragmas>
+				</Variable>
+				<Variable name="cThrottle"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="yThrottle"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/cThrottle_cThrottle"/>
+					</pragmas>
+				</Variable>
+		</inputs>
+		<outputs>
+						<Variable name="out_cThrottle"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="yThrottle"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/cThrottle_out_cThrottle"/>
+					</pragmas>
+				</Variable>
+				
+		</outputs>
+		<locals>
+						<Variable name="L_mcCruise_CaseOut_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/mcCruise/CaseOut/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_mcCruise_CaseIn_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/mcCruise/CaseIn/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_Choice_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/Choice/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_True_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/True/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_Choice_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/Choice/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_True_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/True/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Cruise_IF_3">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Cruise/IF/3"/>
+				</pragmas>
+				</Variable>
+				
+				
+				
+				
+				<Variable name="L_type_mcCruise_Inactive_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_type_mcCruise_Inactive_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/type_mcCruise_Inactive/IF/1"/>
+				</pragmas>
+				</Variable>
+		</locals>
+		<data>
+						<Equation>
+					<lefts>
+						<VariableRef name="L_mcCruise_CaseIn_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mcCruise"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/mcCruise/CaseIn/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_mcCruise_CaseOut_0"/>
+					</lefts>
+				<right>
+					<CaseOp name="casemcCruise">
+						<switch>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_mcCruise_CaseIn_0"/>
+								</path>
+							</IdExpression>
+						</switch>
+						<cases>
+							<Case pattern="type_mcCruise_Cruise">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Cruise_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							
+							 
+							<Case pattern="type_mcCruise_Inactive">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Inactive_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							<Case pattern="type_mcCruise_Off">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Inactive_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							<Case pattern="type_mcCruise_Override">
+								<flow>
+							  	<IdExpression>
+								  	<path>
+										<ConstVarRef name="L_type_mcCruise_Inactive_IF_0"/>
+									</path>
+								</IdExpression>
+							</flow>
+							</Case>
+							
+							
+							
+							 
+							
+							
+							
+						</cases>
+					</CaseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/mcCruise/Case/0"/>
+				</pragmas>
+				</Equation>
+				
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Cruise_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Cruise_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Cruise_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="or">
+							<operands>
+							<BinaryOp operator="&gt;">
+								<operands>
+									<BinaryOp operator="-">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="tDesiredSpeed"/>
+											</path>
+											</IdExpression>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="kTolerance"/>
+										</path>
+										</IdExpression>
+									</operands>
+									</BinaryOp>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="mSpeed"/>
+								</path>
+								</IdExpression>
+							</operands>
+							</BinaryOp>
+							<NAryOp operator="and">
+								<operands>
+								<BinaryOp operator="&gt;">
+									<operands>
+										<BinaryOp operator="-">
+											<operands>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="CLOCK"/>
+												</path>
+												</IdExpression>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+											</path>
+											</IdExpression>
+										</operands>
+										</BinaryOp>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="kStartIncr"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+								<BinaryOp operator="&lt;&gt;">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+										</path>
+										</IdExpression>
+									<UnaryOp operator="-">
+										<operand>
+										<ConstValue value="1.0"/>
+									</operand>
+									</UnaryOp>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/Choice/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="yThrottle_accel"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Cruise_IF_1"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Cruise_1">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Cruise_Choice_1"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_True_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_IF_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/ifThenElse/1"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_Choice_1"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<NAryOp operator="and">
+								<operands>
+								<BinaryOp operator="&lt;=">
+									<operands>
+										<BinaryOp operator="-">
+											<operands>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="tDesiredSpeed"/>
+												</path>
+												</IdExpression>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="kTolerance"/>
+											</path>
+											</IdExpression>
+										</operands>
+										</BinaryOp>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="mSpeed"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+								<BinaryOp operator="&gt;=">
+									<operands>
+										<NAryOp operator="+">
+											<operands>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="tDesiredSpeed"/>
+												</path>
+												</IdExpression>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="kTolerance"/>
+											</path>
+											</IdExpression>
+										</operands>
+										</NAryOp>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="mSpeed"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+							<NAryOp operator="and">
+								<operands>
+								<BinaryOp operator="&lt;=">
+									<operands>
+										<BinaryOp operator="-">
+											<operands>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="CLOCK"/>
+												</path>
+												</IdExpression>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+											</path>
+											</IdExpression>
+										</operands>
+										</BinaryOp>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="kStartIncr"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+								<BinaryOp operator="&lt;&gt;">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+										</path>
+										</IdExpression>
+									<UnaryOp operator="-">
+										<operand>
+										<ConstValue value="1.0"/>
+									</operand>
+									</UnaryOp>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/Choice/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_True_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="yThrottle_maintain"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/True/1"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Cruise_IF_2"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Cruise_2">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Cruise_Choice_2"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_True_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Cruise_IF_3"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/ifThenElse/2"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_Choice_2"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<BinaryOp operator="&lt;">
+								<operands>
+									<NAryOp operator="+">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="tDesiredSpeed"/>
+											</path>
+											</IdExpression>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="kTolerance"/>
+										</path>
+										</IdExpression>
+									</operands>
+									</NAryOp>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="mSpeed"/>
+								</path>
+								</IdExpression>
+							</operands>
+							</BinaryOp>
+							<NAryOp operator="and">
+								<operands>
+								<BinaryOp operator="&lt;=">
+									<operands>
+										<BinaryOp operator="-">
+											<operands>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="CLOCK"/>
+												</path>
+												</IdExpression>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+											</path>
+											</IdExpression>
+										</operands>
+										</BinaryOp>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="kStartIncr"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+								<BinaryOp operator="&lt;&gt;">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+										</path>
+										</IdExpression>
+									<UnaryOp operator="-">
+										<operand>
+										<ConstValue value="1.0"/>
+									</operand>
+									</UnaryOp>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/Choice/2"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_True_2"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="yThrottle_decel"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/True/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Cruise_IF_3"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="cThrottle"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Cruise/IF/3"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_type_mcCruise_Inactive_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_type_mcCruise_Inactive_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_type_mcCruise_Inactive_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Inactive_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_type_mcCruise_Inactive_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_Choice_0"/>
+					</lefts>
+					<right>
+						<ConstValue value="true"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/Choice/0"/>
+					</pragmas>
+				</Equation>
+								<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="yThrottle_off"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_type_mcCruise_Inactive_IF_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="cThrottle"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/type_mcCruise_Inactive/IF/1"/>
+					</pragmas>
+				</Equation>
+					
+					
+				
+				<Equation>
+					<lefts>
+						<VariableRef name="out_cThrottle"/>
+				</lefts>
+				<right>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="L_mcCruise_CaseOut_0"/>
+						</path>
+					</IdExpression>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/mcCruise/CaseOut/0"/>
+				</pragmas>
+				</Equation>
+		</data>
+					<pragmas>
+				<ed:Operator oid="!ed/op_cThrottle">
+					<diagrams> 
+						<TextDiagram name="diagram_cThrottle" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/cThrottle">
+							<presentationElements>
+								<FlowTE presentable="!ed/Expr/mcCruise/Case/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/True/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/ifThenElse/1"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/Choice/1"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/True/1"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/ifThenElse/2"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/Choice/2"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/True/2"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Cruise/IF/3"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/True/0"/> 
+								<FlowTE presentable="!ed/Expr/type_mcCruise_Inactive/IF/1"/>
+								
+								<FlowTE presentable="!ed/Expr/mcCruise/CaseIn/0"/> 
+								<FlowTE presentable="!ed/Expr/mcCruise/CaseOut/0"/>
+							</presentationElements>
+						</TextDiagram>
+					</diagrams>
+				</ed:Operator>
+			</pragmas>
+		</Operator>
+		<Operator kind="node" name="Cruise_Control_System">
+			<inputs>
+			<Variable name="mBrake"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="false"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/Cruise_Control_System_mBrake"/>
+				</pragmas>
+			</Variable>
+			<Variable name="mEngRunning"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="false"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/Cruise_Control_System_mEngRunning"/>
+				</pragmas>
+			</Variable>
+			<Variable name="mIgnOn"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="false"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/Cruise_Control_System_mIgnOn"/>
+				</pragmas>
+			</Variable>
+			<Variable name="mLever"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yLever"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="yLever_release"/>
+					</path>
+					</IdExpression>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/Cruise_Control_System_mLever"/>
+				</pragmas>
+			</Variable>
+						<Variable name="mSpeed"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="0.0"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/Cruise_Control_System_mSpeed"/>
+				</pragmas>
+			</Variable>
+						<Variable name="time"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="0.0"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/Cruise_Control_System_time"/>
+				</pragmas>
+			</Variable>
+			</inputs>
+			<outputs>
+			<Variable name="cThrottle"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="yThrottle"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="yThrottle_off"/>
+					</path>
+					</IdExpression>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/output/Cruise_Control_System_cThrottle"/>
+				</pragmas>
+			</Variable>
+			</outputs>
+			<locals>
+			<Variable name="tDesiredSpeed"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="ySpeed"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="0.0"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/term/Cruise_Control_System_tDesiredSpeed"/>
+				</pragmas>
+			</Variable>
+			<Variable name="dur_tDesiredSpeed_true_time_1"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<UnaryOp operator="-">
+						<operand>
+						<ConstValue value="1.0"/>
+					</operand>
+					</UnaryOp>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/term/Cruise_Control_System_dur_tDesiredSpeed_true_time_1"/>
+				</pragmas>
+			</Variable>
+				<Variable name="CLOCK"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="real"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="0.0"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/term/Cruise_Control_System_CLOCK"/>
+				</pragmas>
+			</Variable>
+			
+			<Variable name="mcCruise"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="type_mcCruise"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="type_mcCruise_Off"/>
+					</path>
+					</IdExpression>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/modeClass/Cruise_Control_System_mcCruise"/>
+				</pragmas>
+			</Variable>
+						<Variable name="L_in_mBrake">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="bool"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/mBrake"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_mEngRunning">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="bool"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/mEngRunning"/>
+			</pragmas>
+			</Variable>
+						<Variable name="L_in_mIgnOn">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="bool"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/mIgnOn"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_mLever">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="yLever"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/mLever"/>
+			</pragmas>
+			</Variable>
+						<Variable name="L_in_mSpeed">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="ySpeed"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/mSpeed"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_time">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/time"/>
+			</pragmas>
+			</Variable>
+						<Variable name="L_last_cThrottle">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="yThrottle"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/last/cThrottle"/>
+			</pragmas>
+			</Variable>
+			
+			<Variable name="L_last_tDesiredSpeed">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="ySpeed"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/last/tDesiredSpeed"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_last_dur_tDesiredSpeed_true_time_1">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/last/dur_tDesiredSpeed_true_time_1"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_last_CLOCK">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/last/CLOCK"/>
+			</pragmas>
+			</Variable>
+			 
+			<Variable name="L_last_mcCruise">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="type_mcCruise"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/last/mcCruise"/>
+			</pragmas>
+			</Variable>
+			
+			<Variable name="L_in_mcCruise">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="type_mcCruise"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/mcCruise"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_CLOCK">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/CLOCK"/>
+			</pragmas>
+			</Variable>
+						<Variable name="L_in_dur_tDesiredSpeed_true_time_1">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="real"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/dur_tDesiredSpeed_true_time_1"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_tDesiredSpeed">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="ySpeed"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/tDesiredSpeed"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_cThrottle">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="yThrottle"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/cThrottle"/>
+			</pragmas>
+			</Variable>
+			</locals>
+			<data>
+			<Equation>
+			<lefts>
+				<VariableRef name="L_in_mBrake"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="mBrake"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_mBrake/mBrake"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="L_in_mEngRunning"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="mEngRunning"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_mEngRunning/mEngRunning"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="L_in_mIgnOn"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="mIgnOn"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_mIgnOn/mIgnOn"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="L_in_mLever"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="mLever"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_mLever/mLever"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="L_in_mSpeed"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="mSpeed"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_mSpeed/mSpeed"/>
+			</pragmas>
+			</Equation>
+						<Equation>
+			<lefts>
+				<VariableRef name="L_in_time"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="time"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_time/time"/>
+			</pragmas>
+			</Equation>
+						<Equation>
+				<lefts>
+				<VariableRef name="L_last_cThrottle"/>
+			</lefts>
+			<right>
+				<Last>
+					<variable>
+						<ConstVarRef name="cThrottle"/>
+					</variable>
+				</Last>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_last_cThrottle/cThrottle"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+				<VariableRef name="L_last_tDesiredSpeed"/>
+			</lefts>
+			<right>
+				<Last>
+					<variable>
+						<ConstVarRef name="tDesiredSpeed"/>
+					</variable>
+				</Last>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_last_tDesiredSpeed/tDesiredSpeed"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+				<VariableRef name="L_last_dur_tDesiredSpeed_true_time_1"/>
+			</lefts>
+			<right>
+				<Last>
+					<variable>
+						<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+					</variable>
+				</Last>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_last_dur_tDesiredSpeed_true_time_1/dur_tDesiredSpeed_true_time_1"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+				<VariableRef name="L_last_CLOCK"/>
+			</lefts>
+			<right>
+				<Last>
+					<variable>
+						<ConstVarRef name="CLOCK"/>
+					</variable>
+				</Last>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_last_CLOCK/CLOCK"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+				<VariableRef name="L_last_mcCruise"/>
+			</lefts>
+			<right>
+				<Last>
+					<variable>
+						<ConstVarRef name="mcCruise"/>
+					</variable>
+				</Last>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_last_mcCruise/mcCruise"/>
+			</pragmas>
+			</Equation>
+						<Equation>
+			<lefts>
+				<VariableRef name="cThrottle"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="L_in_cThrottle"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/cThrottle/L_in_cThrottle"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="tDesiredSpeed"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="L_in_tDesiredSpeed"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/tDesiredSpeed/L_in_tDesiredSpeed"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="dur_tDesiredSpeed_true_time_1"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="L_in_dur_tDesiredSpeed_true_time_1"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/dur_tDesiredSpeed_true_time_1/L_in_dur_tDesiredSpeed_true_time_1"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="CLOCK"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="L_in_CLOCK"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/CLOCK/L_in_CLOCK"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="mcCruise"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="L_in_mcCruise"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/mcCruise/L_in_mcCruise"/>
+			</pragmas>
+			</Equation>
+						<Equation>
+				<lefts>
+					<VariableRef name="L_in_mcCruise"/>
+			</lefts>
+			<right>
+				<CallExpression>
+					<operator>
+						<OpCall name="1">
+							<operator>
+								<OperatorRef name="Cruise_Control_System::mcCruise"/>
+							</operator>
+						</OpCall>
+					</operator>
+					<callParameters>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mLever"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mIgnOn"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mEngRunning"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mBrake"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_last_mcCruise"/>
+						</path>
+						</IdExpression> 
+						
+					</callParameters>
+				</CallExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/fEq/mcCruise"/> 
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+					<VariableRef name="L_in_CLOCK"/>
+			</lefts>
+			<right>
+				<CallExpression>
+					<operator>
+						<OpCall name="1">
+							<operator>
+								<OperatorRef name="Cruise_Control_System::CLOCK"/>
+							</operator>
+						</OpCall>
+					</operator>
+					<callParameters>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_time"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_last_CLOCK"/>
+						</path>
+						</IdExpression> 
+						
+					</callParameters>
+				</CallExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/fEq/CLOCK"/> 
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+					<VariableRef name="L_in_dur_tDesiredSpeed_true_time_1"/>
+			</lefts>
+			<right>
+				<CallExpression>
+					<operator>
+						<OpCall name="1">
+							<operator>
+								<OperatorRef name="Cruise_Control_System::dur_tDesiredSpeed_true_time_1"/>
+							</operator>
+						</OpCall>
+					</operator>
+					<callParameters>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mLever"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_CLOCK"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_last_dur_tDesiredSpeed_true_time_1"/>
+						</path>
+						</IdExpression> 
+						
+					</callParameters>
+				</CallExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/fEq/dur_tDesiredSpeed_true_time_1"/> 
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+					<VariableRef name="L_in_tDesiredSpeed"/>
+			</lefts>
+			<right>
+				<CallExpression>
+					<operator>
+						<OpCall name="1">
+							<operator>
+								<OperatorRef name="Cruise_Control_System::tDesiredSpeed"/>
+							</operator>
+						</OpCall>
+					</operator>
+					<callParameters>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mcCruise"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_CLOCK"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_dur_tDesiredSpeed_true_time_1"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mLever"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mIgnOn"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mEngRunning"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mBrake"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mSpeed"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_last_tDesiredSpeed"/>
+						</path>
+						</IdExpression> 
+						
+					</callParameters>
+				</CallExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/fEq/tDesiredSpeed"/> 
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+					<VariableRef name="L_in_cThrottle"/>
+			</lefts>
+			<right>
+				<CallExpression>
+					<operator>
+						<OpCall name="1">
+							<operator>
+								<OperatorRef name="Cruise_Control_System::cThrottle"/>
+							</operator>
+						</OpCall>
+					</operator>
+					<callParameters>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mcCruise"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_tDesiredSpeed"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mSpeed"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_CLOCK"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_dur_tDesiredSpeed_true_time_1"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_last_cThrottle"/>
+						</path>
+						</IdExpression> 
+						
+					</callParameters>
+				</CallExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/fEq/cThrottle"/> 
+			</pragmas>
+			</Equation>
+			<Assertion kind="guarantee" name="G_mSpeed_min">
+			<definition>
+				<BinaryOp operator="&gt;=">
+					<operands>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="mSpeed"/>
+							</path>
+						</IdExpression>
+						<ConstValue value="0.0"/>
+					</operands>
+				</BinaryOp>
+			</definition>
+			<pragmas>
+				<ed:Assertion oid="!ed/guarantee/min/rangebasedtype/mSpeed"/>
+			</pragmas>
+			</Assertion>
+			<Assertion kind="guarantee" name="G_mSpeed_max">
+				<definition>
+					<BinaryOp operator="&lt;=">
+						<operands>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="mSpeed"/>
+								</path>
+							</IdExpression>
+							<ConstValue value="180.0"/>
+						</operands>
+					</BinaryOp>
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/max/rangebasedtype/mSpeed"/>
+				</pragmas>
+			</Assertion>
+			<Assertion kind="guarantee" name="G_tDesiredSpeed_min">
+			<definition>
+				<BinaryOp operator="&gt;=">
+					<operands>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="tDesiredSpeed"/>
+							</path>
+						</IdExpression>
+						<ConstValue value="0.0"/>
+					</operands>
+				</BinaryOp>
+			</definition>
+			<pragmas>
+				<ed:Assertion oid="!ed/guarantee/min/rangebasedtype/tDesiredSpeed"/>
+			</pragmas>
+			</Assertion>
+			<Assertion kind="guarantee" name="G_tDesiredSpeed_max">
+				<definition>
+					<BinaryOp operator="&lt;=">
+						<operands>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="tDesiredSpeed"/>
+								</path>
+							</IdExpression>
+							<ConstValue value="180.0"/>
+						</operands>
+					</BinaryOp>
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/max/rangebasedtype/tDesiredSpeed"/>
+				</pragmas>
+			</Assertion>
+			<Assertion kind="guarantee" name="G_L_in_mSpeed_min">
+			<definition>
+				<BinaryOp operator="&gt;=">
+					<operands>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_mSpeed"/>
+							</path>
+						</IdExpression>
+						<ConstValue value="0.0"/>
+					</operands>
+				</BinaryOp>
+			</definition>
+			<pragmas>
+				<ed:Assertion oid="!ed/guarantee/min/rangebasedtype/L_in_mSpeed"/>
+			</pragmas>
+			</Assertion>
+			<Assertion kind="guarantee" name="G_L_in_mSpeed_max">
+				<definition>
+					<BinaryOp operator="&lt;=">
+						<operands>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_in_mSpeed"/>
+								</path>
+							</IdExpression>
+							<ConstValue value="180.0"/>
+						</operands>
+					</BinaryOp>
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/max/rangebasedtype/L_in_mSpeed"/>
+				</pragmas>
+			</Assertion>
+			<Assertion kind="guarantee" name="G_L_last_tDesiredSpeed_min">
+			<definition>
+				<BinaryOp operator="&gt;=">
+					<operands>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_last_tDesiredSpeed"/>
+							</path>
+						</IdExpression>
+						<ConstValue value="0.0"/>
+					</operands>
+				</BinaryOp>
+			</definition>
+			<pragmas>
+				<ed:Assertion oid="!ed/guarantee/min/rangebasedtype/L_last_tDesiredSpeed"/>
+			</pragmas>
+			</Assertion>
+			<Assertion kind="guarantee" name="G_L_last_tDesiredSpeed_max">
+				<definition>
+					<BinaryOp operator="&lt;=">
+						<operands>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_last_tDesiredSpeed"/>
+								</path>
+							</IdExpression>
+							<ConstValue value="180.0"/>
+						</operands>
+					</BinaryOp>
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/max/rangebasedtype/L_last_tDesiredSpeed"/>
+				</pragmas>
+			</Assertion>
+	      <Assertion kind="guarantee" name="G_L_in_tDesiredSpeed_min">
+			<definition>
+				<BinaryOp operator="&gt;=">
+					<operands>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_tDesiredSpeed"/>
+							</path>
+						</IdExpression>
+						<ConstValue value="0.0"/>
+					</operands>
+				</BinaryOp>
+			</definition>
+			<pragmas>
+				<ed:Assertion oid="!ed/guarantee/min/rangebasedtype/L_in_tDesiredSpeed"/>
+			</pragmas>
+			</Assertion>
+			<Assertion kind="guarantee" name="G_L_in_tDesiredSpeed_max">
+				<definition>
+					<BinaryOp operator="&lt;=">
+						<operands>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_in_tDesiredSpeed"/>
+								</path>
+							</IdExpression>
+							<ConstValue value="180.0"/>
+						</operands>
+					</BinaryOp>
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/max/rangebasedtype/L_in_tDesiredSpeed"/>
+				</pragmas>
+			</Assertion>
+			<Assertion kind="assume" name="A_N1">
+			  <definition>
+					<BinaryOp operator="&lt;=">
+						<operands>
+							<BinaryOp operator="-">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="mSpeed"/>
+										</path>
+									</IdExpression>
+									<Last>
+										<variable>
+											<ConstVarRef name="mSpeed"/>
+										</variable>
+									</Last>
+									</operands>
+							</BinaryOp>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="kMaxAccel"/>
+							</path>
+						</IdExpression>
+					</operands>
+					</BinaryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/assume/N1"/>
+				</pragmas>
+			</Assertion>
+			<Assertion kind="assume" name="A_N2">
+			  <definition>
+					<BinaryOp operator="&gt;=">
+						<operands>
+							<BinaryOp operator="-">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="mSpeed"/>
+									</path>
+									</IdExpression>
+								<Last>
+									<variable>
+										<ConstVarRef name="mSpeed"/>
+									</variable>
+								</Last>
+							</operands>
+							</BinaryOp>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="kMaxDecel"/>
+						</path>
+						</IdExpression>
+					</operands>
+					</BinaryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/assume/N2"/>
+				</pragmas>
+			</Assertion>
+			<Assertion kind="assume" name="A_N3">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<NAryOp operator="and">
+								<operands> 
+							  	<BinaryOp operator="&lt;&gt;">
+							  		<operands> 
+							  	  	<Last>
+							  	  		<variable>
+							  	  			<ConstVarRef name="mLever"/>
+							  	  		</variable>
+							  	  	</Last>
+							  		<IdExpression>
+							  			<path>
+							  				<ConstVarRef name="mLever"/>
+							  		</path>
+							  		</IdExpression>
+							  	</operands>
+							  	</BinaryOp>
+								<BinaryOp operator="&lt;&gt;">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="mLever"/>
+											</variable>
+										</Last>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="yLever_release"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+						</operand>
+						</UnaryOp>
+						<BinaryOp operator="=">
+							<operands>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="mLever"/>
+								</path>
+								</IdExpression>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="yLever_release"/>
+							</path>
+							</IdExpression>
+						</operands>
+						</BinaryOp>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/assume/N3"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="assume" name="A_N4">
+			  <definition>
+					<BinaryOp operator="&gt;=">
+						<operands>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="time"/>
+							</path>
+							</IdExpression>
+						<Last>
+							<variable>
+								<ConstVarRef name="time"/>
+							</variable>
+						</Last>
+					</operands>
+					</BinaryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/assume/N4"/>
+				</pragmas>
+			</Assertion>
+			<Assertion kind="guarantee" name="G_A1">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<Last>
+								<variable>
+									<ConstVarRef name="mBrake"/>
+								</variable>
+							</Last>
+						</operand>
+						</UnaryOp>
+						<BinaryOp operator="=">
+							<operands>
+								<Last>
+									<variable>
+										<ConstVarRef name="cThrottle"/>
+									</variable>
+								</Last>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="yThrottle_off"/>
+							</path>
+							</IdExpression>
+						</operands>
+						</BinaryOp>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A1"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="guarantee" name="G_A2">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<BinaryOp operator="=">
+								<operands>
+									<Last>
+										<variable>
+											<ConstVarRef name="cThrottle"/>
+										</variable>
+									</Last>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="yThrottle_accel"/>
+								</path>
+								</IdExpression>
+							</operands>
+							</BinaryOp>
+						</operand>
+						</UnaryOp>
+						<BinaryOp operator="&gt;">
+							<operands>
+								<Last>
+									<variable>
+										<ConstVarRef name="tDesiredSpeed"/>
+									</variable>
+								</Last>
+							<Last>
+								<variable>
+									<ConstVarRef name="mSpeed"/>
+								</variable>
+							</Last>
+						</operands>
+						</BinaryOp>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A2"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="guarantee" name="G_A3">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<NAryOp operator="and">
+								<operands>
+								<BinaryOp operator="&lt;&gt;">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="mcCruise"/>
+											</variable>
+										</Last>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="type_mcCruise_Off"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+								<Last>
+									<variable>
+										<ConstVarRef name="mEngRunning"/>
+									</variable>
+								</Last>
+							</operands>
+							</NAryOp>
+						</operand>
+						</UnaryOp>
+						<Last>
+							<variable>
+								<ConstVarRef name="mIgnOn"/>
+							</variable>
+						</Last>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A3"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="guarantee" name="G_A4">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<NAryOp operator="and">
+								<operands>
+								<BinaryOp operator="&lt;&gt;">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="cThrottle"/>
+											</variable>
+										</Last>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="yThrottle_off"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+								<Last>
+									<variable>
+										<ConstVarRef name="mEngRunning"/>
+									</variable>
+								</Last>
+							</operands>
+							</NAryOp>
+						</operand>
+						</UnaryOp>
+						<Last>
+							<variable>
+								<ConstVarRef name="mIgnOn"/>
+							</variable>
+						</Last>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A4"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="guarantee" name="G_A5">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<BinaryOp operator="=">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="mSpeed"/>
+									</path>
+									</IdExpression>
+								<Last>
+									<variable>
+										<ConstVarRef name="mSpeed"/>
+									</variable>
+								</Last>
+							</operands>
+							</BinaryOp>
+						</operand>
+						</UnaryOp>
+						<BinaryOp operator="&lt;&gt;">
+							<operands>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="cThrottle"/>
+								</path>
+								</IdExpression>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="yThrottle_accel"/>
+							</path>
+							</IdExpression>
+						</operands>
+						</BinaryOp>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A5"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="guarantee" name="G_A6">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<NAryOp operator="and">
+								<operands>
+							  	<UnaryOp operator="not">
+									<operand>
+										<Last>
+											<variable>
+												<ConstVarRef name="mEngRunning"/>
+											</variable>
+										</Last>
+									</operand>
+								</UnaryOp>	
+								<IdExpression>
+									<path>
+										<ConstVarRef name="mEngRunning"/>
+								</path>
+								</IdExpression>
+							</operands>
+							</NAryOp>
+						</operand>
+						</UnaryOp>
+						<BinaryOp operator="=">
+							<operands>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="cThrottle"/>
+								</path>
+								</IdExpression>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="yThrottle_off"/>
+							</path>
+							</IdExpression>
+						</operands>
+						</BinaryOp>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A6"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="guarantee" name="G_A7">
+			  <definition>
+					<UnaryOp operator="not">
+						<operand>
+							<NAryOp operator="xor">
+							  	<operands>
+							  		<BinaryOp operator="=">
+							  			<operands>
+							  				<Last>
+							  					<variable>
+							  						<ConstVarRef name="mcCruise"/>
+							  					</variable>
+							  				</Last>
+							  			<IdExpression>
+							  				<path>
+							  					<ConstVarRef name="type_mcCruise_Off"/>
+							  			</path>
+							  			</IdExpression>
+							  		</operands>
+							  		</BinaryOp>
+									<UnaryOp operator="not">
+										<operand>
+										<Last>
+											<variable>
+												<ConstVarRef name="mIgnOn"/>
+											</variable>
+										</Last>
+									</operand>
+									</UnaryOp>
+								</operands>
+							</NAryOp>
+						</operand>
+					</UnaryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A7"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="guarantee" name="G_A8">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<BinaryOp operator="=">
+								<operands>
+									<Last>
+										<variable>
+											<ConstVarRef name="cThrottle"/>
+										</variable>
+									</Last>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="yThrottle_accel"/>
+								</path>
+								</IdExpression>
+							</operands>
+							</BinaryOp>
+						</operand>
+						</UnaryOp>
+						<NAryOp operator="or">
+							<operands>
+							<BinaryOp operator="&gt;">
+								<operands>
+									<Last>
+										<variable>
+											<ConstVarRef name="tDesiredSpeed"/>
+										</variable>
+									</Last>
+								<Last>
+									<variable>
+										<ConstVarRef name="mSpeed"/>
+									</variable>
+								</Last>
+							</operands>
+							</BinaryOp>
+							<NAryOp operator="and">
+								<operands>
+								<BinaryOp operator="&gt;">
+									<operands>
+										<BinaryOp operator="-">
+											<operands>
+												<Last>
+													<variable>
+														<ConstVarRef name="CLOCK"/>
+													</variable>
+												</Last>
+											<Last>
+												<variable>
+													<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+												</variable>
+											</Last>
+										</operands>
+										</BinaryOp>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="kStartIncr"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+								<BinaryOp operator="&lt;&gt;">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="dur_tDesiredSpeed_true_time_1"/>
+											</variable>
+										</Last>
+									<UnaryOp operator="-">
+										<operand>
+										<ConstValue value="1.0"/>
+									</operand>
+									</UnaryOp>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+						</operands>
+						</NAryOp>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A8"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="guarantee" name="G_A9">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<BinaryOp operator="&lt;&gt;">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="tDesiredSpeed"/>
+									</path>
+									</IdExpression>
+								<Last>
+									<variable>
+										<ConstVarRef name="tDesiredSpeed"/>
+									</variable>
+								</Last>
+							</operands>
+							</BinaryOp>
+						</operand>
+						</UnaryOp>
+						<NAryOp operator="and">
+							<operands>
+							<BinaryOp operator="=">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="mcCruise"/>
+									</path>
+									</IdExpression>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="type_mcCruise_Cruise"/>
+								</path>
+								</IdExpression>
+							</operands>
+							</BinaryOp>
+							<NAryOp operator="or">
+								<operands>
+								<BinaryOp operator="=">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="mcCruise"/>
+											</variable>
+										</Last>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="type_mcCruise_Cruise"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+								<BinaryOp operator="=">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="mcCruise"/>
+											</variable>
+										</Last>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="type_mcCruise_Inactive"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+						</operands>
+						</NAryOp>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A9"/>
+				</pragmas>
+			</Assertion>
+						<Assertion kind="guarantee" name="G_A10">
+			  <definition>
+					<NAryOp operator="or">
+						<operands>
+						<UnaryOp operator="not">
+							<operand>
+							<BinaryOp operator="=">
+								<operands>
+									<Last>
+										<variable>
+											<ConstVarRef name="tDesiredSpeed"/>
+										</variable>
+									</Last>
+								<Last>
+									<variable>
+										<ConstVarRef name="mSpeed"/>
+									</variable>
+								</Last>
+							</operands>
+							</BinaryOp>
+						</operand>
+						</UnaryOp>
+						<NAryOp operator="or">
+							<operands>
+							<NAryOp operator="or">
+								<operands>
+								<BinaryOp operator="&lt;&gt;">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="mcCruise"/>
+											</variable>
+										</Last>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="type_mcCruise_Override"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+								<BinaryOp operator="&lt;&gt;">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="mLever"/>
+											</variable>
+										</Last>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="yLever_release"/>
+									</path>
+									</IdExpression>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+							<BinaryOp operator="=">
+								<operands>
+									<Last>
+										<variable>
+											<ConstVarRef name="cThrottle"/>
+										</variable>
+									</Last>
+								<IdExpression>
+									<path>
+										<ConstVarRef name="yThrottle_off"/>
+								</path>
+								</IdExpression>
+							</operands>
+							</BinaryOp>
+						</operands>
+						</NAryOp>
+					</operands>
+					</NAryOp> 
+				</definition>
+				<pragmas>
+					<ed:Assertion oid="!ed/guarantee/A10"/>
+				</pragmas>
+			</Assertion>
+			</data>
+		<pragmas>
+			<ed:Operator oid="!ed/MainOper/Cruise_Control_System" xmlns="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3">
+		  	<diagrams>
+				<TextDiagram name="textDiagram_Cruise_Control_System" landscape="true" format="A4 (210 297)" oid="!ed/Pragma/Cruise_Control_System">
+					<presentationElements>
+						<FlowTE presentable="!ed/Expr/L_in_mBrake/mBrake"/> 
+						<FlowTE presentable="!ed/Expr/L_in_mEngRunning/mEngRunning"/> 
+						<FlowTE presentable="!ed/Expr/L_in_mIgnOn/mIgnOn"/> 
+						<FlowTE presentable="!ed/Expr/L_in_mLever/mLever"/> 
+						<FlowTE presentable="!ed/Expr/L_in_mSpeed/mSpeed"/> 
+						<FlowTE presentable="!ed/Expr/L_in_time/time"/> 
+						 
+						<FlowTE presentable="!ed/Expr/L_last_cThrottle/cThrottle"/>
+						<FlowTE presentable="!ed/Expr/cThrottle/L_in_cThrottle"/> 
+						<FlowTE presentable="!ed/Expr/L_last_tDesiredSpeed/tDesiredSpeed"/>
+						<FlowTE presentable="!ed/Expr/tDesiredSpeed/L_in_tDesiredSpeed"/> 
+						<FlowTE presentable="!ed/Expr/L_last_dur_tDesiredSpeed_true_time_1/dur_tDesiredSpeed_true_time_1"/>
+						<FlowTE presentable="!ed/Expr/dur_tDesiredSpeed_true_time_1/L_in_dur_tDesiredSpeed_true_time_1"/> 
+						<FlowTE presentable="!ed/Expr/L_last_CLOCK/CLOCK"/>
+						<FlowTE presentable="!ed/Expr/CLOCK/L_in_CLOCK"/> 
+						<FlowTE presentable="!ed/Expr/L_last_mcCruise/mcCruise"/>
+						<FlowTE presentable="!ed/Expr/mcCruise/L_in_mcCruise"/> 
+						 
+						<FlowTE presentable="!ed/fEq/mcCruise"/>
+						<FlowTE presentable="!ed/fEq/CLOCK"/>
+						<FlowTE presentable="!ed/fEq/dur_tDesiredSpeed_true_time_1"/>
+						<FlowTE presentable="!ed/fEq/tDesiredSpeed"/>
+						<FlowTE presentable="!ed/fEq/cThrottle"/>
+						
+						<FlowTE presentable="!ed/assume/N1"/>
+						<FlowTE presentable="!ed/assume/N2"/>
+						<FlowTE presentable="!ed/assume/N3"/>
+						<FlowTE presentable="!ed/assume/N4"/>
+						 
+						<FlowTE presentable="!ed/guarantee/A1"/>
+						<FlowTE presentable="!ed/guarantee/A2"/>
+						<FlowTE presentable="!ed/guarantee/A3"/>
+						<FlowTE presentable="!ed/guarantee/A4"/>
+						<FlowTE presentable="!ed/guarantee/A5"/>
+						<FlowTE presentable="!ed/guarantee/A6"/>
+						<FlowTE presentable="!ed/guarantee/A7"/>
+						<FlowTE presentable="!ed/guarantee/A8"/>
+						<FlowTE presentable="!ed/guarantee/A9"/>
+						<FlowTE presentable="!ed/guarantee/A10"/>					
+						
+						<FlowTE presentable="!ed/guarantee/min/rangebasedtype/mSpeed" />
+						<FlowTE presentable="!ed/guarantee/max/rangebasedtype/mSpeed" />
+						
+						<FlowTE presentable="!ed/guarantee/min/rangebasedtype/tDesiredSpeed" />
+						<FlowTE presentable="!ed/guarantee/max/rangebasedtype/tDesiredSpeed" />
+						
+						<FlowTE presentable="!ed/guarantee/min/rangebasedtype/L_in_mSpeed" />
+						<FlowTE presentable="!ed/guarantee/max/rangebasedtype/L_in_mSpeed" />
+						
+						<FlowTE presentable="!ed/guarantee/min/rangebasedtype/L_last_tDesiredSpeed" />
+						<FlowTE presentable="!ed/guarantee/max/rangebasedtype/L_last_tDesiredSpeed" />
+												
+						<FlowTE presentable="!ed/guarantee/min/rangebasedtype/L_in_tDesiredSpeed" />
+						<FlowTE presentable="!ed/guarantee/max/rangebasedtype/L_in_tDesiredSpeed" />
+						
+					</presentationElements>
+				</TextDiagram>
+			</diagrams>
+		</ed:Operator>
+		</pragmas> 
+			</Operator>
+	</declarations>
+	<pragmas>
+		<ed:Package oid="!ed/package/Cruise_Control_System" xmlns="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3">
+			<diagrams>
+				<TreeDiagram landscape="true" format="A4 (210 297)"	oid="!ed/package/constants/Cruise_Control_System" blockKind="constants" />
+				<TreeDiagram landscape="true" format="A4 (210 297)" oid="!ed/package/types/Cruise_Control_System" blockKind="types" />
+				<TreeDiagram landscape="true" format="A4 (210 297)" oid="!ed/package/sensors/Cruise_Control_System" blockKind="sensors"/>
+			</diagrams>
+		</ed:Package>
+	</pragmas>
+	</Package>
+</declarations>
+</File>

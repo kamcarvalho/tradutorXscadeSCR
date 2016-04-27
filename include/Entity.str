@@ -1,0 +1,141 @@
+module Entity
+
+signature
+  constructors
+    Property               : ID * Type -> Property
+    Entity                 : ID * List(Property) -> Definition
+    Main                   : Package -> Start
+    Declare                : ID * Type -> Start
+    Module                 : ID * List(Definition) -> Start
+    Declarations           : List(Type) * List(Constant) * List(Operator) -> Declarations
+    Package                : PragmaId * Declarations * Pragmas -> Package
+    FlowTE2                : PresentableId -> FlowTE
+    FlowTE                 : PresentableId -> FlowTE
+    PresentationElements   : List(FlowTE) -> PresentationElements
+    TextDiagram2           : PragmaId * PragmaId * PresentationElements -> TextDiagram
+    TextDiagram            : PragmaId * PragmaId * PresentationElements -> TextDiagram
+    Diagrams               : TextDiagram -> Diagrams
+    EdOperator2            : PragmaId * Diagrams -> EdOperator
+    EdOperator             : PragmaId * Diagrams -> EdOperator
+    AssertionOperator      : Assertion -> AssumptionOrAssertion
+    AssumptionOperator     : Assumption -> AssumptionOrAssertion
+    Data                   : List(Equation) * List(AssumptionOrAssertion) -> Data
+    Locals                 : List(Variable) -> Locals
+    Outputs                : List(Variable) -> Outputs
+    Inputs                 : List(Variable) -> Inputs
+    MainOperator           : OPKIND * PragmaId * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    ModeClass              : OPKIND * MCVAR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    Term2                  : OPKIND * DUR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    Term                   : OPKIND * TVAR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    Controlled             : OPKIND * CVAR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    Monitored              : OPKIND * MVAR * Inputs * Outputs * Locals * Data * Pragmas -> Operator
+    Assertion11            : Operand * Pragmas -> Assertion
+    Assertion10            : Operand * Pragmas -> Assertion
+    Assertion9             : Operand * Pragmas -> Assertion
+    Assertion8             : Operand * Pragmas -> Assertion
+    Assertion7             : Operand * Pragmas -> Assertion
+    Assertion6             : Operand * Pragmas -> Assertion
+    Assertion5             : Operand * Pragmas -> Assertion
+    Assertion4             : Operand * Pragmas -> Assertion
+    Assertion3             : Operand * Pragmas -> Assertion
+    Assertion2             : Operand * Pragmas -> Assertion
+    Assertion              : PragmaId * Operand * Pragmas -> Assertion
+    Pragmas                : PragmaId * PragmaId * PragmaId * PragmaId -> Pragmas
+    Pragmas                : EdOperator -> Pragmas
+    pragma2                : PragmaId -> Pragmas
+    pragma1                : PragmaId * PragmaId -> Pragmas
+    pragma                 : PragmaId * PragmaId -> Pragmas
+    pragma                 : PragmaId -> Pragmas
+    Assumption             : PragmaId * Operand * Pragmas -> Assumption
+    Right                  : Operand -> Right
+    Lefts                  : PragmaId -> Lefts
+    Equation               : Lefts * Right * Pragma -> Equation
+    ListExpression         : IdExpression -> ListExpression
+    Else                   : ListExpression -> Else
+    Then                   : ListExpression -> Then
+    If                     : IdExpression -> If
+    IdExpression           : PragmaId -> IdExpression
+    Case                   : PragmaId * IdExpression -> Case
+    Cases                  : List(Case) -> Cases
+    Switch                 : IdExpression -> Switch
+    CallParameters         : List(IdExpression) -> CallParameters
+    CallExpressionOperator : INT * PragmaId -> CallExpressionOperator
+    IfThenElseOp           : PragmaId * If * Then * Else -> Operand
+    CaseOp                 : PragmaId * Switch * Cases -> Operand
+    CallExpression         : CallExpressionOperator * CallParameters -> Operand
+    ConstValue             : Value -> Operand
+    LastVariable           : PragmaId -> Operand
+    IdExpressionOp         : IdExpression -> Operand
+    Different              : Operand * Operand -> Operand
+    Equal                  : Operand * Operand -> Operand
+    Subtraction            : Operand * Operand -> Operand
+    Addiction              : Operand * Operand -> Operand
+    LessThanOrEqual        : Operand * Operand -> Operand
+    LessThan               : Operand * Operand -> Operand
+    GreaterThanOrEqual     : Operand * Operand -> Operand
+    GreaterThan            : Operand * Operand -> Operand
+    NotOperand             : Operand -> Operand
+    Xor                    : Operand * Operand -> Operand
+    Negative               : Operand -> Operand
+    Imply                  : Operand * Operand -> Operand
+    Or                     : List(Operand) -> Operand
+    And                    : List(Operand) -> Operand
+    Event3                 : Operand * Operand -> Operand
+    OrEvent                : Event * Operand -> Operand
+    AndEvent               : Event * Operand -> Operand
+    EventOp                : Event -> Operand
+    Event                  : Operand * Operand -> Event
+    Pragma3                : Pragma
+    Pragma2                : PragmaId * PragmaId * PragmaId * INT -> Pragma
+    Pragma                 : PragmaId * PragmaId -> Pragma
+    Pragma4                : PragmaId * PragmaId -> Pragma
+    Pragma3                : PragmaId * PragmaId * INT -> Pragma
+    Pragma2                : PragmaId * PragmaId * PragmaId -> Pragma
+    Pragma1                : PragmaId * PragmaId -> Pragma
+    LastConstruct          : Value -> Last
+    LastIdExpression       : PragmaId -> Last
+    LastInt                : Value -> Last
+    GenericVariable        : PragmaId * Type * List(Last) * Pragma -> Variable
+    ModeClassVariable      : MCVAR * Type * List(Last) * Pragma -> Variable
+    TermVariable2          : DUR * Type * List(Last) * Pragma -> Variable
+    TermVariable           : TVAR * Type * List(Last) * Pragma -> Variable
+    ControlledVariable     : CVAR * Type * List(Last) * Pragma -> Variable
+    MonitoredVariable2     : Time * Type * List(Last) * Pragma -> Variable
+    MonitoredVariable      : MVAR * Type * List(Last) * Pragma -> Variable
+    Constant2              : ID * NamedType * Value * ID -> Constant
+    Constant               : ID * NamedType * Value * ID -> Constant
+    Type                   : ID -> Type
+    Type                   : NamedType -> Type
+    Type                   : PragmaId * NamedType * PragmaId -> Type
+    EnumValue              : PragmaId * PragmaId -> EnumValue
+    Enum                   : List(EnumValue) -> NamedType
+    CustomType             : PragmaId * IgnoreSpace -> NamedType
+    Real                   : NamedType
+    Bool                   : NamedType
+    Int                    : NamedType
+                           : String -> Value
+                           : String -> PresentableId
+                           : String -> IgnoreSpace
+                           : String -> PragmaId
+                           : String -> INT
+                           : String -> OPKIND
+                           : String -> TVAR
+                           : String -> MCVAR
+                           : String -> CVAR
+                           : String -> DUR
+                           : String -> Time
+                           : String -> MVAR
+                           : String -> ID
+
+
+signature
+  constructors
+    Some : a -> Option(a)
+    None : Option(a)
+
+
+signature
+  constructors
+    Cons : a * List(a) -> List(a)
+    Nil  : List(a)
+    Conc : List(a) * List(a) -> List(a)

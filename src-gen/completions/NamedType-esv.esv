@@ -1,0 +1,19 @@
+
+module src-gen/completions/NamedType-esv
+
+imports
+  src-gen/completions/Common-esv
+
+completions
+  completion template NamedType : "<NamedType> <type> <TypeRef name=\"int\" /> </type> </NamedType>" =
+    "<NamedType>\n\t<type>\n\t\t<TypeRef name=\"int\" />\n\t</type>\n</NamedType>" (blank)  
+  completion template NamedType : "<NamedType> <type> <TypeRef name=\"bool\" /> </type> </NamedType>" =
+    "<NamedType>\n\t<type>\n\t\t<TypeRef name=\"bool\" />\n\t</type>\n</NamedType>" (blank)  
+  completion template NamedType : "<NamedType> <type> <TypeRef name=\"real\" /> </type> </NamedType>" =
+    "<NamedType>\n\t<type>\n\t\t<TypeRef name=\"real\" />\n\t</type>\n</NamedType>" (blank)  
+  completion template NamedType : "<NamedType> <type> <TypeRef name=\"PragmaId\"IgnoreSpace/> </type> </NamedType> " =
+    "<NamedType>\n\t<type>\n\t\t<TypeRef name=\"" <PragmaId:PragmaId> "\"" <IgnoreSpace:IgnoreSpace> "/>\n\t</type>\n</NamedType>\n" (blank)  
+  completion template NamedType : "<Enum> <values> </values> </Enum>" =
+    "<Enum>\n\t<values>\n\t" (cursor) "\n\t</values>\n</Enum>" (blank)               
+  completion template EnumValue : "<Value name=\"PragmaId\"> <pragmas> <ed:Value oid=\"!ed/enumValue/PragmaId\" /> </pragmas> </Value>" =
+    "<Value name=\"" <PragmaId:PragmaId> "\">\n\t<pragmas>\n\t\t<ed:Value oid=\"!ed/enumValue/" <PragmaId:PragmaId> "\" />\n\t</pragmas>\n</Value>" (blank)  

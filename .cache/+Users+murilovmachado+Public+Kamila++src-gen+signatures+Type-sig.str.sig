@@ -1,0 +1,1 @@
+Module("src-gen/signatures/Type-sig",[Imports([(),()]),Signature([Constructors([OpDecl("Type",FunType([ConstType(SortNoArgs("PragmaId")),ConstType(SortNoArgs("NamedType")),ConstType(SortNoArgs("PragmaId"))],ConstType(SortNoArgs("Type"))))])])])

@@ -1,0 +1,48 @@
+module Equation
+
+imports
+	Common
+	Operand
+ 
+context-free syntax
+	Equation.Equation = [
+		<Equation>
+			[Lefts]
+			[Right]
+			[Pragma]
+		</Equation>
+	]
+	
+	Lefts.Lefts = [
+		<lefts>
+			<VariableRef name="[PragmaId]"/>
+		</lefts>
+	]
+	
+	Right.Right = [
+		<right>
+			[Operand]
+		</right>
+	]
+	
+	Pragma.Pragma = [
+		<pragmas>
+			<ed:Equation oid="!ed/Expr/[PragmaId]/[PragmaId]"/>
+		</pragmas>
+	]
+	Pragma.Pragma1 = [
+		<pragmas>
+			<ed:Equation oid="!ed/[PragmaId]/[PragmaId]"/>
+		</pragmas>
+	]
+	Pragma.Pragma2 = [
+		<pragmas>
+			<ed:Equation oid="!ed/[PragmaId]/[PragmaId]/[PragmaId]/[INT]"/>
+		</pragmas>
+	]
+	
+	Pragma.Pragma3 = [
+		<pragmas>
+			<ed:Variable oid="!ed/tOverridden/IF/2"/>
+		</pragmas>
+	]

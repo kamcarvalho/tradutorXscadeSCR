@@ -1,0 +1,1 @@
+Module("src-gen/signatures/Entity-sig",[Imports([(),(),()]),Signature([Constructors([OpDecl("Main",FunType([ConstType(SortNoArgs("Package"))],ConstType(SortNoArgs("Start"))))])])])

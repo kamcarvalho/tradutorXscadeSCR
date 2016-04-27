@@ -1,0 +1,21 @@
+module Assumption
+
+imports
+	Common
+	Operand
+
+context-free syntax
+	Assumption.Assumption = [
+		<Assertion kind="assume" name="A_[PragmaId]">
+			<definition>
+				[Operand]
+			</definition>
+			[Pragmas]
+		</Assertion>
+	]
+	
+	Pragmas.pragma = [
+		<pragmas>
+			<ed:Assertion oid="!ed/assume/[PragmaId]"/>
+		</pragmas>
+	]

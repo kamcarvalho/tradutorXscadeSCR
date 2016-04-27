@@ -1,0 +1,116 @@
+module src-gen/pp/Constant-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  src-gen/signatures/Constant-sig
+
+
+imports
+  src-gen/signatures/Common-sig
+  src-gen/signatures/NamedType-sig
+
+
+imports
+  src-gen/pp/Common-pp
+  src-gen/pp/NamedType-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Constant
+
+  prettyprint-Constant :
+    Constant(t1__, t2__, t3__, t4__) -> [ H(
+                                            [SOpt(HS(), "0")]
+                                          , [ S("<Constant name=\"")
+                                            , t1__'
+                                            , S("\">")
+                                            ]
+                                          )
+                                        , t5__'
+                                        , t2__'
+                                        , t6__'
+                                        , t7__'
+                                        , t3__'
+                                        , t8__'
+                                        , t9__'
+                                        , t4__'
+                                        , t10__'
+                                        , H(
+                                            [SOpt(HS(), "0")]
+                                          , [S("</Constant>")]
+                                          )
+                                        ]
+    with t1__' := <pp-one-Z(prettyprint-ID)> t1__
+    with t5__' := <pp-indent(|"2")> [S("<type>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-NamedType)> t2__]
+    with t6__' := <pp-indent(|"2")> [S("</type>")]
+    with t7__' := <pp-indent(|"2")> [S("<value>")]
+    with t3__' := <pp-indent(|"4")> [ S("<ConstValue value=\"")
+                                    , <pp-one-Z(prettyprint-Value)> t3__
+                                    , S("\"/>")
+                                    ]
+    with t8__' := <pp-indent(|"2")> [S("</value>")]
+    with t9__' := <pp-indent(|"2")> [S("<pragmas>")]
+    with t4__' := <pp-indent(|"4")> [ S("<ed:Constant oid=\"!ed/Constant/")
+                                    , <pp-one-Z(prettyprint-ID)> t4__
+                                    , S("\"/>")
+                                    ]
+    with t10__' := <pp-indent(|"2")> [S("</pragmas>")]
+
+  is-Constant =
+    ?Constant(_, _, _, _)
+
+  prettyprint-Constant :
+    Constant2(t1__, t2__, t3__, t4__) -> [ H(
+                                             [SOpt(HS(), "0")]
+                                           , [ S("<Constant name=\"")
+                                             , t1__'
+                                             , S("\">")
+                                             ]
+                                           )
+                                         , t5__'
+                                         , t2__'
+                                         , t6__'
+                                         , t7__'
+                                         , t8__'
+                                         , t9__'
+                                         , t3__'
+                                         , t10__'
+                                         , t11__'
+                                         , t12__'
+                                         , t13__'
+                                         , t4__'
+                                         , t14__'
+                                         , H(
+                                             [SOpt(HS(), "0")]
+                                           , [S("</Constant>")]
+                                           )
+                                         ]
+    with t1__' := <pp-one-Z(prettyprint-ID)> t1__
+    with t5__' := <pp-indent(|"2")> [S("<type>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-NamedType)> t2__]
+    with t6__' := <pp-indent(|"2")> [S("</type>")]
+    with t7__' := <pp-indent(|"2")> [S("<value>")]
+    with t8__' := <pp-indent(|"4")> [S("<UnaryOp operator=\"-\">")]
+    with t9__' := <pp-indent(|"6")> [S("<operand>")]
+    with t3__' := <pp-indent(|"8")> [ S("<ConstValue value=\"")
+                                    , <pp-one-Z(prettyprint-Value)> t3__
+                                    , S("\"/>")
+                                    ]
+    with t10__' := <pp-indent(|"6")> [S("</operand>")]
+    with t11__' := <pp-indent(|"4")> [S("</UnaryOp>")]
+    with t12__' := <pp-indent(|"2")> [S("</value>")]
+    with t13__' := <pp-indent(|"2")> [S("<pragmas>")]
+    with t4__' := <pp-indent(|"4")> [ S("<ed:Constant oid=\"!ed/Constant/")
+                                    , <pp-one-Z(prettyprint-ID)> t4__
+                                    , S("\"/>")
+                                    ]
+    with t14__' := <pp-indent(|"2")> [S("</pragmas>")]
+
+  is-Constant =
+    ?Constant2(_, _, _, _)
+
+  is-Constant =
+    fail

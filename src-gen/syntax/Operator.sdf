@@ -1,0 +1,41 @@
+
+module Operator
+imports Common Variable Equation Assumption Assertion
+
+exports
+  context-free syntax
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" MVAR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                          -> Operator              {cons("Monitored")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" CVAR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                          -> Operator              {cons("Controlled")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" TVAR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                          -> Operator              {cons("Term")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" DUR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                           -> Operator              {cons("Term2")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" MCVAR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                         -> Operator              {cons("ModeClass")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" PragmaId "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                      -> Operator              {cons("MainOperator"), avoid}
+    "<inputs>" Variable* "</inputs>"                                                                                                                                                 -> Inputs                {cons("Inputs")}
+    "<outputs>" Variable* "</outputs>"                                                                                                                                               -> Outputs               {cons("Outputs")}
+    "<locals>" Variable* "</locals>"                                                                                                                                                 -> Locals                {cons("Locals")}
+    "<data>" Equation* AssumptionOrAssertion* "</data>"                                                                                                                              -> Data                  {cons("Data")}
+    Assumption                                                                                                                                                                       -> AssumptionOrAssertion {cons("AssumptionOperator")}
+    Assertion                                                                                                                                                                        -> AssumptionOrAssertion {cons("AssertionOperator")}
+    "<pragmas>" EdOperator "</pragmas>"                                                                                                                                              -> Pragmas               {cons("Pragmas")}
+    "<ed:Operator" "oid=\"!ed/MainOper/" PragmaId "\"" "xmlns=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\">" Diagrams "</ed:Operator>"                          -> EdOperator            {cons("EdOperator")}
+    "<ed:Operator" "oid=\"!ed/" PragmaId "\">" Diagrams "</ed:Operator>"                                                                                                             -> EdOperator            {cons("EdOperator2")}
+    "<diagrams>" TextDiagram "</diagrams>"                                                                                                                                           -> Diagrams              {cons("Diagrams")}
+    "<TextDiagram" "name=\"" PragmaId "\"" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/Pragma/" PragmaId "\">" PresentationElements "</TextDiagram>"      -> TextDiagram           {cons("TextDiagram")}
+    "<TextDiagram" "name=\"" PragmaId "\"" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/TextDiagram/" PragmaId "\">" PresentationElements "</TextDiagram>" -> TextDiagram           {cons("TextDiagram2")}
+    "<presentationElements>" FlowTE* "</presentationElements>"                                                                                                                       -> PresentationElements  {cons("PresentationElements")}
+    "<FlowTE" "presentable=\"" PresentableId "\"/>"                                                                                                                                  -> FlowTE                {cons("FlowTE")}
+    "<FlowTE" "presentable=\"" PresentableId "\"" "/>"                                                                                                                               -> FlowTE                {cons("FlowTE2"), avoid}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Operator              {cons("COMPLETION-Operator")}
+    CONTENTCOMPLETE -> Inputs                {cons("COMPLETION-Inputs")}
+    CONTENTCOMPLETE -> Outputs               {cons("COMPLETION-Outputs")}
+    CONTENTCOMPLETE -> Locals                {cons("COMPLETION-Locals")}
+    CONTENTCOMPLETE -> Data                  {cons("COMPLETION-Data")}
+    CONTENTCOMPLETE -> AssumptionOrAssertion {cons("COMPLETION-AssumptionOrAssertion")}
+    CONTENTCOMPLETE -> Pragmas               {cons("COMPLETION-Pragmas")}
+    CONTENTCOMPLETE -> EdOperator            {cons("COMPLETION-EdOperator")}
+    CONTENTCOMPLETE -> Diagrams              {cons("COMPLETION-Diagrams")}
+    CONTENTCOMPLETE -> TextDiagram           {cons("COMPLETION-TextDiagram")}
+    CONTENTCOMPLETE -> PresentationElements  {cons("COMPLETION-PresentationElements")}
+    CONTENTCOMPLETE -> FlowTE                {cons("COMPLETION-FlowTE")}

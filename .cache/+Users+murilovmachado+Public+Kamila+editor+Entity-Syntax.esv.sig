@@ -1,0 +1,1 @@
+Module("Entity-Syntax",Imports([Import("Entity-Syntax.generated")]),[Language("",[])])

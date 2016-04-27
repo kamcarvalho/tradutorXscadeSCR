@@ -1,0 +1,119 @@
+module Variable
+
+imports
+ Common
+ NamedType
+ 
+ context-free syntax
+ 	Variable.MonitoredVariable = [
+		<Variable name="[MVAR]">
+			[Type]
+			[Last*]
+			[Pragma]
+		</Variable>
+	]
+	
+	 	
+	Variable.MonitoredVariable2 = [
+		<Variable name="[Time]">
+			[Type]
+			[Last*]
+			[Pragma]
+		</Variable>
+	]
+	
+	Variable.ControlledVariable = [
+		<Variable name="[CVAR]">
+			[Type]
+			[Last*]
+			[Pragma]
+		</Variable>
+	]
+	
+	Variable.TermVariable = [
+		<Variable name="[TVAR]">
+			[Type]
+			[Last*]
+			[Pragma]
+		</Variable>
+	]
+	
+   Variable.TermVariable2 = [
+		<Variable name="[DUR]">
+			[Type]
+			[Last*]
+			[Pragma]
+		</Variable>
+	] {prefer}
+	
+	Variable.ModeClassVariable = [
+		<Variable name="[MCVAR]">
+			[Type]
+			[Last*]
+			[Pragma]
+		</Variable>
+	]
+ 	
+ 	Variable.GenericVariable = [
+		<Variable name="[PragmaId]">
+			[Type]
+			[Last*]
+			[Pragma]
+		</Variable>
+	] {avoid}
+	
+	Type.Type =[
+		<type>
+			[NamedType]
+		</type>
+	]
+	
+	Last.LastInt = [
+		<last>
+			<ConstValue value="[Value]"/>
+		</last>
+	]
+	
+	Last.LastIdExpression = [
+		<last>
+			<IdExpression>
+				<path>
+					<ConstVarRef name="[PragmaId]"/>
+				</path>
+			</IdExpression>
+		</last>
+	]
+	
+	Last.LastConstruct = [
+		<last>
+			<UnaryOp operator="-">
+					<operand>
+						<ConstValue value="[Value]"/>
+					</operand>
+			</UnaryOp>
+		</last>
+	]
+	
+	Pragma.Pragma1 = [
+		<pragmas>
+			<ed:Variable oid="!ed/[PragmaId]/[PragmaId]"/>
+		</pragmas>
+	]
+	
+	Pragma.Pragma2 = [
+		<pragmas>
+			<ed:Variable oid="!ed/[PragmaId]/[PragmaId]/[PragmaId]"/>
+		</pragmas>
+	]
+	Pragma.Pragma3 = [
+		<pragmas>
+			<ed:Variable oid="!ed/[PragmaId]/[PragmaId]/[INT]"/>
+		</pragmas>
+	]
+	
+	Pragma.Pragma4 = [
+		<pragmas>
+			<ed:Variable oid="!ed/[PragmaId]/[PragmaId]" />
+		</pragmas>
+	]{avoid}
+	

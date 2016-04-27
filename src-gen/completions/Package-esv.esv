@@ -1,0 +1,18 @@
+
+module src-gen/completions/Package-esv
+
+imports
+  src-gen/completions/Common-esv
+  src-gen/completions/Type-esv
+  src-gen/completions/Constant-esv
+  src-gen/completions/Operator-esv
+  src-gen/completions/Assumption-esv
+  src-gen/completions/Assertion-esv
+
+completions
+  completion template Package : "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <File xmlns=\"http://www.esterel-technologies.com/ns/scade/3\" xmlns:ed=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\" xmlns:kcg=\"http://www.esterel-technologies.com/ns/scade/pragmas/codegen/1\"> <declarations> <Package name=\"PragmaId\"> Declarations Pragmas </Package> </declarations> </File>" =
+    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\t\t<File xmlns=\"http://www.esterel-technologies.com/ns/scade/3\" xmlns:ed=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\" xmlns:kcg=\"http://www.esterel-technologies.com/ns/scade/pragmas/codegen/1\">\n\t\t\t<declarations>\n\t\t\t\t<Package name=\"" <PragmaId:PragmaId> "\">\n\t\t\t\t\t" <Declarations:Declarations> "\n\t\t\t\t\t" <Pragmas:Pragmas> "\n\t\t\t\t</Package>\n\t\t\t</declarations>\n\t\t</File>" (blank)  
+  completion template Declarations : "<declarations> </declarations>" =
+    "<declarations>\n\t" (cursor) "\n</declarations>" (blank)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+  completion template Pragmas : " <pragmas> <ed:Package oid=\"!ed/package/PragmaId\" xmlns=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\"> <diagrams> <TreeDiagram landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/package/constants/PragmaId\" blockKind=\"constants\" /> <TreeDiagram landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/package/types/PragmaId\" blockKind=\"types\" /> <TreeDiagram landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/package/sensors/PragmaId\" blockKind=\"sensors\"/> </diagrams> </ed:Package> </pragmas>" =
+    "\t<pragmas>\n\t<ed:Package oid=\"!ed/package/" <PragmaId:PragmaId> "\" xmlns=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\">\n\t\t<diagrams>\n\t\t\t<TreeDiagram landscape=\"true\" format=\"A4 (210 297)\"  oid=\"!ed/package/constants/" <PragmaId:PragmaId> "\" blockKind=\"constants\" />\n\t\t\t<TreeDiagram landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/package/types/" <PragmaId:PragmaId> "\" blockKind=\"types\" />\n\t\t\t<TreeDiagram landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/package/sensors/" <PragmaId:PragmaId> "\" blockKind=\"sensors\"/>\n\t\t</diagrams>\n\t</ed:Package>\n</pragmas>" (blank)  

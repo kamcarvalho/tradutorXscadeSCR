@@ -1,0 +1,149 @@
+module Operator
+
+imports
+ Common
+ Variable
+ Equation
+ Assumption
+ Assertion
+
+ context-free syntax
+	Operator.Monitored = [
+		<Operator kind="[OPKIND]" name="[MVAR]">
+			[Inputs]
+			[Outputs]
+			[Locals]
+			[Data]
+			[Pragmas]
+		</Operator>
+	]
+	
+	Operator.Controlled = [
+		<Operator kind="[OPKIND]" name="[CVAR]">
+			[Inputs]
+			[Outputs]
+			[Locals]
+			[Data]
+			[Pragmas]
+		</Operator>
+	]
+	
+	Operator.Term = [
+		<Operator kind="[OPKIND]" name="[TVAR]">
+			[Inputs]
+			[Outputs]
+			[Locals]
+			[Data]
+			[Pragmas]
+		</Operator> 
+	] 
+	
+	Operator.Term2 = [
+		<Operator kind="[OPKIND]" name="[DUR]">
+			[Inputs]
+			[Outputs]
+			[Locals]
+			[Data]
+			[Pragmas]
+		</Operator>
+	] 
+	
+	Operator.ModeClass = [
+		<Operator kind="[OPKIND]" name="[MCVAR]">
+			[Inputs]
+			[Outputs]
+			[Locals]
+			[Data]
+			[Pragmas]
+		</Operator>
+	]
+	
+	Operator.MainOperator = [
+		<Operator kind="[OPKIND]" name="[PragmaId]">
+			[Inputs]
+			[Outputs]
+			[Locals]
+			[Data]
+			[Pragmas]
+		</Operator>
+	] {avoid}
+	
+	Inputs.Inputs = [
+		<inputs>
+			[Variable*]
+		</inputs>
+	]
+	
+	Outputs.Outputs = [
+		<outputs>
+			[Variable*]
+		</outputs>
+	]
+	
+	Locals.Locals = [
+		<locals>
+			[Variable*]
+		</locals>
+	]
+	
+	Data.Data = [
+		<data>
+			[Equation*]
+			[AssumptionOrAssertion*]
+		</data>
+	]
+	
+	AssumptionOrAssertion.AssumptionOperator = [[Assumption]]
+	
+	AssumptionOrAssertion.AssertionOperator = [[Assertion]]
+	
+	Pragmas.Pragmas = [
+		<pragmas>
+			[EdOperator]
+		</pragmas>
+	]
+	
+	EdOperator.EdOperator = [
+		<ed:Operator oid="!ed/MainOper/[PragmaId]" xmlns="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3">
+			[Diagrams]
+		</ed:Operator>
+	]
+	
+	EdOperator.EdOperator2 = [
+		<ed:Operator oid="!ed/[PragmaId]">
+			[Diagrams]
+		</ed:Operator>
+	]
+	
+	Diagrams.Diagrams = [
+		<diagrams>
+			[TextDiagram]
+		</diagrams>
+	]
+	
+	TextDiagram.TextDiagram = [
+		<TextDiagram name="[PragmaId]" landscape="true" format="A4 (210 297)" oid="!ed/Pragma/[PragmaId]">
+			[PresentationElements]
+		</TextDiagram>
+	]
+	
+	TextDiagram.TextDiagram2 = [
+		<TextDiagram name="[PragmaId]" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/[PragmaId]">
+			[PresentationElements]
+		</TextDiagram>
+	]
+	
+	PresentationElements.PresentationElements = [
+		<presentationElements>
+			[FlowTE*]
+		</presentationElements>
+	]
+	
+	FlowTE.FlowTE = [
+		<FlowTE presentable="[PresentableId]"/>
+	]
+	
+	FlowTE.FlowTE2 = [
+		<FlowTE presentable="[PresentableId]" />
+	] {avoid}
+	

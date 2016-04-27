@@ -1,0 +1,26 @@
+module Variable
+imports Common NamedType
+
+exports
+  context-free syntax
+    "<Variable" "name=\"" MVAR "\">" Type Last* Pragma "</Variable>"                                                            -> Variable {cons("MonitoredVariable")}
+    "<Variable" "name=\"" Time "\">" Type Last* Pragma "</Variable>"                                                            -> Variable {cons("MonitoredVariable2")}
+    "<Variable" "name=\"" CVAR "\">" Type Last* Pragma "</Variable>"                                                            -> Variable {cons("ControlledVariable")}
+    "<Variable" "name=\"" TVAR "\">" Type Last* Pragma "</Variable>"                                                            -> Variable {cons("TermVariable")}
+    "<Variable" "name=\"" DUR "\">" Type Last* Pragma "</Variable>"                                                             -> Variable {cons("TermVariable2"), prefer}
+    "<Variable" "name=\"" MCVAR "\">" Type Last* Pragma "</Variable>"                                                           -> Variable {cons("ModeClassVariable")}
+    "<Variable" "name=\"" PragmaId "\">" Type Last* Pragma "</Variable>"                                                        -> Variable {cons("GenericVariable"), avoid}
+    "<type>" NamedType "</type>"                                                                                                -> Type     {cons("Type")}
+    "<last>" "<ConstValue" "value=\"" Value "\"/>" "</last>"                                                                    -> Last     {cons("LastInt")}
+    "<last>" "<IdExpression>" "<path>" "<ConstVarRef" "name=\"" PragmaId "\"/>" "</path>" "</IdExpression>" "</last>"           -> Last     {cons("LastIdExpression")}
+    "<last>" "<UnaryOp" "operator=\"-\">" "<operand>" "<ConstValue" "value=\"" Value "\"/>" "</operand>" "</UnaryOp>" "</last>" -> Last     {cons("LastConstruct")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                                           -> Pragma   {cons("Pragma1")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/" PragmaId "/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                              -> Pragma   {cons("Pragma2")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/" PragmaId "/" PragmaId "/" INT "\"/>" "</pragmas>"                                   -> Pragma   {cons("Pragma3")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/" PragmaId "/" PragmaId "\"" "/>" "</pragmas>"                                        -> Pragma   {cons("Pragma4"), avoid}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Variable {cons("COMPLETION-Variable")}
+    CONTENTCOMPLETE -> Type     {cons("COMPLETION-Type")}
+    CONTENTCOMPLETE -> Last     {cons("COMPLETION-Last")}
+    CONTENTCOMPLETE -> Pragma   {cons("COMPLETION-Pragma")}

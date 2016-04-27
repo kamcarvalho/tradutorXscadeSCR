@@ -1,0 +1,1 @@
+Module("src-gen/pp/Entity-pp",[Imports([(),(),()]),Imports([(),(),()]),Imports([(),(),()]),Strategies([SDefT("prettyprint-SDF-start-symbols",[],[],[])]),Strategies([SDefT("prettyprint-example",[],[],[]),SDefT("prettyprint-Start",[],[],[]),SDefT("is-Start",[],[],[]),SDefT("is-Start",[],[],[])])])

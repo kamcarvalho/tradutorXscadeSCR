@@ -1,0 +1,397 @@
+module function
+
+imports
+	include/Entity
+	
+rules
+
+	resolve-functions-given-operators:
+		[] -> []
+		
+	resolve-functions-given-operators:
+  		[head | tail] -> $[[resolvedHead]
+  		[resolvedTail]]
+  		with resolvedHead := <resolve-function> head
+  		with resolvedTail := <resolve-functions-given-operators> tail
+  		
+  	resolve-function:
+  		Monitored(opKind, opName, inputs, outputs, locals, data, pragmas) -> $[var [opName] := [resolvedLastEquation]]
+  		with resolvedLastEquation := <resolve-last-equation> data  		
+  		
+  	resolve-function:
+  		Controlled(opKind, opName, inputs, outputs, locals, data, pragmas) -> $[var [opName] := [resolvedLastEquation]]
+  		with resolvedLastEquation := <resolve-last-equation> data
+  		
+  	resolve-function:
+  		Term(opKind, opName, inputs, outputs, locals, data, pragmas) -> $[var [opName] := [resolvedLastEquation]]
+  		with resolvedLastEquation := <resolve-last-equation> data
+  		
+     resolve-function:
+  		Term2(opKind, opName, inputs, outputs, locals, data, pragmas) -> $[var [opName] := [resolvedLastEquation]]
+  		with resolvedLastEquation := <resolve-last-equation> data
+  		
+  	resolve-function:
+  		ModeClass(opKind, opName, inputs, outputs, locals, data, pragmas) -> $[var [opName] := [resolvedLastEquation]]
+  		with resolvedLastEquation := <resolve-last-equation> data
+  		
+  	resolve-function:
+  		MainOperator(opKind, opName, inputs, outputs, locals, data, pragmas) -> $[]  		
+  		
+  	resolve-last-equation:
+  		Data(equations, assumptionOrAsserion) -> $[[resolvedLastEquation]]
+  		with resolvedLastEquation := <resolve-last-equation> (equations, equations)		
+  	
+  	resolve-last-equation:
+  		([], allEquations) -> $[]
+  		
+  	resolve-last-equation:
+  		([head | []], allEquations) -> $[[resolvedEquation]]
+  		with resolvedEquation := <resolve-last-equation> (head, allEquations, "true")
+  		
+  	resolve-last-equation:
+  		([head | tail], allEquations) -> $[[resolvedTail]]
+  		with resolvedTail := <resolve-last-equation> (tail, allEquations)
+  	
+  	//////	
+  	resolve-last-equation:
+  		(Equation(lefts, equationRight, pragmas), allEquations, printConstVarRef) -> $[[resolvedRight]]
+  		with resolvedRight := <resolve-right> (equationRight, allEquations, printConstVarRef, "true")
+  		
+  	resolve-equation: 
+  		(Equation(lefts, equationRight, pragmas), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedRight]]
+  		with resolvedRight := <resolve-right> (equationRight, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-right:
+  		(Right(operand), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedOperand]]
+  		with resolvedOperand := <resolve-operand-2> (operand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	//Por algum motivo "resolve-operand" não funciona, então colocamos o sufixo "-2"
+	resolve-operand-2:
+		(IdExpressionOp(idExpression), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedIdExpression]]
+		with resolvedIdExpression := <resolve-operand-2> (idExpression, allEquations, printConstVarRef, isLastEquation)
+		
+	resolve-operand-2:
+		(IdExpression(expressionName), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedIdExpression]]
+	    with equationExists := <exists-equation-given-lefts-name> (expressionName, allEquations)
+		with resolvedIdExpression := <resolve-id-expression> (expressionName, equationExists, allEquations, printConstVarRef, isLastEquation)			
+	
+	resolve-id-expression:
+		(expressionName, "false", allEquations, printConstVarRef, isLastEquation) -> ${{resolvedExpression}}
+		where 
+			if <eq>("false", printConstVarRef)
+			then resolvedExpression := $[]
+			else resolvedExpression := expressionName
+			end
+			/*
+		where
+			if <eq>(expressionName, "CLOCK")
+	  			then resolvedExpression := $[time]
+	  			else resolvedExpression := $[Clock]
+	  			end	
+	*/
+	resolve-id-expression:
+		(expressionName, "true", allEquations, printConstVarRef, isLastEquation) -> ${{resolvedIdExpression}}
+		with resolvedIdExpression := <resolve-equation-given-lefts-name> (expressionName, allEquations, printConstVarRef, isLastEquation)
+
+  	resolve-operand-2:
+  		(Event3(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) ->
+  		${@F ({resolvedFirstOperand})}
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  	/* 	
+  	resolve-operand-2:
+  		(And2(firstOperand, secondOperand), allEquations, printConstVarRef) -> $[[resolvedFirstOperand] WHILE [resolvedSecondOperand]]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef)
+  	  */
+  	  
+  	 resolve-operand-2:
+  		(Event(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) ->
+  		$[@T[resolvedSecondOperand]]
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(EventOp(firstOperand), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedFirstOperand]]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation) 
+  	  		  	
+  	resolve-operand-2:
+  		(GreaterThanOrEqual(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[([resolvedFirstOperand] >= [resolvedSecondOperand])]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(GreaterThan(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[([resolvedFirstOperand] >= [resolvedSecondOperand])]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	 resolve-operand-2:
+  		(Addiction(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[([resolvedFirstOperand] + [resolvedSecondOperand])]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  	
+  	resolve-operand-2:
+  		(Subtraction(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[([resolvedFirstOperand] - [resolvedSecondOperand])]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(LessThan(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[([resolvedFirstOperand] < [resolvedSecondOperand])]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	  	resolve-operand-2:
+  		(LessThanOrEqual(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[([resolvedFirstOperand] <= [resolvedSecondOperand])]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(Equal(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedFirstOperand]=[resolvedSecondOperand]]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(Different(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedFirstOperand]<>[resolvedSecondOperand]]
+  		with resolvedFirstOperand := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(ConstValue(currentValue), allEquations, printConstVarRef, isLastEquation) -> $[[currentValue]]
+  		
+  	resolve-operand-2:
+  		(NotOperand(currentOperand), allEquations, printConstVarRef, isLastEquation) -> $[NOT([resolvedCurrentOperand])]
+  		with resolvedCurrentOperand := <resolve-operand-2> (currentOperand, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(LastVariable(currentValue), allEquations, printConstVarRef, isLastEquation) -> $[[currentValue]]
+  		
+  	resolve-operand-recursive:
+  		([], allEquations, printConstVarRef, opName, isLastEquation) -> $[]
+  		
+  	resolve-operand-recursive:
+  		([head | []], allEquations, printConstVarRef, opName, isLastEquation) -> $[[resolvedhead]]
+  		with resolvedhead := <resolve-operand-2> (head, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-recursive:
+  		([head | tail], allEquations, printConstVarRef, opName, isLastEquation) ->$[([resolvedHead] [opName] [resolvedTail])]
+  		with resolvedHead := <resolve-operand-2> (head, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedTail := <resolve-operand-recursive> (tail, allEquations, printConstVarRef, opName, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(And(operands), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedOperands]]
+  		with resolvedOperands := <resolve-operand-recursive> (operands, allEquations, printConstVarRef, "AND", isLastEquation)
+  		
+  	resolve-operand-2:
+  		(Or(operands), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedOperands]]
+  		with resolvedOperands := <resolve-operand-recursive> (operands, allEquations, printConstVarRef, "OR", isLastEquation)
+  		
+  	resolve-operand-2:
+  		(AndEvent(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedEvent] WHEN [resolvedSecondOperand]]
+  		with resolvedEvent := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)
+  	
+  	resolve-operand-2:
+  		(OrEvent(firstOperand, secondOperand), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedEvent] WHEN [resolvedSecondOperand]]
+  		with resolvedEvent := <resolve-operand-2> (firstOperand, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedSecondOperand := <resolve-operand-2> (secondOperand, allEquations, printConstVarRef, isLastEquation)	
+  	
+  	resolve-operand-2:
+  		(Negative(operands), allEquations, printConstVarRef, isLastEquation) -> $[-[resolvedOperands]]
+  		with resolvedOperands := <resolve-operand-2> (operands, allEquations, printConstVarRef, isLastEquation)
+  	
+  	resolve-operand-2:
+  		(IfThenElseOp(opName, ifOp, thenOp, elseOp), allEquations, printConstVarRef, "false") 
+  		-> ${[] {resolvedIf} -> {resolvedThen}
+  		{resolvedElse}}
+  		with resolvedIf := <resolve-operand-2> (ifOp, allEquations, "true", "false")
+  		with resolvedThen := <resolve-operand-2> (thenOp, allEquations, "true", "false")
+  		with resolvedElse := <resolve-operand-2> (elseOp, allEquations, "true", "false")
+  		
+  	resolve-operand-2:
+  		(IfThenElseOp(opName, If(idExpression), thenOp, elseOp), allEquations, printConstVarRef, "true") 
+  		-> ${
+  			{resolvedEventOrIf}
+  				[] {resolvedIf} -> {resolvedThen}
+  				{resolvedElse}
+  		{resolvedEventOrIfInverted}}
+  		with resolvedIf := <resolve-operand-2> (If(idExpression), allEquations, "true", "false")
+  		with resolvedThen := <resolve-operand-2> (thenOp, allEquations, "true", "false")
+  		with resolvedElse := <resolve-operand-2> (elseOp, allEquations, "true", "false")
+  		with resolvedEventOrIf := <resolve-event-or-if> (idExpression, allEquations)
+  		with resolvedEventOrIfInverted := <resolve-event-or-if-inverted> (resolvedEventOrIf)
+  	
+  	resolve-operand-2:
+  		(If(idExpression), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedIdExpression]]
+  		with resolvedIdExpression := <resolve-operand-2> (idExpression, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(Then(listExpression), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedListExpression]]
+  		with resolvedListExpression := <resolve-operand-2> (listExpression, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(Else(listExpression), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedListExpression]]
+  		with resolvedListExpression := <resolve-operand-2> (listExpression, allEquations, "false", isLastEquation)
+  		
+  	resolve-operand-2:
+  		(ListExpression(idExpression), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedIdExpression]]
+  		with resolvedIdExpression := <resolve-operand-2> (idExpression, allEquations, printConstVarRef, isLastEquation)
+  	
+  	resolve-operand-2:
+  		(CaseOp(caseOpName, caseOpSwitch, cases), allEquations, printConstVarRef, isLastEquation) -> 
+  		$[case [resolvedSwitch]
+  			[resolvedCases]
+  		esac]
+  		with resolvedSwitch := <resolve-operand-2> (caseOpSwitch, allEquations, "true", "false")
+  		with resolvedCases := <resolve-operand-2> (cases, allEquations, "true", "false")
+  		
+  	resolve-operand-2:
+  		(Switch(idExpression), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedSwitch]]
+  		with resolvedSwitch := <resolve-operand-2> (idExpression, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-operand-2:
+  		(Cases(cases), allEquations, printConstVarRef, isLastEquation) -> $[[resolvedCases]]
+  		with resolvedCases := <resolve-cases> (cases, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-cases:
+  		([], allEquations, printConstVarRef, isLastEquation) -> $[]
+  		
+  	resolve-cases:
+  		([head | []], allEquations, printConstVarRef, isLastEquation) -> $[[resolvedHead]]
+  		with resolvedHead := <resolve-case> (head, allEquations, printConstVarRef, isLastEquation)
+  		
+  	resolve-cases:
+  		([head | tail], allEquations, printConstVarRef, isLastEquation) -> 
+  		$[[resolvedHead]
+  		[resolvedTail]]
+  		with resolvedHead := <resolve-case> (head, allEquations, printConstVarRef, isLastEquation)
+  		with resolvedTail := <resolve-cases> (tail, allEquations, printConstVarRef, isLastEquation)
+  		
+  	/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+  		
+  	resolve-case:
+  		(Case(caseName, idExpression), allEquations, printConstVarRef, isLastEquation) -> 
+  		${[] {caseName}
+  		{resolvedEventOrIf}
+  			{resolvedIdExpression}
+  		{resolvedEventOrIfInverted}}
+  		with resolvedIdExpression := <resolve-operand-2> (idExpression, allEquations, printConstVarRef, "false")
+  		with resolvedEventOrIf := <resolve-event-or-if> (idExpression, allEquations)
+  		with resolvedEventOrIfInverted := <resolve-event-or-if-inverted> (resolvedEventOrIf)
+  		
+  	resolve-event-or-if-inverted:
+  		eventOrIf -> $[[inverted]]
+  		where
+  			if <eq> (eventOrIf, "ev")
+  			then inverted := $[ve]
+  			else inverted := $[fi]
+  			end
+  		
+  	resolve-event-or-if:
+  		(IdExpression(expressionName), allEquations) -> $[[resolvedIdExpression]]
+  		with resolvedIdExpression := <look-inside-if> (expressionName, allEquations)
+  		
+  	look-inside-if:
+ 		(equationName, allEquations) -> $[[resolvedEquation]]
+ 		with resolvedEquation := <look-inside-if> (equationName, allEquations, allEquations)
+ 
+	look-inside-if:
+		(equationName, allEquations, [head | []]) -> $[[resolvedHead]]
+		with resolvedHead := <resolve-if> (head, allEquations)
+		
+	look-inside-if:
+		(equationName, allEquations, [head | tail]) -> $[[resolvedEquation]]
+		where
+  			if <eq>(equationName, <get-equation-name> head)
+  			then resolvedEquation := <resolve-if> (head, allEquations)
+  			else resolvedEquation := <look-inside-if> (equationName, allEquations, tail)
+  			end
+  	
+  	resolve-if: 
+  		(Equation(lefts, Right(IfThenElseOp(pragmaId, If(ifIdExpression), thenOp, elseOp)), pragmas), allEquations) -> $[ev]//$[[resolvedRight]]
+  		//with resolvedRight := <is-if-event-or-not> (ifIdExpression, allEquations)
+  	
+  	resolve-if: 
+  		(Equation(lefts, Right(EventOp(event)), pragmas), allEquations) -> $[ev]
+  		
+  	resolve-if:
+  		(Equation(lefts, Right(AndEvent(firstOperand, secondOperand)), pragmas), allEquations) -> $[ev]
+  		
+  	resolve-if:
+  		(Equation(lefts, Right(qualquerCoisa), pragmas), allEquations) -> $[ev]
+  		
+  	is-if-event-or-not:
+  		(IdExpression(expressionName), allEquations) ->$[[resolvedIdExpression]]
+  		with resolvedIdExpression := <is-if-event-or-not> (expressionName, allEquations)
+  			
+  	is-if-event-or-not:
+ 		(equationName, allEquations) -> $[[resolvedEquation]]
+ 		with resolvedEquation := <is-if-event-or-not> (equationName, allEquations, allEquations)
+ 
+	is-if-event-or-not:
+		(equationName, allEquations, [head | []]) -> $[[resolvedHead]]
+		with resolvedHead := <event-or-not> (head, allEquations)
+		
+	is-if-event-or-not:
+		(equationName, allEquations, [head | tail]) -> $[[resolvedEquation]]
+		where
+  			if <eq>(equationName, <get-equation-name> head)
+  			then resolvedEquation := <event-or-not> (head, allEquations)
+  			else resolvedEquation := <is-if-event-or-not> (equationName, allEquations, tail)
+  			end	
+  	
+  	event-or-not: 
+  		(Equation(lefts, equationRight, pragmas), allEquations) -> $[[resolvedRight]]
+  		with resolvedRight := <event-or-not> (equationRight, allEquations)
+  		
+  	//Nao trocar a ordem das proximas duas regras!!
+  	event-or-not:
+  		(Right(EventOp(event)), allEquations) -> $[ev]
+  		
+  	event-or-not:
+  		(Right(Event3(firstOperand, secondOperand)), allEquatinos) -> $[ev]
+  	
+  	event-or-not:
+  		(Right(operandNotEvent), allEquations) -> $[if]	
+  		
+  	/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+		
+ 
+ 	resolve-equation-given-lefts-name:
+ 		(equationName, allEquations, printConstVarRef, isLastEquation) -> $[[resolvedEquation]]
+ 		with resolvedEquation := <resolve-equation-given-lefts-name> (equationName, allEquations, allEquations, printConstVarRef, isLastEquation)
+ 
+	resolve-equation-given-lefts-name:
+		(equationName, allEquations, [head | []], printConstVarRef, isLastEquation) -> $[[resolvedHead]]
+		with resolvedHead := <resolve-equation> (head, allEquations, printConstVarRef, isLastEquation)
+		
+	resolve-equation-given-lefts-name:
+		(equationName, allEquations, [head | tail], printConstVarRef, isLastEquation) -> $[[resolvedEquation]]
+		where
+  			if <eq>(equationName, <get-equation-name> head)
+  			then resolvedEquation := <resolve-equation> (head, allEquations, printConstVarRef, isLastEquation)
+  			else resolvedEquation := <resolve-equation-given-lefts-name> (equationName, allEquations, tail, printConstVarRef, isLastEquation)
+  			end
+  	
+  	exists-equation-given-lefts-name:
+  		(expressionName, []) -> $[false]
+  			
+  	exists-equation-given-lefts-name:
+	  	(expressionName, [head | []]) -> $[[exists]]
+	  		where
+	  			if <eq>(expressionName, <get-equation-name> head)
+	  			then exists := $[true]
+	  			else exists := $[false]
+	  			end	
+  			
+  	exists-equation-given-lefts-name:
+  		(expressionName, [head | tail]) -> $[[exists]]
+	  		where
+	  			if <eq>(expressionName, <get-equation-name> head)
+	  			then exists := $[true]
+	  			else exists := <exists-equation-given-lefts-name> (expressionName, tail)
+	  			end	
+	  			
+  	get-equation-name:	
+  		Equation(lefts, equationRight, pragmas) -> $[[leftsName]]
+  		with leftsName := <get-lefts-name> lefts
+  		
+  	get-lefts-name:
+  		Lefts(leftsName) -> $[[leftsName]]

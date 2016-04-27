@@ -1,0 +1,60 @@
+spec the_priority_logic_function
+type definitions
+	
+constant definitions
+	
+
+monitored variables
+	
+	
+	
+	
+	
+controlled variables
+	
+	
+	c__the_command_in_control_output: int, initially 0;c_cond__the_command_in_control_output: int, initially 0;c_event__the_command_in_control_output: int, initially 0;
+	
+	
+term variables
+	
+	
+	
+	
+	
+mode classes
+	
+	
+	
+	
+	
+assumptions
+	
+assertions
+	
+function definitions
+	var c__the_command_in_control_output := 
+	                ev
+	                	[] c_cond__the_command_in_control_output<>c_cond__the_command_in_control_output -> c_cond__the_command_in_control_output
+	                	[] c_event__the_command_in_control_output<>c_event__the_command_in_control_output -> c_event__the_command_in_control_output
+	                	
+	                ve
+	var c_cond__the_command_in_control_output := 
+	                ev
+	                	[] (((m__the_right_command=true AND m__the_left_command=true) AND NOT(m__the_right_priority_button=true)) AND NOT(m__the_left_priority_button=true)) -> 0
+	                	[] (((m__the_right_command=true AND NOT(m__the_left_command=true)) AND NOT(m__the_right_priority_button=true)) AND NOT(m__the_left_priority_button=true)) -> 1
+	                	[] (@Tm__the_left_command=true WHEN NOT(m__the_right_priority_button=true) AND NOT(m__the_left_priority_button=true)) -> 2
+	                	[] (@TNOT(m__the_left_command=true) WHEN NOT(m__the_right_priority_button=true) AND NOT(m__the_left_priority_button=true)) -> 3
+	                	[] @Tm__the_left_priority_button=true -> 4
+	                	[] (m__the_right_priority_button=true AND NOT(m__the_left_priority_button=true)) -> 5
+	                	
+	                ve
+	var c_event__the_command_in_control_output := 
+	                ev
+	                	[] (@Tm__the_right_priority_button=true WHEN m__the_left_priority_button=true AND m__the_left_priority_button=true) -> 4
+	                	[] (@Tm__the_left_priority_button=true WHEN m__the_right_priority_button=true AND m__the_right_priority_button=true) -> 5
+	                	
+	                ve
+	
+	
+

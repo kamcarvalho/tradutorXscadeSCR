@@ -1,0 +1,1 @@
+Module("src-gen/signatures/Entity-sig",[Imports([Import("src-gen/signatures/Common-sig"),Import("src-gen/signatures/Package-sig"),Import("src-gen/signatures/Java-sig")]),Signature([Constructors([OpDecl("Main",FunType([ConstType(SortNoArgs("Package"))],ConstType(SortNoArgs("Start"))))])])])

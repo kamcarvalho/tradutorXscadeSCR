@@ -1,0 +1,2722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<File
+    xmlns="http://www.esterel-technologies.com/ns/scade/3"
+    xmlns:ed="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3"
+    xmlns:kcg="http://www.esterel-technologies.com/ns/scade/pragmas/codegen/1">
+    <declarations>
+        <Package name="Safety_Injection_System">
+            <declarations>
+                <Type name="ySwitch">
+                    <definition>
+                        <Enum>
+                            <values>
+                                <Value name="Off">
+                                    <pragmas>
+                                        <ed:Value oid="!ed/enumValue/ySwitch_Off"/>
+                                    </pragmas>
+                                </Value>
+                                <Value name="On">
+                                    <pragmas>
+                                        <ed:Value oid="!ed/enumValue/ySwitch_On"/>
+                                    </pragmas>
+                                </Value>
+                            </values>
+                        </Enum>
+                    </definition>
+                    <pragmas>
+                        <ed:Type oid="!ed/type/ySwitch"/>
+                    </pragmas>
+                </Type>
+                <Type name="type_mcPressure">
+                    <definition>
+                        <Enum>
+                            <values>
+                                <Value name="TooLow">
+                                    <pragmas>
+                                        <ed:Value oid="!ed/enumValue/type_mcPressure_TooLow"/>
+                                    </pragmas>
+                                </Value>
+                                <Value name="Permitted">
+                                    <pragmas>
+                                        <ed:Value oid="!ed/enumValue/type_mcPressure_Permitted"/>
+                                    </pragmas>
+                                </Value>
+                                <Value name="High">
+                                    <pragmas>
+                                        <ed:Value oid="!ed/enumValue/type_mcPressure_High"/>
+                                    </pragmas>
+                                </Value>
+                            </values>
+                        </Enum>
+                    </definition>
+                    <pragmas>
+                        <ed:Type oid="!ed/type/type_mcPressure"/>
+                    </pragmas>
+                </Type>
+                <Type name="yWPres">
+                    <definition>
+                        <NamedType>
+                            <type>
+                                <TypeRef name="int"/>
+                            </type>
+                        </NamedType>
+                    </definition>
+                    <pragmas>
+                        <ed:Type oid="!ed/type/yWPres"/>
+                    </pragmas>
+                </Type>
+                <Constant name="Low">
+                    <type>
+                        <NamedType>
+                            <type>
+                                <TypeRef name="int"/>
+                            </type>
+                        </NamedType>
+                    </type>
+                    <value>
+                        <ConstValue value="900"/>
+                    </value>
+                    <pragmas>
+                        <ed:Constant oid="!ed/Constant/Low"/>
+                    </pragmas>
+                </Constant>
+                <Constant name="Permit">
+                    <type>
+                        <NamedType>
+                            <type>
+                                <TypeRef name="int"/>
+                            </type>
+                        </NamedType>
+                    </type>
+                    <value>
+                        <ConstValue value="1000"/>
+                    </value>
+                    <pragmas>
+                        <ed:Constant oid="!ed/Constant/Permit"/>
+                    </pragmas>
+                </Constant>
+                <Operator kind="node" name="mcPressure">
+                    <inputs>
+                        <Variable name="mWaterPres">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="yWPres"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <ConstValue value="0"/>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/mcPressure_mWaterPres"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="mcPressure">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="TooLow"/>
+                                    </path>
+                                </IdExpression>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/mcPressure_mcPressure"/>
+                            </pragmas>
+                        </Variable>
+                    </inputs>
+                    <outputs>
+                        <Variable name="out_mcPressure">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="TooLow"/>
+                                    </path>
+                                </IdExpression>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/mcPressure_out_mcPressure"/>
+                            </pragmas>
+                        </Variable>
+                    </outputs>
+                    <locals>
+                        <Variable name="L_mcPressure_CaseOut_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/mcPressure/CaseOut/0"/>
+                            </pragmas>
+                        </Variable>
+                         <Variable name="L_mcPressure_CaseIn_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/mcPressure/CaseIn/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_IF_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/IF/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_Choice_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/Choice/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_True_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/True/0"/>
+                            </pragmas>
+                        </Variable>
+                         <Variable name="L_TooLow_IF_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/IF/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_IF_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/IF/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_Choice_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/Choice/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_True_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/True/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_IF_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/IF/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_Choice_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/Choice/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_True_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/True/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_IF_2">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/IF/2"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_High_IF_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/High/IF/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_High_Choice_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/High/Choice/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_High_True_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/High/True/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_High_IF_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/High/IF/1"/>
+                            </pragmas>
+                        </Variable>
+                    </locals>
+                    <data>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_mcPressure_CaseIn_0"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="mcPressure"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/mcPressure/CaseIn/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_mcPressure_CaseOut_0"/>
+                            </lefts>
+                            <right>
+                                <CaseOp name="casemcPressure">
+                                    <switch>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_mcPressure_CaseIn_0"/>
+                                            </path>
+                                        </IdExpression>
+                                    </switch>
+                                    <cases>
+                                        <Case pattern="TooLow">
+                                            <flow>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_TooLow_IF_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </flow>
+                                        </Case>
+                                        <Case pattern="Permitted">
+                                            <flow>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_IF_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </flow>
+                                        </Case>
+                                        <Case pattern="High">
+                                            <flow>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_High_IF_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </flow>
+                                        </Case>
+                                    </cases>
+                                </CaseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/mcPressure/Case/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_IF_0"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_TooLow_0">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_TooLow_Choice_0"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_TooLow_True_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_TooLow_IF_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/ifThenElse/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_Choice_0"/>
+                            </lefts>
+                            <right>
+                                <NAryOp operator="and">
+                                    <operands>
+                                        <UnaryOp operator="not">
+                                            <operand>
+                                                <BinaryOp operator="&gt;=">
+                                                    <operands>
+                                                        <Last>
+                                                            <variable>
+                                                                <ConstVarRef name="mWaterPres"/>
+                                                            </variable>
+                                                        </Last>
+                                                        <IdExpression>
+                                                            <path>
+                                                                <ConstVarRef name="Low"/>
+                                                            </path>
+                                                        </IdExpression>
+                                                    </operands>
+                                                </BinaryOp>
+                                            </operand>
+                                        </UnaryOp>
+                                        <BinaryOp operator="&gt;=">
+                                            <operands>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="mWaterPres"/>
+                                                    </path>
+                                                </IdExpression>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="Low"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </operands>
+                                        </BinaryOp>
+                                    </operands>
+                                </NAryOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/Choice/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_True_0"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="Permitted"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/True/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_IF_1"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="mcPressure"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/IF/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_IF_0"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_Permitted_0">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_Permitted_Choice_0"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_True_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_IF_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/ifThenElse/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_Choice_0"/>
+                            </lefts>
+                            <right>
+                                <NAryOp operator="and">
+                                    <operands>
+                                        <UnaryOp operator="not">
+                                            <operand>
+                                                <BinaryOp operator="&gt;=">
+                                                    <operands>
+                                                        <Last>
+                                                            <variable>
+                                                                <ConstVarRef name="mWaterPres"/>
+                                                            </variable>
+                                                        </Last>
+                                                        <IdExpression>
+                                                            <path>
+                                                                <ConstVarRef name="Permit"/>
+                                                            </path>
+                                                        </IdExpression>
+                                                    </operands>
+                                                </BinaryOp>
+                                            </operand>
+                                        </UnaryOp>
+                                        <BinaryOp operator="&gt;=">
+                                            <operands>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="mWaterPres"/>
+                                                    </path>
+                                                </IdExpression>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="Permit"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </operands>
+                                        </BinaryOp>
+                                    </operands>
+                                </NAryOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/Choice/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_True_0"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="High"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/True/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_IF_1"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_Permitted_1">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_Permitted_Choice_1"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_True_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_IF_2"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/ifThenElse/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_Choice_1"/>
+                            </lefts>
+                            <right>
+                                <NAryOp operator="and">
+                                    <operands>
+                                        <UnaryOp operator="not">
+                                            <operand>
+                                                <BinaryOp operator="&lt;">
+                                                    <operands>
+                                                        <Last>
+                                                            <variable>
+                                                                <ConstVarRef name="mWaterPres"/>
+                                                            </variable>
+                                                        </Last>
+                                                        <IdExpression>
+                                                            <path>
+                                                                <ConstVarRef name="Low"/>
+                                                            </path>
+                                                        </IdExpression>
+                                                    </operands>
+                                                </BinaryOp>
+                                            </operand>
+                                        </UnaryOp>
+                                        <BinaryOp operator="&lt;">
+                                            <operands>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="mWaterPres"/>
+                                                    </path>
+                                                </IdExpression>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="Low"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </operands>
+                                        </BinaryOp>
+                                    </operands>
+                                </NAryOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/Choice/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_True_1"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="TooLow"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/True/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_IF_2"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="mcPressure"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/IF/2"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_High_IF_0"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_High_0">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_High_Choice_0"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_High_True_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_High_IF_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/High/ifThenElse/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_High_Choice_0"/>
+                            </lefts>
+                            <right>
+                                <NAryOp operator="and">
+                                    <operands>
+                                        <UnaryOp operator="not">
+                                            <operand>
+                                                <BinaryOp operator="&lt;">
+                                                    <operands>
+                                                        <Last>
+                                                            <variable>
+                                                                <ConstVarRef name="mWaterPres"/>
+                                                            </variable>
+                                                        </Last>
+                                                        <IdExpression>
+                                                            <path>
+                                                                <ConstVarRef name="Permit"/>
+                                                            </path>
+                                                        </IdExpression>
+                                                    </operands>
+                                                </BinaryOp>
+                                            </operand>
+                                        </UnaryOp>
+                                        <BinaryOp operator="&lt;">
+                                            <operands>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="mWaterPres"/>
+                                                    </path>
+                                                </IdExpression>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="Permit"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </operands>
+                                        </BinaryOp>
+                                    </operands>
+                                </NAryOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/High/Choice/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_High_True_0"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="Permitted"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/High/True/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_High_IF_1"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="mcPressure"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/High/IF/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="out_mcPressure"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="L_mcPressure_CaseOut_0"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/mcPressure/CaseOut/0"/>
+                            </pragmas>
+                        </Equation>
+                    </data>
+                    <pragmas>
+                        <ed:Operator oid="!ed/MainOper/asdasd"
+                            xmlns="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3">
+                            <diagrams>
+                                <TextDiagram name="ewrwerwe" landscape="true" format="A4 (210 297)" oid="!ed/Pragma/werwerwe">
+                                    <presentationElements></presentationElements>
+                                </TextDiagram>
+                            </diagrams>
+                        </ed:Operator>
+                    </pragmas>
+                </Operator>
+                <Operator kind="node" name="tOverridden">
+                    <inputs>
+                        <Variable name="mBlock">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="Off"/>
+                                    </path>
+                                </IdExpression>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/tOverridden_mBlock"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="mReset">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="Off"/>
+                                    </path>
+                                </IdExpression>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/tOverridden_mReset"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="mcPressure">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="TooLow"/>
+                                    </path>
+                                </IdExpression>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/tOverridden_mcPressure"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="tOverridden">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <ConstValue value="false"/>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/tOverridden_tOverridden"/>
+                            </pragmas>
+                        </Variable>
+                    </inputs>
+                    <outputs>
+                        <Variable name="out_tOverridden">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <ConstValue value="false"/>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/tOverridden_out_tOverridden"/>
+                            </pragmas>
+                        </Variable>
+                    </outputs>
+                    <locals>
+                        <Variable name="L_tOverridden_IF_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/tOverridden/IF/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_tOverridden_Choice_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/tOverridden/Choice/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_tOverridden_True_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/tOverridden/True/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_tOverridden_IF_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/tOverridden/IF/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_tOverridden_Choice_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/tOverridden/Choice/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_tOverridden_True_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/tOverridden/True/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_tOverridden_IF_2">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/tOverridden/IF/2"/>
+                            </pragmas>
+                        </Variable>
+                    </locals>
+                    <data>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_tOverridden_IF_0"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_tOverridden_0">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_tOverridden_Choice_0"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_tOverridden_True_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_tOverridden_IF_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/tOverridden/ifThenElse/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_tOverridden_Choice_0"/>
+                            </lefts>
+                            <right>
+                            	<NAryOp operator="and">
+                                    <operands>
+                                        <NAryOp operator="and">
+                                            <operands>
+                                                <UnaryOp operator="not">
+                                                    <operand>
+                                                        <BinaryOp operator="=">
+                                                            <operands>
+                                                                <Last>
+                                                                    <variable>
+                                                                        <ConstVarRef name="mBlock"/>
+                                                                    </variable>
+                                                                </Last>
+                                                                <IdExpression>
+                                                                    <path>
+                                                                        <ConstVarRef name="On"/>
+                                                                    </path>
+                                                                </IdExpression>
+                                                            </operands>
+                                                        </BinaryOp>
+                                                    </operand>
+                                                </UnaryOp>
+                                                <BinaryOp operator="=">
+                                                    <operands>
+                                                        <IdExpression>
+                                                            <path>
+                                                                <ConstVarRef name="mBlock"/>
+                                                            </path>
+                                                        </IdExpression>
+                                                        <IdExpression>
+                                                            <path>
+                                                                <ConstVarRef name="On"/>
+                                                            </path>
+                                                        </IdExpression>
+                                                    </operands>
+                                                </BinaryOp>
+                                            </operands>
+                                        </NAryOp>
+                                        <NAryOp operator="and">
+                                            <operands>
+                                                <BinaryOp operator="=">
+                                                    <operands>
+                                                        <Last>
+                                                            <variable>
+                                                                <ConstVarRef name="mReset"/>
+                                                            </variable>
+                                                        </Last>
+                                                        <IdExpression>
+                                                            <path>
+                                                                <ConstVarRef name="Off"/>
+                                                            </path>
+                                                        </IdExpression>
+                                                    </operands>
+                                                </BinaryOp>
+                                                <UnaryOp operator="not">
+                                                    <operand>
+                                                        <BinaryOp operator="=">
+                                                            <operands>
+                                                                <Last>
+                                                                    <variable>
+                                                                        <ConstVarRef name="mcPressure"/>
+                                                                    </variable>
+                                                                </Last>
+                                                                <IdExpression>
+                                                                    <path>
+                                                                        <ConstVarRef name="High"/>
+                                                                    </path>
+                                                                </IdExpression>
+                                                            </operands>
+                                                        </BinaryOp>
+                                                    </operand>
+                                                </UnaryOp>
+                                            </operands>
+                                        </NAryOp>
+                                    </operands>
+                                </NAryOp>       
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/tOverridden/Choice/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_tOverridden_True_0"/>
+                            </lefts>
+                            <right>
+                                <ConstValue value="true"/>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/tOverridden/True/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_tOverridden_IF_1"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_tOverridden_1">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_tOverridden_Choice_1"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_tOverridden_True_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_tOverridden_IF_2"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/tOverridden/ifThenElse/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_tOverridden_Choice_1"/>
+                            </lefts>
+                            <right>
+                                <NAryOp operator="or">
+                                    <operands>
+                                        <NAryOp operator="or">
+                                            <operands>
+                                                <NAryOp operator="and">
+                                                    <operands>
+                                                        <NAryOp operator="and">
+                                                            <operands>
+                                                                <UnaryOp operator="not">
+                                                                    <operand>
+                                                                        <BinaryOp operator="=">
+                                                                            <operands>
+                                                                                <Last>
+                                                                                    <variable>
+                                                                                        <ConstVarRef name="mReset"/>
+                                                                                    </variable>
+                                                                                </Last>
+                                                                                <IdExpression>
+                                                                                    <path>
+                                                                                        <ConstVarRef name="On"/>
+                                                                                    </path>
+                                                                                </IdExpression>
+                                                                            </operands>
+                                                                        </BinaryOp>
+                                                                    </operand>
+                                                                </UnaryOp>
+                                                                <BinaryOp operator="=">
+                                                                    <operands>
+                                                                        <IdExpression>
+                                                                            <path>
+                                                                                <ConstVarRef name="mReset"/>
+                                                                            </path>
+                                                                        </IdExpression>
+                                                                        <IdExpression>
+                                                                            <path>
+                                                                                <ConstVarRef name="On"/>
+                                                                            </path>
+                                                                        </IdExpression>
+                                                                    </operands>
+                                                                </BinaryOp>
+                                                            </operands>
+                                                        </NAryOp>
+                                                        <UnaryOp operator="not">
+                                                            <operand>
+                                                                <BinaryOp operator="=">
+                                                                    <operands>
+                                                                        <Last>
+                                                                            <variable>
+                                                                                <ConstVarRef name="mcPressure"/>
+                                                                            </variable>
+                                                                        </Last>
+                                                                        <IdExpression>
+                                                                            <path>
+                                                                                <ConstVarRef name="High"/>
+                                                                            </path>
+                                                                        </IdExpression>
+                                                                    </operands>
+                                                                </BinaryOp>
+                                                            </operand>
+                                                        </UnaryOp>
+                                                    </operands>
+                                                </NAryOp>
+                                                <NAryOp operator="and">
+                                                    <operands>
+                                                        <UnaryOp operator="not">
+                                                            <operand>
+                                                                <BinaryOp operator="=">
+                                                                    <operands>
+                                                                        <Last>
+                                                                            <variable>
+                                                                                <ConstVarRef name="mcPressure"/>
+                                                                            </variable>
+                                                                        </Last>
+                                                                        <IdExpression>
+                                                                            <path>
+                                                                                <ConstVarRef name="High"/>
+                                                                            </path>
+                                                                        </IdExpression>
+                                                                    </operands>
+                                                                </BinaryOp>
+                                                            </operand>
+                                                        </UnaryOp>
+                                                        <BinaryOp operator="=">
+                                                            <operands>
+                                                                <IdExpression>
+                                                                    <path>
+                                                                        <ConstVarRef name="mcPressure"/>
+                                                                    </path>
+                                                                </IdExpression>
+                                                                <IdExpression>
+                                                                    <path>
+                                                                        <ConstVarRef name="High"/>
+                                                                    </path>
+                                                                </IdExpression>
+                                                            </operands>
+                                                        </BinaryOp>
+                                                    </operands>
+                                                </NAryOp>
+                                            </operands>
+                                        </NAryOp>
+                                        <NAryOp operator="and">
+                                            <operands>
+                                                <UnaryOp operator="not">
+                                                    <operand>
+                                                        <UnaryOp operator="not">
+                                                            <operand>
+                                                                <BinaryOp operator="=">
+                                                                    <operands>
+                                                                        <Last>
+                                                                            <variable>
+                                                                                <ConstVarRef name="mcPressure"/>
+                                                                            </variable>
+                                                                        </Last>
+                                                                        <IdExpression>
+                                                                            <path>
+                                                                                <ConstVarRef name="High"/>
+                                                                            </path>
+                                                                        </IdExpression>
+                                                                    </operands>
+                                                                </BinaryOp>
+                                                            </operand>
+                                                        </UnaryOp>
+                                                    </operand>
+                                                </UnaryOp>
+                                                <UnaryOp operator="not">
+                                                    <operand>
+                                                        <BinaryOp operator="=">
+                                                            <operands>
+                                                                <IdExpression>
+                                                                    <path>
+                                                                        <ConstVarRef name="mcPressure"/>
+                                                                    </path>
+                                                                </IdExpression>
+                                                                <IdExpression>
+                                                                    <path>
+                                                                        <ConstVarRef name="High"/>
+                                                                    </path>
+                                                                </IdExpression>
+                                                            </operands>
+                                                        </BinaryOp>
+                                                    </operand>
+                                                </UnaryOp>
+                                            </operands>
+                                        </NAryOp>
+                                    </operands>
+                                </NAryOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/tOverridden/Choice/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_tOverridden_True_1"/>
+                            </lefts>
+                            <right>
+                                <ConstValue value="false"/>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/tOverridden/True/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_tOverridden_IF_2"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="tOverridden"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/tOverridden/IF/2"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="out_tOverridden"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="L_tOverridden_IF_0"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/tOverridden/IF/0"/>
+                            </pragmas>
+                        </Equation>
+                    </data>
+                    <pragmas>
+                        <ed:Operator oid="!ed/op_tOverridden">
+                            <diagrams>
+                                <TextDiagram name="diagram_tOverridden" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/tOverridden">
+                                    <presentationElements>
+                                        <FlowTE presentable="!ed/Expr/tOverridden/ifThenElse/0"/>
+                                        <FlowTE presentable="!ed/Expr/tOverridden/Choice/0"/>
+                                        <FlowTE presentable="!ed/Expr/tOverridden/True/0"/>
+                                        <FlowTE presentable="!ed/Expr/tOverridden/ifThenElse/1"/>
+                                        <FlowTE presentable="!ed/Expr/tOverridden/Choice/1"/>
+                                        <FlowTE presentable="!ed/Expr/tOverridden/True/1"/>
+                                        <FlowTE presentable="!ed/Expr/tOverridden/IF/2"/>
+                                        <FlowTE presentable="!ed/Expr/tOverridden/IF/0"/>
+                                    </presentationElements>
+                                </TextDiagram>
+                            </diagrams>
+                        </ed:Operator>
+                    </pragmas>
+                </Operator>
+                <Operator kind="node" name="cSafety_Injection">
+                                        <inputs>
+                    <Variable name="mcPressure">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure" />
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/cSafety_Injection_mcPressure" />
+                            </pragmas>
+                        </Variable>
+                        <Variable name="tOverridden">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool" />
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/cSafety_Injection_tOverridden" />
+                            </pragmas>
+                        </Variable>
+                        <Variable name="cSafety_Injection">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch" />
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/cSafety_Injection_cSafety_Injection" />
+                            </pragmas>
+                        </Variable>
+                    </inputs>
+                    <outputs>
+                    <Variable name="out_cSafety_Injection">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch" />
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/varDecl/cSafety_Injection_out_cSafety_Injection" />
+                            </pragmas>
+                        </Variable>
+                    </outputs>
+                    <locals>
+                   <Variable name="L_mcPressure_CaseOut_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch" />
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/mcPressure/CaseOut/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_mcPressure_CaseIn_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/mcPressure/CaseIn/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_IF_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/IF/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_Choice_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool" />
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/Choice/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_True_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/True/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_IF_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/IF/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_Choice_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/Choice/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_True_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/True/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_TooLow_IF_2">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/TooLow/IF/2"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_IF_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/IF/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_Choice_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/Choice/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_True_0">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/True/0"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_IF_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/IF/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_Choice_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/Choice/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_True_1">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/True/1"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_Permitted_IF_2">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Permitted/IF/2"/>
+                            </pragmas>
+                        </Variable>
+                    </locals>
+                    <data>
+                    <Equation>
+                            <lefts>
+                                <VariableRef name="L_mcPressure_CaseIn_0"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="mcPressure"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/mcPressure/CaseIn/0"/>
+                            </pragmas>
+                        </Equation>
+                         <Equation>
+                            <lefts>
+                                <VariableRef name="L_mcPressure_CaseOut_0"/>
+                            </lefts>
+                            <right>
+                                <CaseOp name="casemcPressure">
+                                    <switch>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_mcPressure_CaseIn_0"/>
+                                            </path>
+                                        </IdExpression>
+                                    </switch>
+                                    <cases>
+                                        <Case pattern="TooLow">
+                                            <flow>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_TooLow_IF_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </flow>
+                                        </Case>
+                                        <Case pattern="Permitted">
+                                            <flow>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_IF_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </flow>
+                                        </Case>
+                                        <Case pattern="High">
+                                            <flow>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_IF_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </flow>
+                                        </Case>
+                                    </cases>
+                                </CaseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/mcPressure/Case/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_IF_0"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_TooLow_0">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_TooLow_Choice_0"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_TooLow_True_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_TooLow_IF_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/ifThenElse/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_Choice_0"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="tOverridden"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/Choice/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_True_0"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="Off"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/True/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_IF_1"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_TooLow_1">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_TooLow_Choice_1"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_TooLow_True_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_TooLow_IF_2"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/ifThenElse/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_Choice_1"/>
+                            </lefts>
+                            <right>
+                                <UnaryOp operator="not">
+                                    <operand>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="tOverridden"/>
+                                            </path>
+                                        </IdExpression>
+                                    </operand>
+                                </UnaryOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/Choice/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                        <lefts>
+                                <VariableRef name="L_TooLow_True_1"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="On"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/True/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_TooLow_IF_2"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="cSafety_Injection"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/TooLow/IF/2"/>
+                            </pragmas>
+                        </Equation>
+                         <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_IF_0"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_Permitted_0">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_Permitted_Choice_0"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_True_0"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_IF_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/ifThenElse/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_Choice_0"/>
+                            </lefts>
+                            <right>
+                                <ConstValue value="false"/>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/Choice/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_True_0"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="On"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/True/0"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_IF_1"/>
+                            </lefts>
+                            <right>
+                                <IfThenElseOp name="ifThenElse_Permitted_1">
+                                    <if>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_Permitted_Choice_1"/>
+                                            </path>
+                                        </IdExpression>
+                                    </if>
+                                    <then>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_True_1"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </then>
+                                    <else>
+                                        <ListExpression>
+                                            <items>
+                                                <IdExpression>
+                                                    <path>
+                                                        <ConstVarRef name="L_Permitted_IF_2"/>
+                                                    </path>
+                                                </IdExpression>
+                                            </items>
+                                        </ListExpression>
+                                    </else>
+                                </IfThenElseOp>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/ifThenElse/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_Choice_1"/>
+                            </lefts>
+                            <right>
+                                <ConstValue value="true"/>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/Choice/1"/>
+                            </pragmas>
+                        </Equation>
+                         <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_True_1"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="Off"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/True/1"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_Permitted_IF_2"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="cSafety_Injection"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/Permitted/IF/2"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="out_cSafety_Injection"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="L_mcPressure_CaseOut_0"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/mcPressure/CaseOut/0"/>
+                            </pragmas>
+                        </Equation>
+                    </data>
+                    <pragmas>
+                        <ed:Operator oid="!ed/MainOper/asdasd"
+                            xmlns="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3">
+                            <diagrams>
+                                <TextDiagram name="ewrwerwe" landscape="true" format="A4 (210 297)" oid="!ed/Pragma/werwerwe">
+                                    <presentationElements></presentationElements>
+                                </TextDiagram>
+                            </diagrams>
+                        </ed:Operator>
+                    </pragmas>
+                </Operator>
+                <Operator kind="node" name="Safety_Injection_System">
+                    <inputs>
+                        <Variable name="mWaterPres">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="yWPres"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <ConstValue value="0"/>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/input/Safety_Injection_System_mWaterPres"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="mBlock">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="Off"/>
+                                    </path>
+                                </IdExpression>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/input/Safety_Injection_System_mBlock"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="mReset">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="Off"/>
+                                    </path>
+                                </IdExpression>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/input/Safety_Injection_System_mReset"/>
+                            </pragmas>
+                        </Variable>
+                    </inputs>
+                    <outputs>
+                        <Variable name="cSafety_Injection">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="On"/>
+                                    </path>
+                                </IdExpression>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/output/Safety_Injection_System_cSafety_Injection"/>
+                            </pragmas>
+                        </Variable>
+                    </outputs>
+                    <locals>
+                        <Variable name="tOverridden">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <ConstValue value="false"/>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/term/Safety_Injection_System_tOverridden"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="mcPressure">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <last>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="TooLow"/>
+                                    </path>
+                                </IdExpression>
+                            </last>
+                            <pragmas>
+                                <ed:Variable oid="!ed/modeClass/Safety_Injection_System_mcPressure"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_in_mWaterPres">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="yWPres"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Local/in/mWaterPres"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_in_mBlock">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Local/in/mBlock"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_in_mReset">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Local/in/mReset"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_last_cSafety_Injection">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Local/last/cSafety_Injection"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_last_tOverridden">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Local/last/tOverridden"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_last_mcPressure">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Local/last/mcPressure"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_in_mcPressure">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="type_mcPressure"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Local/in/mcPressure"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_in_tOverridden">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="bool"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Local/in/tOverridden"/>
+                            </pragmas>
+                        </Variable>
+                        <Variable name="L_in_cSafety_Injection">
+                            <type>
+                                <NamedType>
+                                    <type>
+                                        <TypeRef name="ySwitch"/>
+                                    </type>
+                                </NamedType>
+                            </type>
+                            <pragmas>
+                                <ed:Variable oid="!ed/Local/in/cSafety_Injection"/>
+                            </pragmas>
+                        </Variable>
+                    </locals>
+                    <data>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_in_mWaterPres"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="mWaterPres"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/L_in_mWaterPres/mWaterPres"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_in_mBlock"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="mBlock"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/L_in_mBlock/mBlock"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_in_mReset"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="mReset"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/L_in_mReset/mReset"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_last_cSafety_Injection"/>
+                            </lefts>
+                            <right>
+                                <Last>
+                                    <variable>
+                                        <ConstVarRef name="cSafety_Injection"/>
+                                    </variable>
+                                </Last>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/L_last_cSafety_Injection/cSafety_Injection"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_last_tOverridden"/>
+                            </lefts>
+                            <right>
+                                <Last>
+                                    <variable>
+                                        <ConstVarRef name="tOverridden"/>
+                                    </variable>
+                                </Last>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/L_last_tOverridden/tOverridden"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_last_mcPressure"/>
+                            </lefts>
+                            <right>
+                                <Last>
+                                    <variable>
+                                        <ConstVarRef name="mcPressure"/>
+                                    </variable>
+                                </Last>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/L_last_mcPressure/mcPressure"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="cSafety_Injection"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="L_in_cSafety_Injection"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/cSafety_Injection/L_in_cSafety_Injection"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="tOverridden"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="L_in_tOverridden"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/tOverridden/L_in_tOverridden"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="mcPressure"/>
+                            </lefts>
+                            <right>
+                                <IdExpression>
+                                    <path>
+                                        <ConstVarRef name="L_in_mcPressure"/>
+                                    </path>
+                                </IdExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/Expr/mcPressure/L_in_mcPressure"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_in_mcPressure"/>
+                            </lefts>
+                            <right>
+                                <CallExpression>
+                                    <operator>
+                                        <OpCall name="1">
+                                            <operator>
+                                                <OperatorRef name="Safety_Injection_System::mcPressure"/>
+                                            </operator>
+                                        </OpCall>
+                                    </operator>
+                                    <callParameters>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_in_mWaterPres"/>
+                                            </path>
+                                        </IdExpression>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_last_mcPressure"/>
+                                            </path>
+                                        </IdExpression>
+                                    </callParameters>
+                                </CallExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/fEq/mcPressure"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_in_tOverridden"/>
+                            </lefts>
+                            <right>
+                                <CallExpression>
+                                    <operator>
+                                        <OpCall name="1">
+                                            <operator>
+                                                <OperatorRef name="Safety_Injection_System::tOverridden"/>
+                                            </operator>
+                                        </OpCall>
+                                    </operator>
+                                    <callParameters>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_in_mBlock"/>
+                                            </path>
+                                        </IdExpression>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_in_mReset"/>
+                                            </path>
+                                        </IdExpression>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_in_mcPressure"/>
+                                            </path>
+                                        </IdExpression>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_last_tOverridden"/>
+                                            </path>
+                                        </IdExpression>
+                                    </callParameters>
+                                </CallExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/fEq/tOverridden"/>
+                            </pragmas>
+                        </Equation>
+                        <Equation>
+                            <lefts>
+                                <VariableRef name="L_in_cSafety_Injection"/>
+                            </lefts>
+                            <right>
+                                <CallExpression>
+                                    <operator>
+                                        <OpCall name="1">
+                                            <operator>
+                                                <OperatorRef name="Safety_Injection_System::cSafety_Injection"/>
+                                            </operator>
+                                        </OpCall>
+                                    </operator>
+                                    <callParameters>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_in_mcPressure"/>
+                                            </path>
+                                        </IdExpression>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_in_tOverridden"/>
+                                            </path>
+                                        </IdExpression>
+                                        <IdExpression>
+                                            <path>
+                                                <ConstVarRef name="L_last_cSafety_Injection"/>
+                                            </path>
+                                        </IdExpression>
+                                    </callParameters>
+                                </CallExpression>
+                            </right>
+                            <pragmas>
+                                <ed:Equation oid="!ed/fEq/cSafety_Injection"/>
+                            </pragmas>
+                        </Equation>
+                        <Assertion kind="assume" name="A_A1">
+                            <definition>
+                                <NAryOp operator="or">
+                                    <operands>
+                                        <NAryOp operator="and">
+                                            <operands>
+                                                <BinaryOp operator="&gt;=">
+                                                    <operands>
+                                                        <IdExpression>
+                                                            <path>
+                                                                <ConstVarRef name="mWaterPres"/>
+                                                            </path>
+                                                        </IdExpression>
+                                                        <Last>
+                                                            <variable>
+                                                                <ConstVarRef name="mWaterPres"/>
+                                                            </variable>
+                                                        </Last>
+                                                    </operands>
+                                                </BinaryOp>
+                                                <BinaryOp operator="&lt;=">
+                                                    <operands>
+                                                        <BinaryOp operator="-">
+                                                            <operands>
+                                                                <IdExpression>
+                                                                    <path>
+                                                                        <ConstVarRef name="mWaterPres"/>
+                                                                    </path>
+                                                                </IdExpression>
+                                                                <Last>
+                                                                    <variable>
+                                                                        <ConstVarRef name="mWaterPres"/>
+                                                                    </variable>
+                                                                </Last>
+                                                            </operands>
+                                                        </BinaryOp>
+                                                        <ConstValue value="10"/>
+                                                    </operands>
+                                                </BinaryOp>
+                                            </operands>
+                                        </NAryOp>
+                                        <NAryOp operator="and">
+                                            <operands>
+                                                <BinaryOp operator="&lt;">
+                                                    <operands>
+                                                        <IdExpression>
+                                                            <path>
+                                                                <ConstVarRef name="mWaterPres"/>
+                                                            </path>
+                                                        </IdExpression>
+                                                        <Last>
+                                                            <variable>
+                                                                <ConstVarRef name="mWaterPres"/>
+                                                            </variable>
+                                                        </Last>
+                                                    </operands>
+                                                </BinaryOp>
+                                                <BinaryOp operator="&lt;=">
+                                                    <operands>
+                                                        <BinaryOp operator="-">
+                                                            <operands>
+                                                                <Last>
+                                                                    <variable>
+                                                                        <ConstVarRef name="mWaterPres"/>
+                                                                    </variable>
+                                                                </Last>
+                                                                <IdExpression>
+                                                                    <path>
+                                                                        <ConstVarRef name="mWaterPres"/>
+                                                                    </path>
+                                                                </IdExpression>
+                                                            </operands>
+                                                        </BinaryOp>
+                                                        <ConstValue value="10"/>
+                                                    </operands>
+                                                </BinaryOp>
+                                            </operands>
+                                        </NAryOp>
+                                    </operands>
+                                </NAryOp>
+                            </definition>
+                            <pragmas>
+                                <ed:Assertion oid="!ed/assume/A1"/>
+                            </pragmas>
+                        </Assertion>
+                    </data>
+                    <pragmas>
+                        <ed:Operator oid="!ed/MainOper/Safety_Injection_System"
+                            xmlns="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3">
+                            <diagrams>
+                                <TextDiagram name="textDiagram_Safety_Injection_System" landscape="true" format="A4 (210 297)" oid="!ed/Pragma/Safety_Injection_System">
+                                    <presentationElements>
+                                        <FlowTE presentable="!ed/Expr/L_in_mWaterPres/mWaterPres"/>
+                                        <FlowTE presentable="!ed/Expr/L_in_mBlock/mBlock"/>
+                                        <FlowTE presentable="!ed/Expr/L_in_mReset/mReset"/>
+                                        <FlowTE presentable="!ed/Expr/L_last_cSafety_Injection/cSafety_Injection"/>
+                                        <FlowTE presentable="!ed/Expr/cSafety_Injection/L_in_cSafety_Injection"/>
+                                        <FlowTE presentable="!ed/Expr/L_last_tOverridden/tOverridden"/>
+                                        <FlowTE presentable="!ed/Expr/tOverridden/L_in_tOverridden"/>
+                                        <FlowTE presentable="!ed/Expr/L_last_mcPressure/mcPressure"/>
+                                        <FlowTE presentable="!ed/Expr/mcPressure/L_in_mcPressure"/>
+                                        <FlowTE presentable="!ed/fEq/mcPressure"/>
+                                        <FlowTE presentable="!ed/fEq/tOverridden"/>
+                                        <FlowTE presentable="!ed/fEq/cSafety_Injection"/>
+                                        <FlowTE presentable="!ed/assume/A1"/>
+                                        <FlowTE presentable="!ed/guarantee/min/rangebasedtype/mWaterPres"/>
+                                        <FlowTE presentable="!ed/guarantee/max/rangebasedtype/mWaterPres"/>
+                                        <FlowTE presentable="!ed/guarantee/min/rangebasedtype/L_in_mWaterPres"/>
+                                        <FlowTE presentable="!ed/guarantee/max/rangebasedtype/L_in_mWaterPres"/>
+                                    </presentationElements>
+                                </TextDiagram>
+                            </diagrams>
+                        </ed:Operator>
+                    </pragmas>
+                </Operator>
+            </declarations>
+            <pragmas>
+                <ed:Package oid="!ed/package/Safety_Injection_System"
+                    xmlns="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3">
+                    <diagrams>
+                        <TreeDiagram landscape="true" format="A4 (210 297)"	oid="!ed/package/constants/Safety_Injection_System" blockKind="constants"/>
+                        <TreeDiagram landscape="true" format="A4 (210 297)" oid="!ed/package/types/Safety_Injection_System" blockKind="types"/>
+                        <TreeDiagram landscape="true" format="A4 (210 297)" oid="!ed/package/sensors/Safety_Injection_System" blockKind="sensors"/>
+                    </diagrams>
+                </ed:Package>
+            </pragmas>
+        </Package>
+    </declarations>
+</File>

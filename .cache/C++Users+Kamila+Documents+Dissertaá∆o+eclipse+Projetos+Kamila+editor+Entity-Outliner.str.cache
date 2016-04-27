@@ -1,0 +1,1 @@
+Module("editor/Entity-Outliner",[Imports([Import("include/Entity"),Import("lib/runtime/editor/outline-library"),Import("lib/runtime/editor/origins"),Import("editor/Entity-Outliner.generated")]),Rules([SDefNoArgs("to-outline-label",Fail)])])

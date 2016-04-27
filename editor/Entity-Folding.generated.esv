@@ -1,0 +1,70 @@
+module Entity-Folding.generated
+
+folding Default folding definitions
+  
+  // Folding rules indicate which syntactic constructs can be folded,
+  // and take one of the following forms:
+  //
+  //   <sort>.<constructor>
+  //
+  //   <sort>._
+  //
+  //   _.<constructor>
+  //
+  // To indicate that an element should always be folded, add
+  // a (folded) annotation:
+  //
+  //   _.Imports (folded)
+  //
+  // To disable a folding rule defined elsewhere, add a (disabled) annotation:
+  //
+  //   Definition._ (disabled)
+  
+  Start.Module
+  Definition.Entity
+  Property.Property
+  Type.Type
+  NamedType.Enum
+  Type.Type
+  Start.Declare
+  Declarations.Declarations
+  Constant.Constant
+  Constant.Constant2
+  Operator.Monitored
+  Inputs.Inputs
+  Variable.MonitoredVariable
+  Variable.MonitoredVariable2
+  Variable.ControlledVariable
+  Variable.TermVariable
+  Variable.TermVariable2
+  Variable.ModeClassVariable
+  Variable.GenericVariable
+  Outputs.Outputs
+  Locals.Locals
+  Data.Data
+  Equation.Equation
+  Right.Right
+  Operand.CallExpression
+  CallParameters.CallParameters
+  Operand.CaseOp
+  Cases.Cases
+  Assumption.Assumption
+  TextDiagram.TextDiagram
+  PresentationElements.PresentationElements
+  TextDiagram.TextDiagram2
+  Assertion.Assertion
+  Assertion.Assertion2
+  Assertion.Assertion3
+  Assertion.Assertion4
+  Assertion.Assertion5
+  Assertion.Assertion6
+  Assertion.Assertion7
+  Assertion.Assertion8
+  Assertion.Assertion9
+  Assertion.Assertion10
+  Assertion.Assertion11
+  Operator.Controlled
+  Operator.Term
+  Operator.Term2
+  Operator.ModeClass
+  Operator.MainOperator

@@ -1,0 +1,49 @@
+
+module src-gen/completions/Operator-esv
+
+imports
+  src-gen/completions/Common-esv
+  src-gen/completions/Variable-esv
+  src-gen/completions/Equation-esv
+  src-gen/completions/Assumption-esv
+  src-gen/completions/Assertion-esv
+
+completions
+  completion template Operator : "<Operator kind=\"OPKIND\" name=\"MVAR\"> Inputs Outputs Locals Data Pragmas </Operator>" =
+    "<Operator kind=\"" <OPKIND:OPKIND> "\" name=\"" <MVAR:MVAR> "\">\n\t" <Inputs:Inputs> "\n\t" <Outputs:Outputs> "\n\t" <Locals:Locals> "\n\t" <Data:Data> "\n\t" <Pragmas:Pragmas> "\n</Operator>" (blank)  
+  completion template Operator : "<Operator kind=\"OPKIND\" name=\"CVAR\"> Inputs Outputs Locals Data Pragmas </Operator>" =
+    "<Operator kind=\"" <OPKIND:OPKIND> "\" name=\"" <CVAR:CVAR> "\">\n\t" <Inputs:Inputs> "\n\t" <Outputs:Outputs> "\n\t" <Locals:Locals> "\n\t" <Data:Data> "\n\t" <Pragmas:Pragmas> "\n</Operator>" (blank)  
+  completion template Operator : "<Operator kind=\"OPKIND\" name=\"TVAR\"> Inputs Outputs Locals Data Pragmas </Operator>" =
+    "<Operator kind=\"" <OPKIND:OPKIND> "\" name=\"" <TVAR:TVAR> "\">\n\t" <Inputs:Inputs> "\n\t" <Outputs:Outputs> "\n\t" <Locals:Locals> "\n\t" <Data:Data> "\n\t" <Pragmas:Pragmas> "\n</Operator>" (blank)  
+  completion template Operator : "<Operator kind=\"OPKIND\" name=\"DUR\"> Inputs Outputs Locals Data Pragmas </Operator>" =
+    "<Operator kind=\"" <OPKIND:OPKIND> "\" name=\"" <DUR:DUR> "\">\n\t" <Inputs:Inputs> "\n\t" <Outputs:Outputs> "\n\t" <Locals:Locals> "\n\t" <Data:Data> "\n\t" <Pragmas:Pragmas> "\n</Operator>" (blank)  
+  completion template Operator : "<Operator kind=\"OPKIND\" name=\"MCVAR\"> Inputs Outputs Locals Data Pragmas </Operator>" =
+    "<Operator kind=\"" <OPKIND:OPKIND> "\" name=\"" <MCVAR:MCVAR> "\">\n\t" <Inputs:Inputs> "\n\t" <Outputs:Outputs> "\n\t" <Locals:Locals> "\n\t" <Data:Data> "\n\t" <Pragmas:Pragmas> "\n</Operator>" (blank)  
+  completion template Operator : "<Operator kind=\"OPKIND\" name=\"PragmaId\"> Inputs Outputs Locals Data Pragmas </Operator>" =
+    "<Operator kind=\"" <OPKIND:OPKIND> "\" name=\"" <PragmaId:PragmaId> "\">\n\t" <Inputs:Inputs> "\n\t" <Outputs:Outputs> "\n\t" <Locals:Locals> "\n\t" <Data:Data> "\n\t" <Pragmas:Pragmas> "\n</Operator>" (blank)  
+  completion template Inputs : "<inputs> </inputs>" =
+    "<inputs>\n\t" (cursor) "\n</inputs>" (blank)                                                                                                                     
+  completion template Outputs : "<outputs> </outputs>" =
+    "<outputs>\n\t" (cursor) "\n</outputs>" (blank)                                                                                                                
+  completion template Locals : "<locals> </locals>" =
+    "<locals>\n\t" (cursor) "\n</locals>" (blank)                                                                                                                     
+  completion template Data : "<data> </data>" =
+    "<data>\n\t" (cursor) "\n</data>" (blank)                                                                                                                               
+  completion template Pragmas : "<pragmas> EdOperator </pragmas>" =
+    "<pragmas>\n\t" <EdOperator:EdOperator> "\n</pragmas>" (blank)                                                                                      
+  completion template EdOperator : "<ed:Operator oid=\"!ed/MainOper/PragmaId\" xmlns=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\"> Diagrams </ed:Operator>" =
+    "<ed:Operator oid=\"!ed/MainOper/" <PragmaId:PragmaId> "\" xmlns=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\">\n\t" <Diagrams:Diagrams> "\n</ed:Operator>" (blank)  
+  completion template EdOperator : "<ed:Operator oid=\"!ed/PragmaId\"> Diagrams </ed:Operator>" =
+    "<ed:Operator oid=\"!ed/" <PragmaId:PragmaId> "\">\n\t" <Diagrams:Diagrams> "\n</ed:Operator>" (blank)                
+  completion template Diagrams : "<diagrams> TextDiagram </diagrams>" =
+    "<diagrams>\n\t" <TextDiagram:TextDiagram> "\n</diagrams>" (blank)                                                                              
+  completion template TextDiagram : "<TextDiagram name=\"PragmaId\" landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/Pragma/PragmaId\"> PresentationElements </TextDiagram>" =
+    "<TextDiagram name=\"" <PragmaId:PragmaId> "\" landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/Pragma/" <PragmaId:PragmaId> "\">\n\t" <PresentationElements:PresentationElements> "\n</TextDiagram>" (blank)  
+  completion template TextDiagram : "<TextDiagram name=\"PragmaId\" landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/TextDiagram/PragmaId\"> PresentationElements </TextDiagram>" =
+    "<TextDiagram name=\"" <PragmaId:PragmaId> "\" landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/TextDiagram/" <PragmaId:PragmaId> "\">\n\t" <PresentationElements:PresentationElements> "\n</TextDiagram>" (blank)  
+  completion template PresentationElements : "<presentationElements> </presentationElements>" =
+    "<presentationElements>\n\t" (cursor) "\n</presentationElements>" (blank)                                               
+  completion template FlowTE : "<FlowTE presentable=\"PresentableId\"/>" =
+    "<FlowTE presentable=\"" <PresentableId:PresentableId> "\"/>" (blank)                                                                        
+  completion template FlowTE : "<FlowTE presentable=\"PresentableId\" />" =
+    "<FlowTE presentable=\"" <PresentableId:PresentableId> "\" />" (blank)                                                                      

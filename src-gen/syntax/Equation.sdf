@@ -1,0 +1,18 @@
+module Equation
+imports Common Operand
+
+exports
+  context-free syntax
+    "<Equation>" Lefts Right Pragma "</Equation>"                                                          -> Equation {cons("Equation")}
+    "<lefts>" "<VariableRef" "name=\"" PragmaId "\"/>" "</lefts>"                                          -> Lefts    {cons("Lefts")}
+    "<right>" Operand "</right>"                                                                           -> Right    {cons("Right")}
+    "<pragmas>" "<ed:Equation" "oid=\"!ed/Expr/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                 -> Pragma   {cons("Pragma")}
+    "<pragmas>" "<ed:Equation" "oid=\"!ed/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                      -> Pragma   {cons("Pragma1")}
+    "<pragmas>" "<ed:Equation" "oid=\"!ed/" PragmaId "/" PragmaId "/" PragmaId "/" INT "\"/>" "</pragmas>" -> Pragma   {cons("Pragma2")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/tOverridden/IF/2\"/>" "</pragmas>"                               -> Pragma   {cons("Pragma3")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Equation {cons("COMPLETION-Equation")}
+    CONTENTCOMPLETE -> Lefts    {cons("COMPLETION-Lefts")}
+    CONTENTCOMPLETE -> Right    {cons("COMPLETION-Right")}
+    CONTENTCOMPLETE -> Pragma   {cons("COMPLETION-Pragma")}

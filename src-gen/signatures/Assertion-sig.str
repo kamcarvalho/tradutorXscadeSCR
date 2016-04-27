@@ -1,0 +1,23 @@
+module src-gen/signatures/Assertion-sig
+
+imports
+  src-gen/signatures/Common-sig
+  src-gen/signatures/Operand-sig
+
+
+signature
+  constructors
+    Assertion   : PragmaId * Operand * Pragmas -> Assertion
+    Assertion2  : Operand * Pragmas -> Assertion
+    Assertion3  : Operand * Pragmas -> Assertion
+    Assertion4  : Operand * Pragmas -> Assertion
+    Assertion5  : Operand * Pragmas -> Assertion
+    Assertion6  : Operand * Pragmas -> Assertion
+    Assertion7  : Operand * Pragmas -> Assertion
+    Assertion8  : Operand * Pragmas -> Assertion
+    Assertion9  : Operand * Pragmas -> Assertion
+    Assertion10 : Operand * Pragmas -> Assertion
+    Assertion11 : Operand * Pragmas -> Assertion
+    pragma      : PragmaId * PragmaId -> Pragmas
+    pragma1     : PragmaId * PragmaId -> Pragmas
+    pragma2     : PragmaId -> Pragmas

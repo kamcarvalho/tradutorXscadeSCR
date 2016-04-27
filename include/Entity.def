@@ -1,0 +1,311 @@
+definition
+module Java
+imports Common
+
+exports
+  context-free syntax
+    "module" ID Definition*       -> Start      {cons("Module")}
+    "entity" ID "{" Property* "}" -> Definition {cons("Entity")}
+    ID ":" Type                   -> Property   {cons("Property")}
+    ID                            -> Type       {cons("Type")}
+    ID ":" Type                   -> Start      {cons("Declare")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Definition {cons("COMPLETION-Definition")}
+    CONTENTCOMPLETE -> Property   {cons("COMPLETION-Property")}
+    CONTENTCOMPLETE -> Type       {cons("COMPLETION-Type")}
+    CONTENTCOMPLETE -> Start      {cons("COMPLETION-Start")}
+
+module Assertion
+imports Common Operand
+
+exports
+  context-free syntax
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_" PragmaId "\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"             -> Assertion {cons("Assertion"), avoid}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_mSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"               -> Assertion {cons("Assertion2")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_mSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"               -> Assertion {cons("Assertion3")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_tDesiredSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"        -> Assertion {cons("Assertion4")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_tDesiredSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"        -> Assertion {cons("Assertion5")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_in_mSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"          -> Assertion {cons("Assertion6")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_in_mSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"          -> Assertion {cons("Assertion7")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_last_tDesiredSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>" -> Assertion {cons("Assertion8")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_last_tDesiredSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>" -> Assertion {cons("Assertion9")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_in_tDesiredSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"   -> Assertion {cons("Assertion10")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_in_tDesiredSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"   -> Assertion {cons("Assertion11")}
+    "<pragmas>" "<ed:Assertion" "oid=\"!ed/guarantee/min/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                                       -> Pragmas   {cons("pragma")}
+    "<pragmas>" "<ed:Assertion" "oid=\"!ed/guarantee/max/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                                       -> Pragmas   {cons("pragma1")}
+    "<pragmas>" "<ed:Assertion" "oid=\"!ed/guarantee/" PragmaId "\"/>" "</pragmas>"                                                        -> Pragmas   {cons("pragma2")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Assertion {cons("COMPLETION-Assertion")}
+    CONTENTCOMPLETE -> Pragmas   {cons("COMPLETION-Pragmas")}
+
+module Assumption
+imports Common Operand
+
+exports
+  context-free syntax
+    "<Assertion" "kind=\"assume\"" "name=\"A_" PragmaId "\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>" -> Assumption {cons("Assumption")}
+    "<pragmas>" "<ed:Assertion" "oid=\"!ed/assume/" PragmaId "\"/>" "</pragmas>"                                            -> Pragmas    {cons("pragma")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Assumption {cons("COMPLETION-Assumption")}
+    CONTENTCOMPLETE -> Pragmas    {cons("COMPLETION-Pragmas")}
+
+module Operand
+imports Common
+
+exports
+  context-free syntax
+                                                                                                                                                                                                                                                                                                        -> Boolean                {cons("True")}
+                                                                                                                                                                                                                                                                                                        -> Boolean                {cons("False")}
+    "<NAryOp" "operator=\"and\">" "<operands>" "<UnaryOp" "operator=\"not\">" "<operand>" Operand "</operand>" "</UnaryOp>" Operand "</operands>" "</NAryOp>"                                                                                                                                           -> Event                  {cons("Event")}
+    Event                                                                                                                                                                                                                                                                                               -> Operand                {cons("EventOp")}
+    "<NAryOp" "operator=\"and\">" "<operands>" Event Operand "</operands>" "</NAryOp>"                                                                                                                                                                                                                  -> Operand                {cons("AndEvent"), prefer}
+    "<NAryOp" "operator=\"or\">" "<operands>" Event Operand "</operands>" "</NAryOp>"                                                                                                                                                                                                                   -> Operand                {cons("OrEvent"), prefer}
+    "<NAryOp" "operator=\"and\">" "<operands>" "<UnaryOp" "operator=\"not\">" "<operand>" "<UnaryOp" "operator=\"not\">" "<operand>" Operand "</operand>" "</UnaryOp>" "</operand>" "</UnaryOp>" "<UnaryOp" "operator=\"not\">" "<operand>" Operand "</operand>" "</UnaryOp>" "</operands>" "</NAryOp>" -> Operand                {cons("Event3"), prefer}
+    "<NAryOp" "operator=\"and\">" "<operands>" Operand* "</operands>" "</NAryOp>"                                                                                                                                                                                                                       -> Operand                {cons("And"), avoid}
+    "<NAryOp" "operator=\"or\">" "<operands>" Operand* "</operands>" "</NAryOp>"                                                                                                                                                                                                                        -> Operand                {cons("Or"), avoid}
+    "<NAryOp" "operator=\"or\">" "<operands>" "<UnaryOp" "operator=\"not\">" "<operand>" Operand "</operand>" "</UnaryOp>" Operand "</operands>" "</NAryOp>"                                                                                                                                            -> Operand                {cons("Imply"), prefer}
+    "<UnaryOp" "operator=\"-\">" "<operand>" Operand "</operand>" "</UnaryOp>"                                                                                                                                                                                                                          -> Operand                {cons("Negative")}
+    "<UnaryOp" "operator=\"not\">" "<operand>" "<NAryOp" "operator=\"xor\">" "<operands>" Operand Operand "</operands>" "</NAryOp>" "</operand>" "</UnaryOp>"                                                                                                                                           -> Operand                {cons("Xor")}
+    "<UnaryOp" "operator=\"not\">" "<operand>" Operand "</operand>" "</UnaryOp>"                                                                                                                                                                                                                        -> Operand                {cons("NotOperand"), avoid}
+    "<BinaryOp" "operator=\"&gt;\">" "<operands>" Operand Operand "</operands>" "</BinaryOp>"                                                                                                                                                                                                           -> Operand                {cons("GreaterThan")}
+    "<BinaryOp" "operator=\"&gt;=\">" "<operands>" Operand Operand "</operands>" "</BinaryOp>"                                                                                                                                                                                                          -> Operand                {cons("GreaterThanOrEqual")}
+    "<BinaryOp" "operator=\"&lt;\">" "<operands>" Operand Operand "</operands>" "</BinaryOp>"                                                                                                                                                                                                           -> Operand                {cons("LessThan")}
+    "<BinaryOp" "operator=\"&lt;=\">" "<operands>" Operand Operand "</operands>" "</BinaryOp>"                                                                                                                                                                                                          -> Operand                {cons("LessThanOrEqual")}
+    "<NAryOp" "operator=\"+\">" "<operands>" Operand Operand "</operands>" "</NAryOp>"                                                                                                                                                                                                                  -> Operand                {cons("Addiction")}
+    "<BinaryOp" "operator=\"-\">" "<operands>" Operand Operand "</operands>" "</BinaryOp>"                                                                                                                                                                                                              -> Operand                {cons("Subtraction")}
+    "<BinaryOp" "operator=\"=\">" "<operands>" Operand Operand "</operands>" "</BinaryOp>"                                                                                                                                                                                                              -> Operand                {cons("Equal")}
+    "<BinaryOp" "operator=\"&lt;&gt;\">" "<operands>" Operand Operand "</operands>" "</BinaryOp>"                                                                                                                                                                                                       -> Operand                {cons("Different")}
+    IdExpression                                                                                                                                                                                                                                                                                        -> Operand                {cons("IdExpressionOp")}
+    "<Last>" "<variable>" "<ConstVarRef" "name=\"" PragmaId "\"/>" "</variable>" "</Last>"                                                                                                                                                                                                              -> Operand                {cons("LastVariable")}
+    "<ConstValue" "value=\"" Value "\"/>"                                                                                                                                                                                                                                                               -> Operand                {cons("ConstValue")}
+    "<CallExpression>" CallExpressionOperator CallParameters "</CallExpression>"                                                                                                                                                                                                                        -> Operand                {cons("CallExpression")}
+    "<CaseOp" "name=\"" PragmaId "\">" Switch Cases "</CaseOp>"                                                                                                                                                                                                                                         -> Operand                {cons("CaseOp")}
+    "<IfThenElseOp" "name=\"" PragmaId "\">" If Then Else "</IfThenElseOp>"                                                                                                                                                                                                                             -> Operand                {cons("IfThenElseOp")}
+    "<operator>" "<OpCall" "name=\"" INT "\">" "<operator>" "<OperatorRef" "name=\"" PragmaId "\"/>" "</operator>" "</OpCall>" "</operator>"                                                                                                                                                            -> CallExpressionOperator {cons("CallExpressionOperator")}
+    "<callParameters>" IdExpression* "</callParameters>"                                                                                                                                                                                                                                                -> CallParameters         {cons("CallParameters")}
+    "<switch>" IdExpression "</switch>"                                                                                                                                                                                                                                                                 -> Switch                 {cons("Switch")}
+    "<cases>" Case* "</cases>"                                                                                                                                                                                                                                                                          -> Cases                  {cons("Cases")}
+    "<Case" "pattern=\"" PragmaId "\">" "<flow>" IdExpression "</flow>" "</Case>"                                                                                                                                                                                                                       -> Case                   {cons("Case")}
+    "<IdExpression>" "<path>" "<ConstVarRef" "name=\"" PragmaId "\"/>" "</path>" "</IdExpression>"                                                                                                                                                                                                      -> IdExpression           {cons("IdExpression")}
+    "<if>" IdExpression "</if>"                                                                                                                                                                                                                                                                         -> If                     {cons("If")}
+    "<then>" ListExpression "</then>"                                                                                                                                                                                                                                                                   -> Then                   {cons("Then")}
+    "<else>" ListExpression "</else>"                                                                                                                                                                                                                                                                   -> Else                   {cons("Else")}
+    "<ListExpression>" "<items>" IdExpression "</items>" "</ListExpression>"                                                                                                                                                                                                                            -> ListExpression         {cons("ListExpression")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Boolean                {cons("COMPLETION-Boolean")}
+    CONTENTCOMPLETE -> Event                  {cons("COMPLETION-Event")}
+    CONTENTCOMPLETE -> Operand                {cons("COMPLETION-Operand")}
+    CONTENTCOMPLETE -> CallExpressionOperator {cons("COMPLETION-CallExpressionOperator")}
+    CONTENTCOMPLETE -> CallParameters         {cons("COMPLETION-CallParameters")}
+    CONTENTCOMPLETE -> Switch                 {cons("COMPLETION-Switch")}
+    CONTENTCOMPLETE -> Cases                  {cons("COMPLETION-Cases")}
+    CONTENTCOMPLETE -> Case                   {cons("COMPLETION-Case")}
+    CONTENTCOMPLETE -> IdExpression           {cons("COMPLETION-IdExpression")}
+    CONTENTCOMPLETE -> If                     {cons("COMPLETION-If")}
+    CONTENTCOMPLETE -> Then                   {cons("COMPLETION-Then")}
+    CONTENTCOMPLETE -> Else                   {cons("COMPLETION-Else")}
+    CONTENTCOMPLETE -> ListExpression         {cons("COMPLETION-ListExpression")}
+
+module Equation
+imports Common Operand
+
+exports
+  context-free syntax
+    "<Equation>" Lefts Right Pragma "</Equation>"                                                          -> Equation {cons("Equation")}
+    "<lefts>" "<VariableRef" "name=\"" PragmaId "\"/>" "</lefts>"                                          -> Lefts    {cons("Lefts")}
+    "<right>" Operand "</right>"                                                                           -> Right    {cons("Right")}
+    "<pragmas>" "<ed:Equation" "oid=\"!ed/Expr/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                 -> Pragma   {cons("Pragma")}
+    "<pragmas>" "<ed:Equation" "oid=\"!ed/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                      -> Pragma   {cons("Pragma1")}
+    "<pragmas>" "<ed:Equation" "oid=\"!ed/" PragmaId "/" PragmaId "/" PragmaId "/" INT "\"/>" "</pragmas>" -> Pragma   {cons("Pragma2")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/tOverridden/IF/2\"/>" "</pragmas>"                               -> Pragma   {cons("Pragma3")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Equation {cons("COMPLETION-Equation")}
+    CONTENTCOMPLETE -> Lefts    {cons("COMPLETION-Lefts")}
+    CONTENTCOMPLETE -> Right    {cons("COMPLETION-Right")}
+    CONTENTCOMPLETE -> Pragma   {cons("COMPLETION-Pragma")}
+
+module Variable
+imports Common NamedType
+
+exports
+  context-free syntax
+    "<Variable" "name=\"" MVAR "\">" Type Last* Pragma "</Variable>"                                                            -> Variable {cons("MonitoredVariable")}
+    "<Variable" "name=\"" Time "\">" Type Last* Pragma "</Variable>"                                                            -> Variable {cons("MonitoredVariable2")}
+    "<Variable" "name=\"" CVAR "\">" Type Last* Pragma "</Variable>"                                                            -> Variable {cons("ControlledVariable")}
+    "<Variable" "name=\"" TVAR "\">" Type Last* Pragma "</Variable>"                                                            -> Variable {cons("TermVariable")}
+    "<Variable" "name=\"" DUR "\">" Type Last* Pragma "</Variable>"                                                             -> Variable {cons("TermVariable2"), prefer}
+    "<Variable" "name=\"" MCVAR "\">" Type Last* Pragma "</Variable>"                                                           -> Variable {cons("ModeClassVariable")}
+    "<Variable" "name=\"" PragmaId "\">" Type Last* Pragma "</Variable>"                                                        -> Variable {cons("GenericVariable"), avoid}
+    "<type>" NamedType "</type>"                                                                                                -> Type     {cons("Type")}
+    "<last>" "<ConstValue" "value=\"" Value "\"/>" "</last>"                                                                    -> Last     {cons("LastInt")}
+    "<last>" "<IdExpression>" "<path>" "<ConstVarRef" "name=\"" PragmaId "\"/>" "</path>" "</IdExpression>" "</last>"           -> Last     {cons("LastIdExpression")}
+    "<last>" "<UnaryOp" "operator=\"-\">" "<operand>" "<ConstValue" "value=\"" Value "\"/>" "</operand>" "</UnaryOp>" "</last>" -> Last     {cons("LastConstruct")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                                           -> Pragma   {cons("Pragma1")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/" PragmaId "/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                              -> Pragma   {cons("Pragma2")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/" PragmaId "/" PragmaId "/" INT "\"/>" "</pragmas>"                                   -> Pragma   {cons("Pragma3")}
+    "<pragmas>" "<ed:Variable" "oid=\"!ed/" PragmaId "/" PragmaId "\"" "/>" "</pragmas>"                                        -> Pragma   {cons("Pragma4"), avoid}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Variable {cons("COMPLETION-Variable")}
+    CONTENTCOMPLETE -> Type     {cons("COMPLETION-Type")}
+    CONTENTCOMPLETE -> Last     {cons("COMPLETION-Last")}
+    CONTENTCOMPLETE -> Pragma   {cons("COMPLETION-Pragma")}
+
+module Operator
+imports Common Variable Equation Assumption Assertion
+
+exports
+  context-free syntax
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" MVAR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                          -> Operator              {cons("Monitored")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" CVAR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                          -> Operator              {cons("Controlled")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" TVAR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                          -> Operator              {cons("Term")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" DUR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                           -> Operator              {cons("Term2")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" MCVAR "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                         -> Operator              {cons("ModeClass")}
+    "<Operator" "kind=\"" OPKIND "\"" "name=\"" PragmaId "\">" Inputs Outputs Locals Data Pragmas "</Operator>"                                                                      -> Operator              {cons("MainOperator"), avoid}
+    "<inputs>" Variable* "</inputs>"                                                                                                                                                 -> Inputs                {cons("Inputs")}
+    "<outputs>" Variable* "</outputs>"                                                                                                                                               -> Outputs               {cons("Outputs")}
+    "<locals>" Variable* "</locals>"                                                                                                                                                 -> Locals                {cons("Locals")}
+    "<data>" Equation* AssumptionOrAssertion* "</data>"                                                                                                                              -> Data                  {cons("Data")}
+    Assumption                                                                                                                                                                       -> AssumptionOrAssertion {cons("AssumptionOperator")}
+    Assertion                                                                                                                                                                        -> AssumptionOrAssertion {cons("AssertionOperator")}
+    "<pragmas>" EdOperator "</pragmas>"                                                                                                                                              -> Pragmas               {cons("Pragmas")}
+    "<ed:Operator" "oid=\"!ed/MainOper/" PragmaId "\"" "xmlns=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\">" Diagrams "</ed:Operator>"                          -> EdOperator            {cons("EdOperator")}
+    "<ed:Operator" "oid=\"!ed/" PragmaId "\">" Diagrams "</ed:Operator>"                                                                                                             -> EdOperator            {cons("EdOperator2")}
+    "<diagrams>" TextDiagram "</diagrams>"                                                                                                                                           -> Diagrams              {cons("Diagrams")}
+    "<TextDiagram" "name=\"" PragmaId "\"" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/Pragma/" PragmaId "\">" PresentationElements "</TextDiagram>"      -> TextDiagram           {cons("TextDiagram")}
+    "<TextDiagram" "name=\"" PragmaId "\"" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/TextDiagram/" PragmaId "\">" PresentationElements "</TextDiagram>" -> TextDiagram           {cons("TextDiagram2")}
+    "<presentationElements>" FlowTE* "</presentationElements>"                                                                                                                       -> PresentationElements  {cons("PresentationElements")}
+    "<FlowTE" "presentable=\"" PresentableId "\"/>"                                                                                                                                  -> FlowTE                {cons("FlowTE")}
+    "<FlowTE" "presentable=\"" PresentableId "\"" "/>"                                                                                                                               -> FlowTE                {cons("FlowTE2"), avoid}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Operator              {cons("COMPLETION-Operator")}
+    CONTENTCOMPLETE -> Inputs                {cons("COMPLETION-Inputs")}
+    CONTENTCOMPLETE -> Outputs               {cons("COMPLETION-Outputs")}
+    CONTENTCOMPLETE -> Locals                {cons("COMPLETION-Locals")}
+    CONTENTCOMPLETE -> Data                  {cons("COMPLETION-Data")}
+    CONTENTCOMPLETE -> AssumptionOrAssertion {cons("COMPLETION-AssumptionOrAssertion")}
+    CONTENTCOMPLETE -> Pragmas               {cons("COMPLETION-Pragmas")}
+    CONTENTCOMPLETE -> EdOperator            {cons("COMPLETION-EdOperator")}
+    CONTENTCOMPLETE -> Diagrams              {cons("COMPLETION-Diagrams")}
+    CONTENTCOMPLETE -> TextDiagram           {cons("COMPLETION-TextDiagram")}
+    CONTENTCOMPLETE -> PresentationElements  {cons("COMPLETION-PresentationElements")}
+    CONTENTCOMPLETE -> FlowTE                {cons("COMPLETION-FlowTE")}
+
+module Constant
+imports Common NamedType
+
+exports
+  context-free syntax
+    "<Constant" "name=\"" ID "\">" "<type>" NamedType "</type>" "<value>" "<ConstValue" "value=\"" Value "\"/>" "</value>" "<pragmas>" "<ed:Constant" "oid=\"!ed/Constant/" ID "\"/>" "</pragmas>" "</Constant>"                                                                    -> Constant {cons("Constant")}
+    "<Constant" "name=\"" ID "\">" "<type>" NamedType "</type>" "<value>" "<UnaryOp" "operator=\"-\">" "<operand>" "<ConstValue" "value=\"" Value "\"/>" "</operand>" "</UnaryOp>" "</value>" "<pragmas>" "<ed:Constant" "oid=\"!ed/Constant/" ID "\"/>" "</pragmas>" "</Constant>" -> Constant {cons("Constant2")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Constant {cons("COMPLETION-Constant")}
+
+module NamedType
+imports Common
+
+exports
+  context-free syntax
+    "<NamedType>" "<type>" "<TypeRef" "name=\"int\"" "/>" "</type>" "</NamedType>"                                              -> NamedType {cons("Int")}
+    "<NamedType>" "<type>" "<TypeRef" "name=\"bool\"" "/>" "</type>" "</NamedType>"                                             -> NamedType {cons("Bool")}
+    "<NamedType>" "<type>" "<TypeRef" "name=\"real\"" "/>" "</type>" "</NamedType>"                                             -> NamedType {cons("Real")}
+    "<NamedType>" "<type>" "<TypeRef" "name=\"" PragmaId "\"" IgnoreSpace "/>" "</type>" "</NamedType>"                         -> NamedType {cons("CustomType"), avoid}
+    "<Enum>" "<values>" EnumValue* "</values>" "</Enum>"                                                                        -> NamedType {cons("Enum")}
+    "<Value" "name=\"" PragmaId "\">" "<pragmas>" "<ed:Value" "oid=\"!ed/enumValue/" PragmaId "\"" "/>" "</pragmas>" "</Value>" -> EnumValue {cons("EnumValue")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> NamedType {cons("COMPLETION-NamedType")}
+    CONTENTCOMPLETE -> EnumValue {cons("COMPLETION-EnumValue")}
+
+module Type
+imports Common NamedType
+
+exports
+  context-free syntax
+    "<Type" "name=\"" PragmaId "\">" "<definition>" NamedType "</definition>" "<pragmas>" "<ed:Type" "oid=\"!ed/type/" PragmaId "\"" "/>" "</pragmas>" "</Type>" -> Type {cons("Type")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Type {cons("COMPLETION-Type")}
+
+module Package
+imports Common Type Constant Operator Assumption Assertion
+
+exports
+  context-free syntax
+    "<?xml" "version=\"1.0\"" "encoding=\"UTF-8\"?>" "<File" "xmlns=\"http://www.esterel-technologies.com/ns/scade/3\"" "xmlns:ed=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\"" "xmlns:kcg=\"http://www.esterel-technologies.com/ns/scade/pragmas/codegen/1\">" "<declarations>" "<Package" "name=\"" PragmaId "\">" Declarations Pragmas "</Package>" "</declarations>" "</File>"                                                                                                                                                                                                                                                   -> Package      {cons("Package")}
+    "<declarations>" Type* Constant* Operator* "</declarations>"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          -> Declarations {cons("Declarations")}
+    "<pragmas>" "<ed:Package" "oid=\"!ed/package/" PragmaId "\"" "xmlns=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\">" "<diagrams>" "<TreeDiagram" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/package/constants/" PragmaId "\"" "blockKind=\"constants\"" "/>" "<TreeDiagram" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/package/types/" PragmaId "\"" "blockKind=\"types\"" "/>" "<TreeDiagram" "landscape=\"true\"" "format=\"A4" "(" "210" "297" ")" "\"" "oid=\"!ed/package/sensors/" PragmaId "\"" "blockKind=\"sensors\"/>" "</diagrams>" "</ed:Package>" "</pragmas>" -> Pragmas      {cons("Pragmas")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Package      {cons("COMPLETION-Package")}
+    CONTENTCOMPLETE -> Declarations {cons("COMPLETION-Declarations")}
+    CONTENTCOMPLETE -> Pragmas      {cons("COMPLETION-Pragmas")}
+
+module Common
+exports
+  lexical syntax
+    [a-zA-Z] [a-zA-Z0-9]*                   -> ID            
+    "m" [A-Z] [a-zA-Z0-9]*                  -> MVAR          
+    "time"                                  -> Time          
+    "dur_tDesiredSpeed_true_time_1"         -> DUR           
+    "c" [A-Z\_] [a-zA-Z0-9\_]*              -> CVAR          
+    "mc" [A-Z\_] [a-zA-Z0-9]*               -> MCVAR         
+    "t" [A-Z\_] [a-zA-Z0-9]*                -> TVAR          
+    MVAR | CVAR | MCVAR | TVAR | Time | DUR -> OPNAME        
+    "node" | "function" | "assume"          -> OPKIND        
+    "-"? [0-9]+                             -> INT           
+    [0-9]*                                  -> Number        
+    [a-zA-Z\']*                             -> STRING        
+    "true" | "false"                        -> Booleano      
+    [0-9\.\-]*                              -> Float         
+    INT | Booleano                          -> TYPE          
+    ~[\"\n]                                 -> StringChar    
+    "\\\""                                  -> StringChar    
+    BackSlashChar                           -> StringChar    
+    "\\"                                    -> BackSlashChar 
+    [\ \t\n\r]                              -> LAYOUT        
+    [\*]                                    -> CommentChar   
+    "/*" InsideComment* "*/"                -> LAYOUT        
+    ~[\*]                                   -> InsideComment 
+    CommentChar                             -> InsideComment 
+    "//" ~[\n\r]* NewLineEOF                -> LAYOUT        
+    [\n\r]                                  -> NewLineEOF    
+    EOF                                     -> NewLineEOF    
+    [a-zA-Z] [a-zA-Z0-9\_\:\.\']*           -> PragmaId      
+    [\ ]*                                   -> IgnoreSpace   
+    "!" [a-zA-Z] [a-zA-Z0-9\_\/]*           -> PresentableId 
+    INT | STRING | Booleano | Float         -> Value         
+    "&" [a-zA-Z] ";" "="                    -> BinaryName    
+                                            -> EOF           
+
+  lexical restrictions
+    CommentChar -/- [\/]
+    INT -/- [0-9]
+    ID -/- [a-zA-Z0-9\_]
+    EOF -/- ~[]
+    BackSlashChar -/- [\"]
+
+  context-free restrictions
+    LAYOUT? -/- [\ \t\n\r]
+    LAYOUT? -/- [\/] . [\/]
+    LAYOUT? -/- [\/] . [\*]
+
+module Entity
+imports Common Package Java
+
+exports
+  context-free start-symbols
+    Start
+
+  context-free syntax
+    Package -> Start {cons("Main")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Start {cons("COMPLETION-Start")}

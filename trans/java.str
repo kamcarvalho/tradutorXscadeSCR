@@ -1,0 +1,53 @@
+module java
+
+imports
+	include/Entity
+rules
+	to-java:
+    [_] -> <concat-strings> <map(to-java)>
+    
+  to-java:
+    () -> ""
+
+  to-java:
+  	Module(x,d*) -> 
+  		$[ spec [x]
+  			[d'*]
+  		]
+  		with
+  			d'* := <to-java> d*
+//    Module(x, d*) ->
+//    $[ package [x];
+//       
+//       [d'*]
+//     ]
+//    with
+//      d'* := <to-java> d*
+  
+  to-java:
+    Entity(x, p*) ->
+    $[ class [x] {
+           [p'*]
+       }
+     ]
+    with
+      p'* := <to-java> p*
+
+  to-java:
+    Property(x, Type(t)) -> $[
+      private [t] [x];
+      
+      public [t] get_[x]() {
+          return [x];
+      }
+      
+      public void set_[x] ([t] [x]) {
+          this.[x] = [x];    
+      }
+  ]
+  
+  to-java:
+    Type(t) -> t
+
+  to-java:
+    t* -> <map(to-java)> t*

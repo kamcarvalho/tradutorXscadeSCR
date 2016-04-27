@@ -1,0 +1,38 @@
+
+module src-gen/completions/Variable-esv
+
+imports
+  src-gen/completions/Common-esv
+  src-gen/completions/NamedType-esv
+
+completions
+  completion template Variable : "<Variable name=\"MVAR\"> Type Pragma </Variable>" =
+    "<Variable name=\"" <MVAR:MVAR> "\">\n\t" <Type:Type> "\n\t" (cursor) "\n\t" <Pragma:Pragma> "\n</Variable>" (blank)  
+  completion template Variable : "<Variable name=\"Time\"> Type Pragma </Variable>" =
+    "<Variable name=\"" <Time:Time> "\">\n\t" <Type:Type> "\n\t" (cursor) "\n\t" <Pragma:Pragma> "\n</Variable>" (blank)  
+  completion template Variable : "<Variable name=\"CVAR\"> Type Pragma </Variable>" =
+    "<Variable name=\"" <CVAR:CVAR> "\">\n\t" <Type:Type> "\n\t" (cursor) "\n\t" <Pragma:Pragma> "\n</Variable>" (blank)  
+  completion template Variable : "<Variable name=\"TVAR\"> Type Pragma </Variable>" =
+    "<Variable name=\"" <TVAR:TVAR> "\">\n\t" <Type:Type> "\n\t" (cursor) "\n\t" <Pragma:Pragma> "\n</Variable>" (blank)  
+  completion template Variable : "<Variable name=\"DUR\"> Type Pragma </Variable>" =
+    "<Variable name=\"" <DUR:DUR> "\">\n\t" <Type:Type> "\n\t" (cursor) "\n\t" <Pragma:Pragma> "\n</Variable>" (blank)  
+  completion template Variable : "<Variable name=\"MCVAR\"> Type Pragma </Variable>" =
+    "<Variable name=\"" <MCVAR:MCVAR> "\">\n\t" <Type:Type> "\n\t" (cursor) "\n\t" <Pragma:Pragma> "\n</Variable>" (blank)  
+  completion template Variable : "<Variable name=\"PragmaId\"> Type Pragma </Variable>" =
+    "<Variable name=\"" <PragmaId:PragmaId> "\">\n\t" <Type:Type> "\n\t" (cursor) "\n\t" <Pragma:Pragma> "\n</Variable>" (blank)  
+  completion template Type : "<type> NamedType </type>" =
+    "<type>\n\t" <NamedType:NamedType> "\n</type>" (blank)                                           
+  completion template Last : "<last> <ConstValue value=\"Value\"/> </last>" =
+    "<last>\n\t<ConstValue value=\"" <Value:Value> "\"/>\n</last>" (blank)       
+  completion template Last : "<last> <IdExpression> <path> <ConstVarRef name=\"PragmaId\"/> </path> </IdExpression> </last>" =
+    "<last>\n\t<IdExpression>\n\t\t<path>\n\t\t\t<ConstVarRef name=\"" <PragmaId:PragmaId> "\"/>\n\t\t</path>\n\t</IdExpression>\n</last>" (blank)  
+  completion template Last : "<last> <UnaryOp operator=\"-\"> <operand> <ConstValue value=\"Value\"/> </operand> </UnaryOp> </last>" =
+    "<last>\n\t<UnaryOp operator=\"-\">\n\t\t\t<operand>\n\t\t\t\t<ConstValue value=\"" <Value:Value> "\"/>\n\t\t\t</operand>\n\t</UnaryOp>\n</last>" (blank)  
+  completion template Pragma : "<pragmas> <ed:Variable oid=\"!ed/PragmaId/PragmaId\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Variable oid=\"!ed/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "\"/>\n</pragmas>" (blank)  
+  completion template Pragma : "<pragmas> <ed:Variable oid=\"!ed/PragmaId/PragmaId/PragmaId\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Variable oid=\"!ed/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "\"/>\n</pragmas>" (blank)  
+  completion template Pragma : "<pragmas> <ed:Variable oid=\"!ed/PragmaId/PragmaId/INT\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Variable oid=\"!ed/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "/" <INT:INT> "\"/>\n</pragmas>" (blank)  
+  completion template Pragma : "<pragmas> <ed:Variable oid=\"!ed/PragmaId/PragmaId\" /> </pragmas>" =
+    "<pragmas>\n\t<ed:Variable oid=\"!ed/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "\" />\n</pragmas>" (blank)  

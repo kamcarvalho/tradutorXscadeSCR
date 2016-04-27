@@ -1,0 +1,6 @@
+module src-gen/completions/Entity-esv
+
+imports
+  src-gen/completions/Common-esv
+  src-gen/completions/Package-esv
+  src-gen/completions/Java-esv

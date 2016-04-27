@@ -1,0 +1,337 @@
+module src-gen/pp/Assertion-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  src-gen/signatures/Assertion-sig
+
+
+imports
+  src-gen/signatures/Common-sig
+  src-gen/signatures/Operand-sig
+
+
+imports
+  src-gen/pp/Common-pp
+  src-gen/pp/Operand-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Assertion
+
+  prettyprint-example =
+    prettyprint-Pragmas
+
+  prettyprint-Assertion :
+    Assertion(t1__, t2__, t3__) -> [ H(
+                                       [SOpt(HS(), "0")]
+                                     , [ S("<Assertion kind=\"guarantee\" name=\"G_")
+                                       , t1__'
+                                       , S("\">")
+                                       ]
+                                     )
+                                   , t4__'
+                                   , t2__'
+                                   , t5__'
+                                   , t3__'
+                                   , H(
+                                       [SOpt(HS(), "0")]
+                                     , [S("</Assertion>")]
+                                     )
+                                   ]
+    with t1__' := <pp-one-Z(prettyprint-PragmaId)> t1__
+    with t4__' := <pp-indent(|"2")> [S("<definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t5__' := <pp-indent(|"2")> [S("</definition>")]
+    with t3__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t3__]
+
+  is-Assertion =
+    ?Assertion(_, _, _)
+
+  prettyprint-Assertion :
+    Assertion2(t1__, t2__) -> [ H(
+                                  [SOpt(HS(), "0")]
+                                , [S("<Assertion kind=\"guarantee\" name=\"G_mSpeed_min\">")]
+                                )
+                              , t3__'
+                              , t1__'
+                              , t4__'
+                              , t2__'
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("</Assertion>")]
+                                )
+                              ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion2(_, _)
+
+  prettyprint-Assertion :
+    Assertion3(t1__, t2__) -> [ H(
+                                  [SOpt(HS(), "0")]
+                                , [S("<Assertion kind=\"guarantee\" name=\"G_mSpeed_max\">")]
+                                )
+                              , t3__'
+                              , t1__'
+                              , t4__'
+                              , t2__'
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("</Assertion>")]
+                                )
+                              ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion3(_, _)
+
+  prettyprint-Assertion :
+    Assertion4(t1__, t2__) -> [ H(
+                                  [SOpt(HS(), "0")]
+                                , [S("<Assertion kind=\"guarantee\" name=\"G_tDesiredSpeed_min\">")]
+                                )
+                              , t3__'
+                              , t1__'
+                              , t4__'
+                              , t2__'
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("</Assertion>")]
+                                )
+                              ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion4(_, _)
+
+  prettyprint-Assertion :
+    Assertion5(t1__, t2__) -> [ H(
+                                  [SOpt(HS(), "0")]
+                                , [S("<Assertion kind=\"guarantee\" name=\"G_tDesiredSpeed_max\">")]
+                                )
+                              , t3__'
+                              , t1__'
+                              , t4__'
+                              , t2__'
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("</Assertion>")]
+                                )
+                              ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion5(_, _)
+
+  prettyprint-Assertion :
+    Assertion6(t1__, t2__) -> [ H(
+                                  [SOpt(HS(), "0")]
+                                , [S("<Assertion kind=\"guarantee\" name=\"G_L_in_mSpeed_min\">")]
+                                )
+                              , t3__'
+                              , t1__'
+                              , t4__'
+                              , t2__'
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("</Assertion>")]
+                                )
+                              ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion6(_, _)
+
+  prettyprint-Assertion :
+    Assertion7(t1__, t2__) -> [ H(
+                                  [SOpt(HS(), "0")]
+                                , [S("<Assertion kind=\"guarantee\" name=\"G_L_in_mSpeed_max\">")]
+                                )
+                              , t3__'
+                              , t1__'
+                              , t4__'
+                              , t2__'
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("</Assertion>")]
+                                )
+                              ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion7(_, _)
+
+  prettyprint-Assertion :
+    Assertion8(t1__, t2__) -> [ H(
+                                  [SOpt(HS(), "0")]
+                                , [S("<Assertion kind=\"guarantee\" name=\"G_L_last_tDesiredSpeed_min\">")]
+                                )
+                              , t3__'
+                              , t1__'
+                              , t4__'
+                              , t2__'
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("</Assertion>")]
+                                )
+                              ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion8(_, _)
+
+  prettyprint-Assertion :
+    Assertion9(t1__, t2__) -> [ H(
+                                  [SOpt(HS(), "0")]
+                                , [S("<Assertion kind=\"guarantee\" name=\"G_L_last_tDesiredSpeed_max\">")]
+                                )
+                              , t3__'
+                              , t1__'
+                              , t4__'
+                              , t2__'
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("</Assertion>")]
+                                )
+                              ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion9(_, _)
+
+  prettyprint-Assertion :
+    Assertion10(t1__, t2__) -> [ H(
+                                   [SOpt(HS(), "0")]
+                                 , [S("<Assertion kind=\"guarantee\" name=\"G_L_in_tDesiredSpeed_min\">")]
+                                 )
+                               , t3__'
+                               , t1__'
+                               , t4__'
+                               , t2__'
+                               , H(
+                                   [SOpt(HS(), "0")]
+                                 , [S("</Assertion>")]
+                                 )
+                               ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion10(_, _)
+
+  prettyprint-Assertion :
+    Assertion11(t1__, t2__) -> [ H(
+                                   [SOpt(HS(), "0")]
+                                 , [S("<Assertion kind=\"guarantee\" name=\"G_L_in_tDesiredSpeed_max\">")]
+                                 )
+                               , t3__'
+                               , t1__'
+                               , t4__'
+                               , t2__'
+                               , H(
+                                   [SOpt(HS(), "0")]
+                                 , [S("</Assertion>")]
+                                 )
+                               ]
+    with t3__' := <pp-indent(|"2")> [S("<definition>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t4__' := <pp-indent(|"2")> [S("</definition>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Pragmas)> t2__]
+
+  is-Assertion =
+    ?Assertion11(_, _)
+
+  prettyprint-Pragmas :
+    pragma(t1__, t2__) -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [S("<pragmas>")]
+                            )
+                          , t1__'
+                          , H(
+                              [SOpt(HS(), "0")]
+                            , [S("</pragmas>")]
+                            )
+                          ]
+    with t1__' := <pp-indent(|"2")> [ S("<ed:Assertion oid=\"!ed/guarantee/min/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t1__
+                                    , S("/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t2__
+                                    , S("\"/>")
+                                    ]
+
+  is-Pragmas =
+    ?pragma(_, _)
+
+  prettyprint-Pragmas :
+    pragma1(t1__, t2__) -> [ H(
+                               [SOpt(HS(), "0")]
+                             , [S("<pragmas>")]
+                             )
+                           , t1__'
+                           , H(
+                               [SOpt(HS(), "0")]
+                             , [S("</pragmas>")]
+                             )
+                           ]
+    with t1__' := <pp-indent(|"2")> [ S("<ed:Assertion oid=\"!ed/guarantee/max/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t1__
+                                    , S("/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t2__
+                                    , S("\"/>")
+                                    ]
+
+  is-Pragmas =
+    ?pragma1(_, _)
+
+  prettyprint-Pragmas :
+    pragma2(t1__) -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [S("<pragmas>")]
+                       )
+                     , t1__'
+                     , H(
+                         [SOpt(HS(), "0")]
+                       , [S("</pragmas>")]
+                       )
+                     ]
+    with t1__' := <pp-indent(|"2")> [ S("<ed:Assertion oid=\"!ed/guarantee/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t1__
+                                    , S("\"/>")
+                                    ]
+
+  is-Pragmas =
+    ?pragma2(_)
+
+  is-Assertion =
+    fail
+
+  is-Pragmas =
+    fail

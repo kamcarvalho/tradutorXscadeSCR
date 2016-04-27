@@ -1,0 +1,181 @@
+module assumption
+
+imports
+	include/Entity
+	
+rules	
+	
+	resolve-assumptions-given-operators:
+  		[] -> []
+  		
+  	resolve-assumptions-given-operators:
+  		[head | []] -> <resolve-assumption> head
+  	
+  	resolve-assumptions-given-operators:
+  		[head | tail] -> <resolve-assumptions-given-operators> tail
+  		
+	resolve-assumption:
+  		MainOperator(opkind, opname, inputs, outputs, locals, data, pragmas) -> $[[resolvedAssumptions]]
+  		with resolvedAssumptions := <resolve-assumptions-data> data
+  		
+  	resolve-assumptions-data:
+  		Data(equations, assumptionOrAssertions) -> $[[resolvedAssumptionOrAssertions]]
+  		with resolvedAssumptionOrAssertions := <resolve-assumptions> assumptionOrAssertions
+  		
+  	resolve-assumption-or-assertion:
+  		AssertionOperator(assertion) -> $[]
+  		
+  	resolve-assumption-or-assertion:
+  		AssumptionOperator(assumption) -> $[[resolvedAssumption]]
+  		with resolvedAssumption := <resolve-assumption> assumption
+  	 		
+  	resolve-assumptions:
+  		[] -> []
+  		
+  	resolve-assumptions:
+  		[head | tail] -> $[
+  			[resolvedHead]
+  			[resolvedTail]]
+  		with resolvedHead := <resolve-assumption-or-assertion> head
+  		with resolvedTail := <resolve-assumptions> tail
+  			
+  	resolve-assumption:
+  		Assumption(assumptionName, mainOperand, pragmas) -> $[[assumptionName]: [resolvedOperand];]
+  		with resolvedOperand := <resolve-operand-assumption> mainOperand  	
+  		
+	resolve-operand-assumption:
+  		NotOperand ([]) -> []
+  		
+  	resolve-operand-assumption:
+  		NotOperand (Operand) -> $[NOT([resolveNotOperand])]
+  		with resolveNotOperand := <resolve-operand-assumption> Operand
+  		
+  	resolve-operand-assumption:
+  		And([]) -> []
+  		
+  	resolve-operand-assumption:
+  		And([head | []]) -> $[[resolvedHead]]
+  		with resolvedHead := <resolve-operand-assumption> head
+  		
+  	resolve-operand-assumption:
+  		And([head | tail]) -> $[[resolvedHead] [andOrWhen] [leftParenthesis][resolvedTail][rightParenthesis]]
+  		with resolvedHead := <resolve-operand-assumption> head
+  		with resolvedTail := <resolve-operand-assumption> And(tail)
+  		with isHeadEvent := <is-event> (resolvedHead)
+  		where
+  			if <eq> ("true", isHeadEvent)
+  			then andOrWhen := $[WHEN]
+  			else andOrWhen := $[AND]
+  		end
+  		where
+  			if <eq> ("true", isHeadEvent)
+  			then leftParenthesis := $[(]
+  			else leftParenthesis := $[]
+  		end
+  		where
+  			if <eq> ("true", isHeadEvent)
+  			then rightParenthesis := $[)]
+  			else rightParenthesis := $[]
+  		end
+
+  	is-event:
+  		expressionName -> $[[result]]		  		
+  		with expressionNameChars := <explode-string> expressionName
+  		with result := <starts-with-at-symbol> expressionNameChars
+  		
+  	starts-with-at-symbol:
+  		[head | tail] -> $[[result]]
+  		with firstCharString := <implode-string> [head]
+  		where
+  			if <eq> ("@", firstCharString)
+  			then result := $[true]
+  			else result := $[false]
+  			end
+  		
+  	resolve-operand-assumption:
+  		Or([]) -> []
+  		
+  	resolve-operand-assumption:
+  		Or([head | []]) -> $[[resolvedHead]]
+  		with resolvedHead := <resolve-operand-assumption> head
+  		
+  	resolve-operand-assumption:
+  		Or([head | tail]) -> $[[resolvedHead] OR [resolvedTail]]
+  		with resolvedHead := <resolve-operand-assumption> head
+  		with resolvedTail := <resolve-operand-assumption> Or(tail)
+  		
+    resolve-operand-assumption:
+  		Imply(leftOperand, rightOperand) -> $[([resolvedLeftOp]) => ([resolvedRightOp])]
+  		with resolvedLeftOp := <resolve-operand-assumption> leftOperand
+  		with resolvedRightOp := <resolve-operand-assumption> rightOperand
+  		
+  	resolve-operand-assumption:
+  		Negative(operand) -> $[-[resolveOperand]]
+  		with resolveOperand := <resolve-operand-assumption> operand
+  		
+    resolve-operand-assumption:
+  		Xor(leftOperand, rightOperand) -> $[[resolvedLeftOp] <=> [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assumption> leftOperand
+  		with resolvedRightOp := <resolve-operand-assumption> rightOperand
+  	
+  	resolve-operand-assumption:
+  		GreaterThan(leftOperand, rightOperand) -> $[[resolvedLeftOp] > [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assumption> leftOperand
+  		with resolvedRightOp := <resolve-operand-assumption> rightOperand
+  		
+  	resolve-operand-assumption:
+  		GreaterThanOrEqual(leftOperand, rightOperand) -> $[[resolvedLeftOp] >= [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assumption> leftOperand
+  		with resolvedRightOp := <resolve-operand-assumption> rightOperand
+  		
+  	resolve-operand-assumption:
+  		LessThan(leftOperand, rightOperand) -> $[[resolvedLeftOp] < [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assumption> leftOperand
+  		with resolvedRightOp := <resolve-operand-assumption> rightOperand
+  		
+  	resolve-operand-assumption:
+  		LessThanOrEqual(leftOperand, rightOperand) -> $[[resolvedLeftOp] <= [resolvedRightOp]]
+  		with resolvedLeftOp := <resolve-operand-assumption> leftOperand
+  		with resolvedRightOp := <resolve-operand-assumption> rightOperand
+  		
+  	resolve-operand-assumption:
+  		(Equal(firstOperand, secondOperand)) -> $[[resolvedFirstOperand] = [resolvedSecondOperand]]
+  		with resolvedFirstOperand := <resolve-operand-assumption> (firstOperand)
+  		with resolvedSecondOperand := <resolve-operand-assumption> (secondOperand)
+  		
+  	resolve-operand-assumption:
+  		(Different(LastVariable(lastName), IdExpressionOp(IdExpression(expressionName)))) -> $[[resolvedDifferent]]
+  		where
+  			if <eq> (lastName, expressionName)
+  			then resolvedDifferent := $[@C([lastName])]
+  			else resolvedDifferent := <resolve-operand-assumption-different> (Different(LastVariable(lastName), IdExpressionOp(IdExpression(expressionName))))
+  		end	
+  		
+  	resolve-operand-assumption:
+  		(Different(firstOperand, secondOperand)) -> $[[resolvedFirstOperand] =! [resolvedSecondOperand]]
+  		with resolvedFirstOperand := <resolve-operand-assumption> (firstOperand)
+  		with resolvedSecondOperand := <resolve-operand-assumption> (secondOperand)
+  		
+  	resolve-operand-assumption-different:
+  		(Different(firstOperand, secondOperand)) -> $[([resolvedFirstOperand] =! [resolvedSecondOperand])]
+  		with resolvedFirstOperand := <resolve-operand-assumption> (firstOperand)
+  		with resolvedSecondOperand := <resolve-operand-assumption> (secondOperand) 
+  		
+  	resolve-operand-assumption:
+  		Subtraction(leftOperand, rightOperand) -> $[([resolvedLeftOp] - [resolvedRightOp])]
+  		with resolvedLeftOp := <resolve-operand-assumption> leftOperand
+  		with resolvedRightOp := <resolve-operand-assumption> rightOperand
+  	
+  	resolve-operand-assumption:
+  		IdExpressionOp(idExpression) -> $[[idExpressionResolved]]
+  		with idExpressionResolved := <resolve-operand-assumption> idExpression
+  			
+  	resolve-operand-assumption:
+  		IdExpression(expressionName) -> $[[expressionName]']
+  		
+  	resolve-operand-assumption:
+  		LastVariable(lastName) -> $[[lastName]]
+  		
+  	resolve-operand-assumption:
+  		ConstValue(value) -> $[[value]]
+  		

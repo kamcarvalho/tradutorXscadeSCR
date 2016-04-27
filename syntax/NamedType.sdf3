@@ -1,0 +1,54 @@
+module NamedType
+
+imports
+ Common
+ 
+ context-free syntax
+ 	NamedType.Int = [
+		<NamedType>
+			<type>
+				<TypeRef name="int" />
+			</type>
+		</NamedType>
+	]
+	
+	NamedType.Bool = [
+		<NamedType>
+			<type>
+				<TypeRef name="bool" />
+			</type>
+		</NamedType>
+	]
+	
+	NamedType.Real = [
+		<NamedType>
+			<type>
+				<TypeRef name="real" />
+			</type>
+		</NamedType>
+	]
+	
+	NamedType.CustomType = [
+		<NamedType>
+			<type>
+				<TypeRef name="[PragmaId]"[IgnoreSpace]/>
+			</type>
+		</NamedType>
+		
+	] {avoid}
+	
+	NamedType.Enum = [
+		<Enum>
+			<values>
+			[EnumValue*]
+			</values>
+		</Enum>
+	]
+	
+	EnumValue.EnumValue = [
+		<Value name="[PragmaId]">
+			<pragmas>
+				<ed:Value oid="!ed/enumValue/[PragmaId]" />
+			</pragmas>
+		</Value>
+	]

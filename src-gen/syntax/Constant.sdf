@@ -1,0 +1,10 @@
+module Constant
+imports Common NamedType
+
+exports
+  context-free syntax
+    "<Constant" "name=\"" ID "\">" "<type>" NamedType "</type>" "<value>" "<ConstValue" "value=\"" Value "\"/>" "</value>" "<pragmas>" "<ed:Constant" "oid=\"!ed/Constant/" ID "\"/>" "</pragmas>" "</Constant>"                                                                    -> Constant {cons("Constant")}
+    "<Constant" "name=\"" ID "\">" "<type>" NamedType "</type>" "<value>" "<UnaryOp" "operator=\"-\">" "<operand>" "<ConstValue" "value=\"" Value "\"/>" "</operand>" "</UnaryOp>" "</value>" "<pragmas>" "<ed:Constant" "oid=\"!ed/Constant/" ID "\"/>" "</pragmas>" "</Constant>" -> Constant {cons("Constant2")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Constant {cons("COMPLETION-Constant")}

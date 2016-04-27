@@ -1,0 +1,13 @@
+module include/Entity-parenthesize
+
+imports
+  libstratego-lib
+
+
+strategies
+  io-Entity-parenthesize =
+    io-wrap(id)
+
+  parenthesize-Entity =
+    id
+

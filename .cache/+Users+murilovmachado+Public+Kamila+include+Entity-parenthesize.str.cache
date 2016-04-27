@@ -1,0 +1,1 @@
+Module("include/Entity-parenthesize",[Imports([Import("libstratego-lib")]),Strategies([SDefNoArgs("io-Entity-parenthesize",Call(SVar("io-wrap"),[Id])),SDefNoArgs("parenthesize-Entity",Id)])])

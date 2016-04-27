@@ -1,0 +1,30 @@
+module src-gen/signatures/Common-sig
+
+signature
+  constructors
+     : String -> ID
+     : String -> MVAR
+     : String -> Time
+     : String -> DUR
+     : String -> CVAR
+     : String -> MCVAR
+     : String -> TVAR
+     : String -> OPNAME
+     : String -> OPKIND
+     : String -> INT
+     : String -> Number
+     : String -> STRING
+     : String -> Booleano
+     : String -> Float
+     : String -> TYPE
+     : String -> StringChar
+     : String -> BackSlashChar
+     : String -> CommentChar
+     : String -> InsideComment
+     : String -> NewLineEOF
+     : String -> PragmaId
+     : String -> IgnoreSpace
+     : String -> PresentableId
+     : String -> Value
+     : String -> BinaryName
+     : String -> EOF

@@ -1,0 +1,18 @@
+module editor/Entity-Outliner.generated
+
+imports
+  
+  include/Entity
+  lib/runtime/editor/outline-library
+
+rules
+  
+  to-outline-label = ?Module(<id>, _)
+  to-outline-label = ?Entity(<id>, _)
+  to-outline-label = ?MonitoredVariable(<id>, _, _, _)
+  to-outline-label = ?MonitoredVariable2(<id>, _, _, _)
+  to-outline-label = ?ControlledVariable(<id>, _, _, _)
+  to-outline-label = ?TermVariable(<id>, _, _, _)
+  to-outline-label = ?TermVariable2(<id>, _, _, _)
+  to-outline-label = ?ModeClassVariable(<id>, _, _, _)
+  to-outline-label = ?GenericVariable(<id>, _, _, _)

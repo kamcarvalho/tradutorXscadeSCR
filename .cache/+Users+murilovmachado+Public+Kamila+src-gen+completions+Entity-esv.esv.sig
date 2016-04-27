@@ -1,0 +1,1 @@
+Module("src-gen/completions/Entity-esv",Imports([Import("src-gen/completions/Common-esv"),Import("src-gen/completions/Package-esv"),Import("src-gen/completions/Java-esv")]),[])

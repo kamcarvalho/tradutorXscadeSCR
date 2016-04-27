@@ -1,0 +1,331 @@
+module Operand
+
+imports
+	Common
+ 
+context-free syntax
+	Boolean.True = [
+		
+	]
+	Boolean.False = [
+		
+	]	
+	
+	Event.Event = [
+		<NAryOp operator="and">
+			<operands>
+				<UnaryOp operator="not">
+					<operand>
+						[Operand]
+					</operand>
+				</UnaryOp>
+				[Operand]
+			</operands>
+		</NAryOp>
+	]
+	
+	Operand.EventOp = [
+		[Event]
+	]
+
+	Operand.AndEvent = [
+		<NAryOp operator="and">
+        	<operands>
+	        	[Event]
+				[Operand]
+        	</operands>
+		</NAryOp>
+	] {prefer}
+	
+	Operand.OrEvent = [
+		<NAryOp operator="or">
+        	<operands>
+	        	[Event]
+				[Operand]
+        	</operands>
+		</NAryOp>
+	] {prefer}
+	
+		Operand.Event3 = [
+			<NAryOp operator="and">
+				<operands>
+					<UnaryOp operator="not">
+						<operand>
+							<UnaryOp operator="not">
+								<operand>
+									[Operand]
+								</operand>
+							</UnaryOp>
+						</operand>
+					</UnaryOp>	
+					<UnaryOp operator="not">
+						<operand>
+							[Operand]
+						</operand>
+					</UnaryOp>
+				</operands>
+			</NAryOp>
+		]{prefer}
+	
+	Operand.And = [
+		<NAryOp operator="and">
+			<operands>
+				[Operand*]
+			</operands>
+		</NAryOp>
+	]{avoid}
+	
+	/*
+	Operand.And2 = [		
+		<NAryOp operator="or">
+			<operands> 
+				<NAryOp operator="and">
+					<operands> 
+						[Operand*]
+					</operands>
+				</NAryOp>
+				<NAryOp operator="and">
+					<operands>
+						<NAryOp operator="and">
+							<operands>
+								[Operand*]
+							</operands>
+						</NAryOp>
+								[Operand]
+					</operands>
+				</NAryOp>	
+	] */
+		
+	Operand.Or = [
+		<NAryOp operator="or">
+			<operands>
+				[Operand*]
+			</operands>
+		</NAryOp> 
+	]{avoid}
+	
+	Operand.Imply = [		
+	<NAryOp operator="or">
+		<operands>
+			<UnaryOp operator="not">
+				<operand>
+					[Operand]
+				 </operand>
+			</UnaryOp>
+				[Operand]
+		</operands>
+	</NAryOp> 		
+	]{prefer}
+	
+	Operand.Negative = [
+		<UnaryOp operator="-">
+			<operand>
+				[Operand]
+			</operand>
+		</UnaryOp>
+	]
+	
+	Operand.Xor = [
+<UnaryOp operator="not">
+	<operand>
+		<NAryOp operator="xor">
+				<operands>
+					[Operand]
+					[Operand]
+				</operands>
+		</NAryOp>
+	</operand>
+</UnaryOp> 
+		
+	]
+	
+	
+	Operand.NotOperand = [
+		<UnaryOp operator="not">
+			<operand>
+				[Operand]
+			</operand>
+		</UnaryOp>
+	] {avoid}
+	
+	Operand.GreaterThan = [
+		<BinaryOp operator="&gt;">
+			<operands>
+				[Operand]
+				[Operand]
+			</operands>
+		</BinaryOp>		
+	]
+	
+	Operand.GreaterThanOrEqual = [
+		<BinaryOp operator="&gt;=">
+			<operands>
+				[Operand]
+				[Operand]
+			</operands>
+		</BinaryOp>		
+	]
+	
+	Operand.LessThan = [
+		<BinaryOp operator="&lt;">
+			<operands>
+				[Operand]
+				[Operand]
+			</operands>
+		</BinaryOp>
+	]
+	
+	Operand.LessThanOrEqual = [
+		<BinaryOp operator="&lt;=">
+			<operands>
+				[Operand]
+				[Operand]
+			</operands>
+		</BinaryOp>
+	]
+	
+	Operand.Addiction = [
+		<NAryOp operator="+">
+			<operands>
+				[Operand]
+				[Operand]
+	        </operands>
+		</NAryOp>
+	]
+	
+	Operand.Subtraction = [
+		<BinaryOp operator="-">
+			<operands>
+				[Operand]
+				[Operand]
+			</operands>
+		</BinaryOp>
+	]
+	
+	Operand.Equal = [
+		<BinaryOp operator="=">
+			<operands>
+				[Operand]
+				[Operand]
+			</operands>
+		</BinaryOp>
+	]
+	
+	Operand.Different = [
+		<BinaryOp operator="&lt;&gt;">
+			<operands>
+				[Operand]
+				[Operand]
+			</operands>
+		</BinaryOp>
+	]
+	
+	Operand.IdExpressionOp = [
+		[IdExpression]
+	]
+	
+	Operand.LastVariable = [
+		<Last>
+			<variable>
+				<ConstVarRef name="[PragmaId]"/>
+			</variable>
+		</Last>
+	]
+	
+	Operand.ConstValue = [
+		<ConstValue value="[Value]"/>
+	]
+	
+	Operand.CallExpression = [
+		<CallExpression>
+			[CallExpressionOperator]
+			[CallParameters]					
+		</CallExpression>
+	]
+	
+	Operand.CaseOp = [
+		<CaseOp name="[PragmaId]">
+			[Switch]
+			[Cases]
+		</CaseOp>
+	]
+	
+	Operand.IfThenElseOp = [
+		<IfThenElseOp name="[PragmaId]">
+			[If]
+			[Then]
+			[Else]
+		</IfThenElseOp>
+	]
+	
+	CallExpressionOperator.CallExpressionOperator = [
+		<operator>
+			<OpCall name="[INT]">
+				<operator>
+					<OperatorRef name="[PragmaId]"/>
+				</operator>
+			</OpCall>
+		</operator>
+	]
+	
+	CallParameters.CallParameters = [
+		<callParameters>
+			[IdExpression*]						
+		</callParameters>
+	]
+	
+	Switch.Switch = [
+		<switch>
+        	[IdExpression]
+        </switch>
+	]
+	
+	Cases.Cases = [
+		<cases>
+			[Case*]
+		</cases>          
+	]
+	
+	Case.Case = [
+		<Case pattern="[PragmaId]">
+    		<flow>
+          		[IdExpression]                                     
+         	</flow>
+       </Case>
+	]
+	
+	IdExpression.IdExpression = [
+		<IdExpression>
+			<path>
+				<ConstVarRef name="[PragmaId]"/>
+			</path>
+		</IdExpression>
+	]
+	
+	If.If = [
+		<if>
+			[IdExpression]
+		</if>
+	]
+	
+	Then.Then = [
+		<then>
+			[ListExpression]	
+		</then>	
+	]
+	
+	Else.Else = [
+		<else>
+			[ListExpression]
+		</else>
+	]
+	
+	ListExpression.ListExpression = [
+		<ListExpression>
+	    	<items>
+	        	[IdExpression]                                       
+	    	</items>
+	    </ListExpression>
+    ]
+   
+  

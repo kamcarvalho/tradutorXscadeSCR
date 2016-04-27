@@ -1,0 +1,48 @@
+module generate
+
+imports
+	include/Entity
+	type
+	constant
+	operator
+	java
+rules // Builder
+	
+	// Generates a Java program for selected AST.
+	generate-java:
+		(selected, position, ast, path, project-path) -> (filename, result)
+		with
+			filename := <guarantee-extension(|"java")> path;
+			result := "Codigo em java"
+			//result	 := <to-java> selected
+			
+	generate-scr:
+		(selected, position, ast, path, project-path) -> (filename, result)
+		with
+			filename := <guarantee-extension(|"scr")> path;
+			result	 := <to-scr> selected
+
+rules // Transformation to java strings.
+
+	
+  to-scr:
+  	
+  	Main(package) -> $[[resolvedPackage]]
+  	with resolvedPackage := <to-package> package 
+  
+  to-package:
+  	Package(pragmaId, declarations, pragmas) -> $[spec [pragmaId]
+  	[resolvedDeclarations]]
+  	with resolvedDeclarations := <to-declarations> declarations
+	
+  to-declarations:
+  	Declarations(types*, constants*, operators*) -> 
+  		$[type definitions
+  			[resolvedTypes]
+  		constant definitions
+  			[resolvedConstants]
+  		[resolvedOperators]
+  	]
+  	with resolvedTypes := <to-type> types*
+  	with resolvedConstants := <to-constant> constants*
+  	with resolvedOperators := <to-operator> operators*

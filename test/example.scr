@@ -1,0 +1,92 @@
+spec Safety_Injection_System
+type definitions
+	ySwitch: enum in {Off, On};
+	type_mcPressure: enum in {TooLow, Permitted, High};
+	yWPres: integer in [0, 2000]
+	
+	
+constant definitions
+	Low= 900: integer;
+	Permit= 1000: integer;
+	
+
+monitored variables
+	
+	mWaterPres: yWPres, initially 0;mBlock: ySwitch, initially Off;mReset: ySwitch, initially Off;
+	
+	
+	
+controlled variables
+	
+	
+	cSafety_Injection: ySwitch, initially On;
+	
+	
+term variables
+	
+	
+	
+	tOverridden: bool, initially false;
+	
+mode classes
+	
+	
+	
+	mcPressure: type_mcPressure, initially TooLow;
+	
+assumptions
+	
+	A1: mWaterPres' >= mWaterPres AND (mWaterPres' - mWaterPres) <= 10 OR mWaterPres' < mWaterPres AND (mWaterPres - mWaterPres') <= 10;
+	
+assertions
+	
+	
+	
+function definitions
+	var mcPressure := case mcPressure
+	                	[] TooLow
+	                	ev
+	                		[] @T(mWaterPres >= Low) -> Permitted
+	                		
+	                	ve
+	                	[] Permitted
+	                	ev
+	                		[] @T(mWaterPres >= Permit) -> High
+	                		[] @T(mWaterPres < Low) -> TooLow
+	                		
+	                	ve
+	                	[] High
+	                	ev
+	                		[] @T(mWaterPres < Permit) -> Permitted
+	                		
+	                	ve
+	                esac
+	var tOverridden := 
+	                ev
+	                	[] @TmBlock=On WHEN (mReset=Off AND NOT(mcPressure=High)) -> true
+	                	[] ((@TmReset=On WHEN NOT(mcPressure=High) OR @TmcPressure=High) OR [] @F (mcPressure=High)) -> false
+	                	
+	                ve
+	var cSafety_Injection := case mcPressure
+	                	[] TooLow
+	                	ev
+	                		[] tOverridden -> Off
+	                		[] NOT(tOverridden) -> On
+	                		
+	                	ve
+	                	[] Permitted
+	                	ev
+	                		[] false -> On
+	                		[] true -> Off
+	                		
+	                	ve
+	                	[] High
+	                	ev
+	                		[] false -> On
+	                		[] true -> Off
+	                		
+	                	ve
+	                esac
+	
+	
+

@@ -1,0 +1,580 @@
+module src-gen/pp/Operator-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  src-gen/signatures/Operator-sig
+
+
+imports
+  src-gen/signatures/Common-sig
+  src-gen/signatures/Variable-sig
+  src-gen/signatures/Equation-sig
+  src-gen/signatures/Assumption-sig
+  src-gen/signatures/Assertion-sig
+
+
+imports
+  src-gen/pp/Common-pp
+  src-gen/pp/Variable-pp
+  src-gen/pp/Equation-pp
+  src-gen/pp/Assumption-pp
+  src-gen/pp/Assertion-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Operator
+
+  prettyprint-example =
+    prettyprint-Inputs
+
+  prettyprint-example =
+    prettyprint-Outputs
+
+  prettyprint-example =
+    prettyprint-Locals
+
+  prettyprint-example =
+    prettyprint-Data
+
+  prettyprint-example =
+    prettyprint-AssumptionOrAssertion
+
+  prettyprint-example =
+    prettyprint-Pragmas
+
+  prettyprint-example =
+    prettyprint-EdOperator
+
+  prettyprint-example =
+    prettyprint-Diagrams
+
+  prettyprint-example =
+    prettyprint-TextDiagram
+
+  prettyprint-example =
+    prettyprint-PresentationElements
+
+  prettyprint-example =
+    prettyprint-FlowTE
+
+  prettyprint-Operator :
+    Monitored(
+      t1__
+    , t2__
+    , t3__
+    , t4__
+    , t5__
+    , t6__
+    , t7__
+    ) -> [ H(
+             [SOpt(HS(), "0")]
+           , [ S("<Operator kind=\"")
+             , t1__'
+             , S("\" name=\"")
+             , t2__'
+             , S("\">")
+             ]
+           )
+         , t3__'
+         , t4__'
+         , t5__'
+         , t6__'
+         , t7__'
+         , H(
+             [SOpt(HS(), "0")]
+           , [S("</Operator>")]
+           )
+         ]
+    with t1__' := <pp-one-Z(prettyprint-OPKIND)> t1__
+    with t2__' := <pp-one-Z(prettyprint-MVAR)> t2__
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Inputs)> t3__]
+    with t4__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Outputs)> t4__]
+    with t5__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Locals)> t5__]
+    with t6__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Data)> t6__]
+    with t7__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Pragmas)> t7__]
+
+  is-Operator =
+    ?Monitored(_, _, _, _, _, _, _)
+
+  prettyprint-Operator :
+    Controlled(
+      t1__
+    , t2__
+    , t3__
+    , t4__
+    , t5__
+    , t6__
+    , t7__
+    ) -> [ H(
+             [SOpt(HS(), "0")]
+           , [ S("<Operator kind=\"")
+             , t1__'
+             , S("\" name=\"")
+             , t2__'
+             , S("\">")
+             ]
+           )
+         , t3__'
+         , t4__'
+         , t5__'
+         , t6__'
+         , t7__'
+         , H(
+             [SOpt(HS(), "0")]
+           , [S("</Operator>")]
+           )
+         ]
+    with t1__' := <pp-one-Z(prettyprint-OPKIND)> t1__
+    with t2__' := <pp-one-Z(prettyprint-CVAR)> t2__
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Inputs)> t3__]
+    with t4__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Outputs)> t4__]
+    with t5__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Locals)> t5__]
+    with t6__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Data)> t6__]
+    with t7__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Pragmas)> t7__]
+
+  is-Operator =
+    ?Controlled(_, _, _, _, _, _, _)
+
+  prettyprint-Operator :
+    Term(
+      t1__
+    , t2__
+    , t3__
+    , t4__
+    , t5__
+    , t6__
+    , t7__
+    ) -> [ H(
+             [SOpt(HS(), "0")]
+           , [ S("<Operator kind=\"")
+             , t1__'
+             , S("\" name=\"")
+             , t2__'
+             , S("\">")
+             ]
+           )
+         , t3__'
+         , t4__'
+         , t5__'
+         , t6__'
+         , t7__'
+         , H(
+             [SOpt(HS(), "0")]
+           , [S("</Operator>")]
+           )
+         ]
+    with t1__' := <pp-one-Z(prettyprint-OPKIND)> t1__
+    with t2__' := <pp-one-Z(prettyprint-TVAR)> t2__
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Inputs)> t3__]
+    with t4__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Outputs)> t4__]
+    with t5__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Locals)> t5__]
+    with t6__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Data)> t6__]
+    with t7__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Pragmas)> t7__]
+
+  is-Operator =
+    ?Term(_, _, _, _, _, _, _)
+
+  prettyprint-Operator :
+    Term2(
+      t1__
+    , t2__
+    , t3__
+    , t4__
+    , t5__
+    , t6__
+    , t7__
+    ) -> [ H(
+             [SOpt(HS(), "0")]
+           , [ S("<Operator kind=\"")
+             , t1__'
+             , S("\" name=\"")
+             , t2__'
+             , S("\">")
+             ]
+           )
+         , t3__'
+         , t4__'
+         , t5__'
+         , t6__'
+         , t7__'
+         , H(
+             [SOpt(HS(), "0")]
+           , [S("</Operator>")]
+           )
+         ]
+    with t1__' := <pp-one-Z(prettyprint-OPKIND)> t1__
+    with t2__' := <pp-one-Z(prettyprint-DUR)> t2__
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Inputs)> t3__]
+    with t4__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Outputs)> t4__]
+    with t5__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Locals)> t5__]
+    with t6__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Data)> t6__]
+    with t7__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Pragmas)> t7__]
+
+  is-Operator =
+    ?Term2(_, _, _, _, _, _, _)
+
+  prettyprint-Operator :
+    ModeClass(
+      t1__
+    , t2__
+    , t3__
+    , t4__
+    , t5__
+    , t6__
+    , t7__
+    ) -> [ H(
+             [SOpt(HS(), "0")]
+           , [ S("<Operator kind=\"")
+             , t1__'
+             , S("\" name=\"")
+             , t2__'
+             , S("\">")
+             ]
+           )
+         , t3__'
+         , t4__'
+         , t5__'
+         , t6__'
+         , t7__'
+         , H(
+             [SOpt(HS(), "0")]
+           , [S("</Operator>")]
+           )
+         ]
+    with t1__' := <pp-one-Z(prettyprint-OPKIND)> t1__
+    with t2__' := <pp-one-Z(prettyprint-MCVAR)> t2__
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Inputs)> t3__]
+    with t4__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Outputs)> t4__]
+    with t5__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Locals)> t5__]
+    with t6__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Data)> t6__]
+    with t7__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Pragmas)> t7__]
+
+  is-Operator =
+    ?ModeClass(_, _, _, _, _, _, _)
+
+  prettyprint-Operator :
+    MainOperator(
+      t1__
+    , t2__
+    , t3__
+    , t4__
+    , t5__
+    , t6__
+    , t7__
+    ) -> [ H(
+             [SOpt(HS(), "0")]
+           , [ S("<Operator kind=\"")
+             , t1__'
+             , S("\" name=\"")
+             , t2__'
+             , S("\">")
+             ]
+           )
+         , t3__'
+         , t4__'
+         , t5__'
+         , t6__'
+         , t7__'
+         , H(
+             [SOpt(HS(), "0")]
+           , [S("</Operator>")]
+           )
+         ]
+    with t1__' := <pp-one-Z(prettyprint-OPKIND)> t1__
+    with t2__' := <pp-one-Z(prettyprint-PragmaId)> t2__
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Inputs)> t3__]
+    with t4__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Outputs)> t4__]
+    with t5__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Locals)> t5__]
+    with t6__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Data)> t6__]
+    with t7__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Pragmas)> t7__]
+
+  is-Operator =
+    ?MainOperator(_, _, _, _, _, _, _)
+
+  prettyprint-Inputs :
+    Inputs(t1__) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("<inputs>")]
+                      )
+                    , t1__'
+                    , H(
+                        [SOpt(HS(), "0")]
+                      , [S("</inputs>")]
+                      )
+                    ]
+    with t1__' := <pp-indent(|"2")> [<pp-H-list(prettyprint-Variable)> t1__]
+
+  is-Inputs =
+    ?Inputs(_)
+
+  prettyprint-Outputs :
+    Outputs(t1__) -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [S("<outputs>")]
+                       )
+                     , t1__'
+                     , H(
+                         [SOpt(HS(), "0")]
+                       , [S("</outputs>")]
+                       )
+                     ]
+    with t1__' := <pp-indent(|"2")> [<pp-H-list(prettyprint-Variable)> t1__]
+
+  is-Outputs =
+    ?Outputs(_)
+
+  prettyprint-Locals :
+    Locals(t1__) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("<locals>")]
+                      )
+                    , t1__'
+                    , H(
+                        [SOpt(HS(), "0")]
+                      , [S("</locals>")]
+                      )
+                    ]
+    with t1__' := <pp-indent(|"2")> [<pp-H-list(prettyprint-Variable)> t1__]
+
+  is-Locals =
+    ?Locals(_)
+
+  prettyprint-Data :
+    Data(t1__, t2__) -> [ H(
+                            [SOpt(HS(), "0")]
+                          , [S("<data>")]
+                          )
+                        , t1__'
+                        , t2__'
+                        , H(
+                            [SOpt(HS(), "0")]
+                          , [S("</data>")]
+                          )
+                        ]
+    with t1__' := <pp-indent(|"2")> [<pp-H-list(prettyprint-Equation)> t1__]
+    with t2__' := <pp-indent(|"2")> [<pp-H-list(prettyprint-AssumptionOrAssertion)> t2__]
+
+  is-Data =
+    ?Data(_, _)
+
+  prettyprint-AssumptionOrAssertion :
+    AssumptionOperator(t1__) -> [ H(
+                                    [SOpt(HS(), "0")]
+                                  , [t1__']
+                                  )
+                                ]
+    with t1__' := <pp-one-Z(prettyprint-Assumption)> t1__
+
+  is-AssumptionOrAssertion =
+    ?AssumptionOperator(_)
+
+  prettyprint-AssumptionOrAssertion :
+    AssertionOperator(t1__) -> [ H(
+                                   [SOpt(HS(), "0")]
+                                 , [t1__']
+                                 )
+                               ]
+    with t1__' := <pp-one-Z(prettyprint-Assertion)> t1__
+
+  is-AssumptionOrAssertion =
+    ?AssertionOperator(_)
+
+  prettyprint-Pragmas :
+    Pragmas(t1__) -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [S("<pragmas>")]
+                       )
+                     , t1__'
+                     , H(
+                         [SOpt(HS(), "0")]
+                       , [S("</pragmas>")]
+                       )
+                     ]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-EdOperator)> t1__]
+
+  is-Pragmas =
+    ?Pragmas(_)
+
+  prettyprint-EdOperator :
+    EdOperator(t1__, t2__) -> [ H(
+                                  [SOpt(HS(), "0")]
+                                , [ S("<ed:Operator oid=\"!ed/MainOper/")
+                                  , t1__'
+                                  , S("\" xmlns=\"http://www.esterel-technologies.com/ns/scade/pragmas/editor/3\">")
+                                  ]
+                                )
+                              , t2__'
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("</ed:Operator>")]
+                                )
+                              ]
+    with t1__' := <pp-one-Z(prettyprint-PragmaId)> t1__
+    with t2__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Diagrams)> t2__]
+
+  is-EdOperator =
+    ?EdOperator(_, _)
+
+  prettyprint-EdOperator :
+    EdOperator2(t1__, t2__) -> [ H(
+                                   [SOpt(HS(), "0")]
+                                 , [ S("<ed:Operator oid=\"!ed/")
+                                   , t1__'
+                                   , S("\">")
+                                   ]
+                                 )
+                               , t2__'
+                               , H(
+                                   [SOpt(HS(), "0")]
+                                 , [S("</ed:Operator>")]
+                                 )
+                               ]
+    with t1__' := <pp-one-Z(prettyprint-PragmaId)> t1__
+    with t2__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Diagrams)> t2__]
+
+  is-EdOperator =
+    ?EdOperator2(_, _)
+
+  prettyprint-Diagrams :
+    Diagrams(t1__) -> [ H(
+                          [SOpt(HS(), "0")]
+                        , [S("<diagrams>")]
+                        )
+                      , t1__'
+                      , H(
+                          [SOpt(HS(), "0")]
+                        , [S("</diagrams>")]
+                        )
+                      ]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-TextDiagram)> t1__]
+
+  is-Diagrams =
+    ?Diagrams(_)
+
+  prettyprint-TextDiagram :
+    TextDiagram(t1__, t2__, t3__) -> [ H(
+                                         [SOpt(HS(), "0")]
+                                       , [ S("<TextDiagram name=\"")
+                                         , t1__'
+                                         , S("\" landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/Pragma/")
+                                         , t2__'
+                                         , S("\">")
+                                         ]
+                                       )
+                                     , t3__'
+                                     , H(
+                                         [SOpt(HS(), "0")]
+                                       , [S("</TextDiagram>")]
+                                       )
+                                     ]
+    with t1__' := <pp-one-Z(prettyprint-PragmaId)> t1__
+    with t2__' := <pp-one-Z(prettyprint-PragmaId)> t2__
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-PresentationElements)> t3__]
+
+  is-TextDiagram =
+    ?TextDiagram(_, _, _)
+
+  prettyprint-TextDiagram :
+    TextDiagram2(t1__, t2__, t3__) -> [ H(
+                                          [SOpt(HS(), "0")]
+                                        , [ S("<TextDiagram name=\"")
+                                          , t1__'
+                                          , S("\" landscape=\"true\" format=\"A4 (210 297)\" oid=\"!ed/TextDiagram/")
+                                          , t2__'
+                                          , S("\">")
+                                          ]
+                                        )
+                                      , t3__'
+                                      , H(
+                                          [SOpt(HS(), "0")]
+                                        , [S("</TextDiagram>")]
+                                        )
+                                      ]
+    with t1__' := <pp-one-Z(prettyprint-PragmaId)> t1__
+    with t2__' := <pp-one-Z(prettyprint-PragmaId)> t2__
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-PresentationElements)> t3__]
+
+  is-TextDiagram =
+    ?TextDiagram2(_, _, _)
+
+  prettyprint-PresentationElements :
+    PresentationElements(t1__) -> [ H(
+                                      [SOpt(HS(), "0")]
+                                    , [S("<presentationElements>")]
+                                    )
+                                  , t1__'
+                                  , H(
+                                      [SOpt(HS(), "0")]
+                                    , [S("</presentationElements>")]
+                                    )
+                                  ]
+    with t1__' := <pp-indent(|"2")> [<pp-H-list(prettyprint-FlowTE)> t1__]
+
+  is-PresentationElements =
+    ?PresentationElements(_)
+
+  prettyprint-FlowTE :
+    FlowTE(t1__) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [ S("<FlowTE presentable=\"")
+                        , t1__'
+                        , S("\"/>")
+                        ]
+                      )
+                    ]
+    with t1__' := <pp-one-Z(prettyprint-PresentableId)> t1__
+
+  is-FlowTE =
+    ?FlowTE(_)
+
+  prettyprint-FlowTE :
+    FlowTE2(t1__) -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [ S("<FlowTE presentable=\"")
+                         , t1__'
+                         , S("\" />")
+                         ]
+                       )
+                     ]
+    with t1__' := <pp-one-Z(prettyprint-PresentableId)> t1__
+
+  is-FlowTE =
+    ?FlowTE2(_)
+
+  is-Operator =
+    fail
+
+  is-Inputs =
+    fail
+
+  is-Outputs =
+    fail
+
+  is-Locals =
+    fail
+
+  is-Data =
+    fail
+
+  is-AssumptionOrAssertion =
+    fail
+
+  is-Pragmas =
+    fail
+
+  is-EdOperator =
+    fail
+
+  is-Diagrams =
+    fail
+
+  is-TextDiagram =
+    fail
+
+  is-PresentationElements =
+    fail
+
+  is-FlowTE =
+    fail

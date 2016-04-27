@@ -1,0 +1,11 @@
+module Assumption
+imports Common Operand
+
+exports
+  context-free syntax
+    "<Assertion" "kind=\"assume\"" "name=\"A_" PragmaId "\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>" -> Assumption {cons("Assumption")}
+    "<pragmas>" "<ed:Assertion" "oid=\"!ed/assume/" PragmaId "\"/>" "</pragmas>"                                            -> Pragmas    {cons("pragma")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Assumption {cons("COMPLETION-Assumption")}
+    CONTENTCOMPLETE -> Pragmas    {cons("COMPLETION-Pragmas")}

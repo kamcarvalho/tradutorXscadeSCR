@@ -1,0 +1,15 @@
+module NamedType
+imports Common
+
+exports
+  context-free syntax
+    "<NamedType>" "<type>" "<TypeRef" "name=\"int\"" "/>" "</type>" "</NamedType>"                                              -> NamedType {cons("Int")}
+    "<NamedType>" "<type>" "<TypeRef" "name=\"bool\"" "/>" "</type>" "</NamedType>"                                             -> NamedType {cons("Bool")}
+    "<NamedType>" "<type>" "<TypeRef" "name=\"real\"" "/>" "</type>" "</NamedType>"                                             -> NamedType {cons("Real")}
+    "<NamedType>" "<type>" "<TypeRef" "name=\"" PragmaId "\"" IgnoreSpace "/>" "</type>" "</NamedType>"                         -> NamedType {cons("CustomType"), avoid}
+    "<Enum>" "<values>" EnumValue* "</values>" "</Enum>"                                                                        -> NamedType {cons("Enum")}
+    "<Value" "name=\"" PragmaId "\">" "<pragmas>" "<ed:Value" "oid=\"!ed/enumValue/" PragmaId "\"" "/>" "</pragmas>" "</Value>" -> EnumValue {cons("EnumValue")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> NamedType {cons("COMPLETION-NamedType")}
+    CONTENTCOMPLETE -> EnumValue {cons("COMPLETION-EnumValue")}

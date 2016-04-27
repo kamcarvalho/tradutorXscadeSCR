@@ -1,0 +1,115 @@
+module src-gen/pp/Java-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  src-gen/signatures/Java-sig
+
+
+imports
+  src-gen/signatures/Common-sig
+
+
+imports
+  src-gen/pp/Common-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Definition
+
+  prettyprint-example =
+    prettyprint-Property
+
+  prettyprint-example =
+    prettyprint-Type
+
+  prettyprint-example =
+    prettyprint-Start
+
+  prettyprint-Start :
+    Module(t1__, t2__) -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [S("module "), t1__']
+                            )
+                          , H(
+                              []
+                            , [S("")]
+                            )
+                          , H(
+                              [SOpt(HS(), "0")]
+                            , [t2__']
+                            )
+                          ]
+    with t1__' := <pp-one-Z(prettyprint-ID)> t1__
+    with t2__' := <pp-V-list(prettyprint-Definition|"1")> t2__
+
+  is-Start =
+    ?Module(_, _)
+
+  prettyprint-Definition :
+    Entity(t1__, t2__) -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [ S("entity ")
+                              , t1__'
+                              , S(" {")
+                              ]
+                            )
+                          , t2__'
+                          , H(
+                              [SOpt(HS(), "0")]
+                            , [S("}")]
+                            )
+                          ]
+    with t1__' := <pp-one-Z(prettyprint-ID)> t1__
+    with t2__' := <pp-indent(|"2")> [<pp-V-list(prettyprint-Property)> t2__]
+
+  is-Definition =
+    ?Entity(_, _)
+
+  prettyprint-Property :
+    Property(t1__, t2__) -> [ H(
+                                [SOpt(HS(), "0")]
+                              , [t1__', S(" : "), t2__']
+                              )
+                            ]
+    with t1__' := <pp-one-Z(prettyprint-ID)> t1__
+    with t2__' := <pp-one-Z(prettyprint-Type)> t2__
+
+  is-Property =
+    ?Property(_, _)
+
+  prettyprint-Type :
+    Type(t1__) -> [ H(
+                      [SOpt(HS(), "0")]
+                    , [t1__']
+                    )
+                  ]
+    with t1__' := <pp-one-Z(prettyprint-ID)> t1__
+
+  is-Type =
+    ?Type(_)
+
+  prettyprint-Start :
+    Declare(t1__, t2__) -> [ H(
+                               [SOpt(HS(), "0")]
+                             , [t1__', S(" : "), t2__']
+                             )
+                           ]
+    with t1__' := <pp-one-Z(prettyprint-ID)> t1__
+    with t2__' := <pp-one-Z(prettyprint-Type)> t2__
+
+  is-Start =
+    ?Declare(_, _)
+
+  is-Definition =
+    fail
+
+  is-Property =
+    fail
+
+  is-Type =
+    fail
+
+  is-Start =
+    fail

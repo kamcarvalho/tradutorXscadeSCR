@@ -1,0 +1,164 @@
+module src-gen/pp/Common-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  src-gen/signatures/Common-sig
+
+
+strategies
+  prettyprint-ID =
+    ![S(<is-string>)]
+
+  prettyprint-MVAR =
+    ![S(<is-string>)]
+
+  prettyprint-Time =
+    ![S(<is-string>)]
+
+  prettyprint-DUR =
+    ![S(<is-string>)]
+
+  prettyprint-CVAR =
+    ![S(<is-string>)]
+
+  prettyprint-MCVAR =
+    ![S(<is-string>)]
+
+  prettyprint-TVAR =
+    ![S(<is-string>)]
+
+  prettyprint-OPNAME =
+    ![S(<is-string>)]
+
+  prettyprint-OPKIND =
+    ![S(<is-string>)]
+
+  prettyprint-INT =
+    ![S(<is-string>)]
+
+  prettyprint-Number =
+    ![S(<is-string>)]
+
+  prettyprint-STRING =
+    ![S(<is-string>)]
+
+  prettyprint-Booleano =
+    ![S(<is-string>)]
+
+  prettyprint-Float =
+    ![S(<is-string>)]
+
+  prettyprint-TYPE =
+    ![S(<is-string>)]
+
+  prettyprint-StringChar =
+    ![S(<is-string>)]
+
+  prettyprint-BackSlashChar =
+    ![S(<is-string>)]
+
+  prettyprint-CommentChar =
+    ![S(<is-string>)]
+
+  prettyprint-InsideComment =
+    ![S(<is-string>)]
+
+  prettyprint-NewLineEOF =
+    ![S(<is-string>)]
+
+  prettyprint-PragmaId =
+    ![S(<is-string>)]
+
+  prettyprint-IgnoreSpace =
+    ![S(<is-string>)]
+
+  prettyprint-PresentableId =
+    ![S(<is-string>)]
+
+  prettyprint-Value =
+    ![S(<is-string>)]
+
+  prettyprint-BinaryName =
+    ![S(<is-string>)]
+
+  prettyprint-EOF =
+    ![S(<is-string>)]
+
+  prettyprint-example =
+    prettyprint-ID
+
+  prettyprint-example =
+    prettyprint-MVAR
+
+  prettyprint-example =
+    prettyprint-Time
+
+  prettyprint-example =
+    prettyprint-DUR
+
+  prettyprint-example =
+    prettyprint-CVAR
+
+  prettyprint-example =
+    prettyprint-MCVAR
+
+  prettyprint-example =
+    prettyprint-TVAR
+
+  prettyprint-example =
+    prettyprint-OPNAME
+
+  prettyprint-example =
+    prettyprint-OPKIND
+
+  prettyprint-example =
+    prettyprint-INT
+
+  prettyprint-example =
+    prettyprint-Number
+
+  prettyprint-example =
+    prettyprint-STRING
+
+  prettyprint-example =
+    prettyprint-Booleano
+
+  prettyprint-example =
+    prettyprint-Float
+
+  prettyprint-example =
+    prettyprint-TYPE
+
+  prettyprint-example =
+    prettyprint-StringChar
+
+  prettyprint-example =
+    prettyprint-BackSlashChar
+
+  prettyprint-example =
+    prettyprint-CommentChar
+
+  prettyprint-example =
+    prettyprint-InsideComment
+
+  prettyprint-example =
+    prettyprint-NewLineEOF
+
+  prettyprint-example =
+    prettyprint-PragmaId
+
+  prettyprint-example =
+    prettyprint-IgnoreSpace
+
+  prettyprint-example =
+    prettyprint-PresentableId
+
+  prettyprint-example =
+    prettyprint-Value
+
+  prettyprint-example =
+    prettyprint-BinaryName
+
+  prettyprint-example =
+    prettyprint-EOF

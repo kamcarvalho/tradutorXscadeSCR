@@ -1,0 +1,23 @@
+module Assertion
+imports Common Operand
+
+exports
+  context-free syntax
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_" PragmaId "\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"             -> Assertion {cons("Assertion"), avoid}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_mSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"               -> Assertion {cons("Assertion2")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_mSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"               -> Assertion {cons("Assertion3")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_tDesiredSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"        -> Assertion {cons("Assertion4")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_tDesiredSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"        -> Assertion {cons("Assertion5")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_in_mSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"          -> Assertion {cons("Assertion6")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_in_mSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"          -> Assertion {cons("Assertion7")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_last_tDesiredSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>" -> Assertion {cons("Assertion8")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_last_tDesiredSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>" -> Assertion {cons("Assertion9")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_in_tDesiredSpeed_min\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"   -> Assertion {cons("Assertion10")}
+    "<Assertion" "kind=\"guarantee\"" "name=\"G_L_in_tDesiredSpeed_max\">" "<definition>" Operand "</definition>" Pragmas "</Assertion>"   -> Assertion {cons("Assertion11")}
+    "<pragmas>" "<ed:Assertion" "oid=\"!ed/guarantee/min/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                                       -> Pragmas   {cons("pragma")}
+    "<pragmas>" "<ed:Assertion" "oid=\"!ed/guarantee/max/" PragmaId "/" PragmaId "\"/>" "</pragmas>"                                       -> Pragmas   {cons("pragma1")}
+    "<pragmas>" "<ed:Assertion" "oid=\"!ed/guarantee/" PragmaId "\"/>" "</pragmas>"                                                        -> Pragmas   {cons("pragma2")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Assertion {cons("COMPLETION-Assertion")}
+    CONTENTCOMPLETE -> Pragmas   {cons("COMPLETION-Pragmas")}

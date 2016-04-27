@@ -1,0 +1,1 @@
+Module("operator",[Imports([(),(),(),(),()]),Rules([SDefT("to-operator",[],[],[]),SDefT("to-operator",[],[],[])])])

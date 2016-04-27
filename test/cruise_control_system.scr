@@ -1,0 +1,228 @@
+spec Cruise_Control_System
+type definitions
+	yLever: enum in {yLever_const_, yLever_release, yLever_off, yLever_resume};
+	ySpeed: real: in [0.0, 180.0];
+	yThrottle: enum in {yThrottle_accel, yThrottle_maintain, yThrottle_decel, yThrottle_off};
+	type_mcCruise: enum in {type_mcCruise_Off, type_mcCruise_Inactive, type_mcCruise_Cruise, type_mcCruise_Override};
+	
+	
+	
+constant definitions
+	kMaxAccel= 6.0: real;
+	kMaxDecel= 20.0: real;
+	kMaxSpeed= 180.0: real;
+	kStartIncr= 500.0: real;
+	kTolerance= 2.0: ySpeed;
+	
+	
+	
+	
+
+monitored variables
+	
+	mBrake: bool, initially false;mEngRunning: bool, initially false;mIgnOn: bool, initially false;mLever: yLever, initially yLever_release;mSpeed: ySpeed, initially 0.0;time: real, initially 0.0;
+	
+	
+	
+controlled variables
+	
+	
+	cThrottle: yThrottle, initially yThrottle_off;
+	
+	
+term variables
+	
+	
+	
+	tDesiredSpeed: ySpeed, initially 0.0;dur_tDesiredSpeed_true_time_1: real, initially 1.0;
+	
+mode classes
+	
+	
+	
+	mcCruise: type_mcCruise, initially type_mcCruise_Off;
+	
+assumptions
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	N1: (mSpeed' - mSpeed) <= kMaxAccel';
+	
+	N2: (mSpeed' - mSpeed) >= kMaxDecel';
+	
+	N3: (@C(mLever) WHEN ((mLever =! yLever_release'))) => (mLever' = yLever_release');
+	
+	N4: time' >= time;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+assertions
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	A1 : (mBrake) => (cThrottle = yThrottle_off);
+	
+	A2 : (cThrottle = yThrottle_accel) => (tDesiredSpeed > mSpeed);
+	
+	A3 : ((mcCruise =! type_mcCruise_Off) AND (mEngRunning)) => (mIgnOn);
+	
+	A4 : ((cThrottle =! yThrottle_off) AND (mEngRunning)) => (mIgnOn);
+	
+	A5 : (mSpeed' = mSpeed) => (cThrottle' =! yThrottle_accel);
+	
+	A6 : (@TmEngRunning) => (cThrottle' = yThrottle_off);
+	
+	A7 : (mcCruise = type_mcCruise_Off) <=> NOT(mIgnOn);
+	
+	A8 : (cThrottle = yThrottle_accel) => (tDesiredSpeed > mSpeed OR (((CLOCK - dur_tDesiredSpeed_true_time_1) > kStartIncr) AND (dur_tDesiredSpeed_true_time_1 =! -1.0)));
+	
+	A9 : (tDesiredSpeed' =! tDesiredSpeed) => ((mcCruise' = type_mcCruise_Cruise) AND (mcCruise = type_mcCruise_Cruise OR (mcCruise = type_mcCruise_Inactive)));
+	
+	A10 : (tDesiredSpeed = mSpeed) => (mcCruise =! type_mcCruise_Override OR (mLever =! yLever_release) OR (cThrottle = yThrottle_off));
+	
+function definitions
+	var mcCruise := case mcCruise
+	                	[] type_mcCruise_Off
+	                	ev
+	                		[] @TmIgnOn -> type_mcCruise_Inactive
+	                		
+	                	ve
+	                	[] type_mcCruise_Inactive
+	                	ev
+	                		[] @F (mIgnOn) -> type_mcCruise_Off
+	                		[] @TmLever=yLever_const_ WHEN ((mIgnOn AND mEngRunning) AND NOT(mBrake)) -> type_mcCruise_Cruise
+	                		
+	                	ve
+	                	[] type_mcCruise_Cruise
+	                	ev
+	                		[] @F (mIgnOn) -> type_mcCruise_Off
+	                		[] @F (mEngRunning) -> type_mcCruise_Inactive
+	                		[] @TmBrake WHEN @TmLever=yLever_off -> type_mcCruise_Override
+	                		
+	                	ve
+	                	[] type_mcCruise_Override
+	                	ev
+	                		[] @F (mIgnOn) -> type_mcCruise_Off
+	                		[] @F (mEngRunning) -> type_mcCruise_Inactive
+	                		[] (@TmLever=yLever_resume WHEN ((mIgnOn AND mEngRunning) AND NOT(mBrake)) OR @TmLever=yLever_const_ WHEN ((mIgnOn AND mEngRunning) AND NOT(mBrake))) -> type_mcCruise_Cruise
+	                		
+	                	ve
+	                esac
+	
+	var dur_tDesiredSpeed_true_time_1 := 
+	                ev
+	                	[] @TmLever=yLever_const_ -> CLOCK
+	                	[] @F (mLever=yLever_const_) -> -1.0
+	                	
+	                ve
+	var tDesiredSpeed := case mcCruise
+	                	[] type_mcCruise_Cruise
+	                	ev
+	                		[] @F ((((CLOCK - dur_tDesiredSpeed_true_time_1) >= kStartIncr) AND dur_tDesiredSpeed_true_time_1<>-1.0)) -> mSpeed
+	                		
+	                	ve
+	                	[] type_mcCruise_Inactive
+	                	ev
+	                		[] @TmLever=yLever_const_ WHEN ((mIgnOn AND mEngRunning) AND NOT(mBrake)) -> mSpeed
+	                		
+	                	ve
+	                	[] type_mcCruise_Off
+	                	ev
+	                		[] false -> mSpeed
+	                		
+	                	ve
+	                	[] type_mcCruise_Override
+	                	ev
+	                		[] false -> mSpeed
+	                		
+	                	ve
+	                esac
+	var cThrottle := case mcCruise
+	                	[] type_mcCruise_Cruise
+	                	ev
+	                		[] (((tDesiredSpeed - kTolerance) >= mSpeed) OR (((CLOCK - dur_tDesiredSpeed_true_time_1) >= kStartIncr) AND dur_tDesiredSpeed_true_time_1<>-1.0)) -> yThrottle_accel
+	                		[] ((((tDesiredSpeed - kTolerance) <= mSpeed) AND ((tDesiredSpeed + kTolerance) >= mSpeed)) AND (((CLOCK - dur_tDesiredSpeed_true_time_1) <= kStartIncr) AND dur_tDesiredSpeed_true_time_1<>-1.0)) -> yThrottle_maintain
+	                		[] (((tDesiredSpeed + kTolerance) < mSpeed) AND (((CLOCK - dur_tDesiredSpeed_true_time_1) <= kStartIncr) AND dur_tDesiredSpeed_true_time_1<>-1.0)) -> yThrottle_decel
+	                		
+	                	ve
+	                	[] type_mcCruise_Inactive
+	                	ev
+	                		[] true -> yThrottle_off
+	                		
+	                	ve
+	                	[] type_mcCruise_Off
+	                	ev
+	                		[] true -> yThrottle_off
+	                		
+	                	ve
+	                	[] type_mcCruise_Override
+	                	ev
+	                		[] true -> yThrottle_off
+	                		
+	                	ve
+	                esac
+	
+	
+

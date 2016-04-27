@@ -1,0 +1,180 @@
+module src-gen/pp/Equation-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  src-gen/signatures/Equation-sig
+
+
+imports
+  src-gen/signatures/Common-sig
+  src-gen/signatures/Operand-sig
+
+
+imports
+  src-gen/pp/Common-pp
+  src-gen/pp/Operand-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Equation
+
+  prettyprint-example =
+    prettyprint-Lefts
+
+  prettyprint-example =
+    prettyprint-Right
+
+  prettyprint-example =
+    prettyprint-Pragma
+
+  prettyprint-Equation :
+    Equation(t1__, t2__, t3__) -> [ H(
+                                      [SOpt(HS(), "0")]
+                                    , [S("<Equation>")]
+                                    )
+                                  , t1__'
+                                  , t2__'
+                                  , t3__'
+                                  , H(
+                                      [SOpt(HS(), "0")]
+                                    , [S("</Equation>")]
+                                    )
+                                  ]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Lefts)> t1__]
+    with t2__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Right)> t2__]
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Pragma)> t3__]
+
+  is-Equation =
+    ?Equation(_, _, _)
+
+  prettyprint-Lefts :
+    Lefts(t1__) -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("<lefts>")]
+                     )
+                   , t1__'
+                   , H(
+                       [SOpt(HS(), "0")]
+                     , [S("</lefts>")]
+                     )
+                   ]
+    with t1__' := <pp-indent(|"2")> [ S("<VariableRef name=\"")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t1__
+                                    , S("\"/>")
+                                    ]
+
+  is-Lefts =
+    ?Lefts(_)
+
+  prettyprint-Right :
+    Right(t1__) -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("<right>")]
+                     )
+                   , t1__'
+                   , H(
+                       [SOpt(HS(), "0")]
+                     , [S("</right>")]
+                     )
+                   ]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Operand)> t1__]
+
+  is-Right =
+    ?Right(_)
+
+  prettyprint-Pragma :
+    Pragma(t1__, t2__) -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [S("<pragmas>")]
+                            )
+                          , t1__'
+                          , H(
+                              [SOpt(HS(), "0")]
+                            , [S("</pragmas>")]
+                            )
+                          ]
+    with t1__' := <pp-indent(|"2")> [ S("<ed:Equation oid=\"!ed/Expr/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t1__
+                                    , S("/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t2__
+                                    , S("\"/>")
+                                    ]
+
+  is-Pragma =
+    ?Pragma(_, _)
+
+  prettyprint-Pragma :
+    Pragma1(t1__, t2__) -> [ H(
+                               [SOpt(HS(), "0")]
+                             , [S("<pragmas>")]
+                             )
+                           , t1__'
+                           , H(
+                               [SOpt(HS(), "0")]
+                             , [S("</pragmas>")]
+                             )
+                           ]
+    with t1__' := <pp-indent(|"2")> [ S("<ed:Equation oid=\"!ed/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t1__
+                                    , S("/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t2__
+                                    , S("\"/>")
+                                    ]
+
+  is-Pragma =
+    ?Pragma1(_, _)
+
+  prettyprint-Pragma :
+    Pragma2(t1__, t2__, t3__, t4__) -> [ H(
+                                           [SOpt(HS(), "0")]
+                                         , [S("<pragmas>")]
+                                         )
+                                       , t1__'
+                                       , H(
+                                           [SOpt(HS(), "0")]
+                                         , [S("</pragmas>")]
+                                         )
+                                       ]
+    with t1__' := <pp-indent(|"2")> [ S("<ed:Equation oid=\"!ed/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t1__
+                                    , S("/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t2__
+                                    , S("/")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t3__
+                                    , S("/")
+                                    , <pp-one-Z(prettyprint-INT)> t4__
+                                    , S("\"/>")
+                                    ]
+
+  is-Pragma =
+    ?Pragma2(_, _, _, _)
+
+  prettyprint-Pragma :
+    Pragma3() -> [ H(
+                     [SOpt(HS(), "0")]
+                   , [S("<pragmas>")]
+                   )
+                 , t1__'
+                 , H(
+                     [SOpt(HS(), "0")]
+                   , [S("</pragmas>")]
+                   )
+                 ]
+    with t1__' := <pp-indent(|"2")> [S("<ed:Variable oid=\"!ed/tOverridden/IF/2\"/>")]
+
+  is-Pragma =
+    ?Pragma3()
+
+  is-Equation =
+    fail
+
+  is-Lefts =
+    fail
+
+  is-Right =
+    fail
+
+  is-Pragma =
+    fail

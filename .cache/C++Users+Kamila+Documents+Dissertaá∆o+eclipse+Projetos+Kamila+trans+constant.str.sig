@@ -1,0 +1,1 @@
+Module("constant",[Imports([()]),Rules([SDefT("to-constant",[],[],[]),SDefT("to-constant",[],[],[]),SDefT("to-constant",[],[],[]),SDefT("resolve-constant",[],[],[]),SDefT("resolve-constant",[],[],[]),SDefT("write-constant-type",[],[],[]),SDefT("write-constant-type",[],[],[]),SDefT("write-constant-type",[],[],[]),SDefT("write-constant-type",[],[],[])])])

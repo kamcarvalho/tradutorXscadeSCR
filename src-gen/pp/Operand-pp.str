@@ -1,0 +1,864 @@
+module src-gen/pp/Operand-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  src-gen/signatures/Operand-sig
+
+
+imports
+  src-gen/signatures/Common-sig
+
+
+imports
+  src-gen/pp/Common-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Boolean
+
+  prettyprint-example =
+    prettyprint-Event
+
+  prettyprint-example =
+    prettyprint-Operand
+
+  prettyprint-example =
+    prettyprint-CallExpressionOperator
+
+  prettyprint-example =
+    prettyprint-CallParameters
+
+  prettyprint-example =
+    prettyprint-Switch
+
+  prettyprint-example =
+    prettyprint-Cases
+
+  prettyprint-example =
+    prettyprint-Case
+
+  prettyprint-example =
+    prettyprint-IdExpression
+
+  prettyprint-example =
+    prettyprint-If
+
+  prettyprint-example =
+    prettyprint-Then
+
+  prettyprint-example =
+    prettyprint-Else
+
+  prettyprint-example =
+    prettyprint-ListExpression
+
+  prettyprint-Boolean :
+    True() -> [ H(
+                  []
+                , [S("")]
+                )
+              ]
+
+  is-Boolean =
+    ?True()
+
+  prettyprint-Boolean :
+    False() -> [ H(
+                   []
+                 , [S("")]
+                 )
+               ]
+
+  is-Boolean =
+    ?False()
+
+  prettyprint-Event :
+    Event(t1__, t2__) -> [ H(
+                             [SOpt(HS(), "0")]
+                           , [S("<NAryOp operator=\"and\">")]
+                           )
+                         , t3__'
+                         , t4__'
+                         , t5__'
+                         , t1__'
+                         , t6__'
+                         , t7__'
+                         , t2__'
+                         , t8__'
+                         , H(
+                             [SOpt(HS(), "0")]
+                           , [S("</NAryOp>")]
+                           )
+                         ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t4__' := <pp-indent(|"4")> [S("<UnaryOp operator=\"not\">")]
+    with t5__' := <pp-indent(|"6")> [S("<operand>")]
+    with t1__' := <pp-indent(|"8")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t6__' := <pp-indent(|"6")> [S("</operand>")]
+    with t7__' := <pp-indent(|"4")> [S("</UnaryOp>")]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t8__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Event =
+    ?Event(_, _)
+
+  prettyprint-Operand :
+    EventOp(t1__) -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [t1__']
+                       )
+                     ]
+    with t1__' := <pp-one-Z(prettyprint-Event)> t1__
+
+  is-Operand =
+    ?EventOp(_)
+
+  prettyprint-Operand :
+    AndEvent(t1__, t2__) -> [ H(
+                                [SOpt(HS(), "0")]
+                              , [S("<NAryOp operator=\"and\">")]
+                              )
+                            , t3__'
+                            , t1__'
+                            , t2__'
+                            , t4__'
+                            , H(
+                                [SOpt(HS(), "0")]
+                              , [S("</NAryOp>")]
+                              )
+                            ]
+    with t3__' := <pp-indent(|"6")> [S("<operands>")]
+    with t1__' := <pp-indent(|"8")> [<pp-one-Z(prettyprint-Event)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"6")> [S("</operands>")]
+
+  is-Operand =
+    ?AndEvent(_, _)
+
+  prettyprint-Operand :
+    OrEvent(t1__, t2__) -> [ H(
+                               [SOpt(HS(), "0")]
+                             , [S("<NAryOp operator=\"or\">")]
+                             )
+                           , t3__'
+                           , t1__'
+                           , t2__'
+                           , t4__'
+                           , H(
+                               [SOpt(HS(), "0")]
+                             , [S("</NAryOp>")]
+                             )
+                           ]
+    with t3__' := <pp-indent(|"6")> [S("<operands>")]
+    with t1__' := <pp-indent(|"8")> [<pp-one-Z(prettyprint-Event)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"6")> [S("</operands>")]
+
+  is-Operand =
+    ?OrEvent(_, _)
+
+  prettyprint-Operand :
+    Event3(t1__, t2__) -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [S("<NAryOp operator=\"and\">")]
+                            )
+                          , t3__'
+                          , t4__'
+                          , t5__'
+                          , t6__'
+                          , t7__'
+                          , t1__'
+                          , t8__'
+                          , t9__'
+                          , t10__'
+                          , t11__'
+                          , t12__'
+                          , t13__'
+                          , t2__'
+                          , t14__'
+                          , t15__'
+                          , t16__'
+                          , H(
+                              [SOpt(HS(), "0")]
+                            , [S("</NAryOp>")]
+                            )
+                          ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t4__' := <pp-indent(|"4")> [S("<UnaryOp operator=\"not\">")]
+    with t5__' := <pp-indent(|"6")> [S("<operand>")]
+    with t6__' := <pp-indent(|"8")> [S("<UnaryOp operator=\"not\">")]
+    with t7__' := <pp-indent(|"10")> [S("<operand>")]
+    with t1__' := <pp-indent(|"12")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t8__' := <pp-indent(|"10")> [S("</operand>")]
+    with t9__' := <pp-indent(|"8")> [S("</UnaryOp>")]
+    with t10__' := <pp-indent(|"6")> [S("</operand>")]
+    with t11__' := <pp-indent(|"4")> [S("</UnaryOp>")]
+    with t12__' := <pp-indent(|"4")> [S("<UnaryOp operator=\"not\">")]
+    with t13__' := <pp-indent(|"6")> [S("<operand>")]
+    with t2__' := <pp-indent(|"8")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t14__' := <pp-indent(|"6")> [S("</operand>")]
+    with t15__' := <pp-indent(|"4")> [S("</UnaryOp>")]
+    with t16__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?Event3(_, _)
+
+  prettyprint-Operand :
+    And(t1__) -> [ H(
+                     [SOpt(HS(), "0")]
+                   , [S("<NAryOp operator=\"and\">")]
+                   )
+                 , t2__'
+                 , t1__'
+                 , t3__'
+                 , H(
+                     [SOpt(HS(), "0")]
+                   , [S("</NAryOp>")]
+                   )
+                 ]
+    with t2__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-H-list(prettyprint-Operand)> t1__]
+    with t3__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?And(_)
+
+  prettyprint-Operand :
+    Or(t1__) -> [ H(
+                    [SOpt(HS(), "0")]
+                  , [S("<NAryOp operator=\"or\">")]
+                  )
+                , t2__'
+                , t1__'
+                , t3__'
+                , H(
+                    [SOpt(HS(), "0")]
+                  , [S("</NAryOp>")]
+                  )
+                ]
+    with t2__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-H-list(prettyprint-Operand)> t1__]
+    with t3__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?Or(_)
+
+  prettyprint-Operand :
+    Imply(t1__, t2__) -> [ H(
+                             [SOpt(HS(), "0")]
+                           , [S("<NAryOp operator=\"or\">")]
+                           )
+                         , t3__'
+                         , t4__'
+                         , t5__'
+                         , t1__'
+                         , t6__'
+                         , t7__'
+                         , t2__'
+                         , t8__'
+                         , H(
+                             [SOpt(HS(), "0")]
+                           , [S("</NAryOp>")]
+                           )
+                         ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t4__' := <pp-indent(|"4")> [S("<UnaryOp operator=\"not\">")]
+    with t5__' := <pp-indent(|"6")> [S("<operand>")]
+    with t1__' := <pp-indent(|"8")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t6__' := <pp-indent(|"7")> [S("</operand>")]
+    with t7__' := <pp-indent(|"4")> [S("</UnaryOp>")]
+    with t2__' := <pp-indent(|"6")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t8__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?Imply(_, _)
+
+  prettyprint-Operand :
+    Negative(t1__) -> [ H(
+                          [SOpt(HS(), "0")]
+                        , [S("<UnaryOp operator=\"-\">")]
+                        )
+                      , t2__'
+                      , t1__'
+                      , t3__'
+                      , H(
+                          [SOpt(HS(), "0")]
+                        , [S("</UnaryOp>")]
+                        )
+                      ]
+    with t2__' := <pp-indent(|"2")> [S("<operand>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t3__' := <pp-indent(|"2")> [S("</operand>")]
+
+  is-Operand =
+    ?Negative(_)
+
+  prettyprint-Operand :
+    Xor(t1__, t2__) -> [ H(
+                           [SOpt(HS(), "0")]
+                         , [S("<UnaryOp operator=\"not\">")]
+                         )
+                       , t3__'
+                       , t4__'
+                       , t5__'
+                       , t1__'
+                       , t2__'
+                       , t6__'
+                       , t7__'
+                       , t8__'
+                       , H(
+                           [SOpt(HS(), "0")]
+                         , [S("</UnaryOp>")]
+                         )
+                       , H(
+                           []
+                         , [S("")]
+                         )
+                       ]
+    with t3__' := <pp-indent(|"2")> [S("<operand>")]
+    with t4__' := <pp-indent(|"4")> [S("<NAryOp operator=\"xor\">")]
+    with t5__' := <pp-indent(|"8")> [S("<operands>")]
+    with t1__' := <pp-indent(|"10")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t2__' := <pp-indent(|"10")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t6__' := <pp-indent(|"8")> [S("</operands>")]
+    with t7__' := <pp-indent(|"4")> [S("</NAryOp>")]
+    with t8__' := <pp-indent(|"2")> [S("</operand>")]
+
+  is-Operand =
+    ?Xor(_, _)
+
+  prettyprint-Operand :
+    NotOperand(t1__) -> [ H(
+                            [SOpt(HS(), "0")]
+                          , [S("<UnaryOp operator=\"not\">")]
+                          )
+                        , t2__'
+                        , t1__'
+                        , t3__'
+                        , H(
+                            [SOpt(HS(), "0")]
+                          , [S("</UnaryOp>")]
+                          )
+                        ]
+    with t2__' := <pp-indent(|"2")> [S("<operand>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t3__' := <pp-indent(|"2")> [S("</operand>")]
+
+  is-Operand =
+    ?NotOperand(_)
+
+  prettyprint-Operand :
+    GreaterThan(t1__, t2__) -> [ H(
+                                   [SOpt(HS(), "0")]
+                                 , [S("<BinaryOp operator=\"&gt;\">")]
+                                 )
+                               , t3__'
+                               , t1__'
+                               , t2__'
+                               , t4__'
+                               , H(
+                                   [SOpt(HS(), "0")]
+                                 , [S("</BinaryOp>")]
+                                 )
+                               ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?GreaterThan(_, _)
+
+  prettyprint-Operand :
+    GreaterThanOrEqual(t1__, t2__) -> [ H(
+                                          [SOpt(HS(), "0")]
+                                        , [S("<BinaryOp operator=\"&gt;=\">")]
+                                        )
+                                      , t3__'
+                                      , t1__'
+                                      , t2__'
+                                      , t4__'
+                                      , H(
+                                          [SOpt(HS(), "0")]
+                                        , [S("</BinaryOp>")]
+                                        )
+                                      ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?GreaterThanOrEqual(_, _)
+
+  prettyprint-Operand :
+    LessThan(t1__, t2__) -> [ H(
+                                [SOpt(HS(), "0")]
+                              , [S("<BinaryOp operator=\"&lt;\">")]
+                              )
+                            , t3__'
+                            , t1__'
+                            , t2__'
+                            , t4__'
+                            , H(
+                                [SOpt(HS(), "0")]
+                              , [S("</BinaryOp>")]
+                              )
+                            ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?LessThan(_, _)
+
+  prettyprint-Operand :
+    LessThanOrEqual(t1__, t2__) -> [ H(
+                                       [SOpt(HS(), "0")]
+                                     , [S("<BinaryOp operator=\"&lt;=\">")]
+                                     )
+                                   , t3__'
+                                   , t1__'
+                                   , t2__'
+                                   , t4__'
+                                   , H(
+                                       [SOpt(HS(), "0")]
+                                     , [S("</BinaryOp>")]
+                                     )
+                                   ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?LessThanOrEqual(_, _)
+
+  prettyprint-Operand :
+    Addiction(t1__, t2__) -> [ H(
+                                 [SOpt(HS(), "0")]
+                               , [S("<NAryOp operator=\"+\">")]
+                               )
+                             , t3__'
+                             , t1__'
+                             , t2__'
+                             , t4__'
+                             , H(
+                                 [SOpt(HS(), "0")]
+                               , [S("</NAryOp>")]
+                               )
+                             ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"6")> [S("</operands>")]
+
+  is-Operand =
+    ?Addiction(_, _)
+
+  prettyprint-Operand :
+    Subtraction(t1__, t2__) -> [ H(
+                                   [SOpt(HS(), "0")]
+                                 , [S("<BinaryOp operator=\"-\">")]
+                                 )
+                               , t3__'
+                               , t1__'
+                               , t2__'
+                               , t4__'
+                               , H(
+                                   [SOpt(HS(), "0")]
+                                 , [S("</BinaryOp>")]
+                                 )
+                               ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?Subtraction(_, _)
+
+  prettyprint-Operand :
+    Equal(t1__, t2__) -> [ H(
+                             [SOpt(HS(), "0")]
+                           , [S("<BinaryOp operator=\"=\">")]
+                           )
+                         , t3__'
+                         , t1__'
+                         , t2__'
+                         , t4__'
+                         , H(
+                             [SOpt(HS(), "0")]
+                           , [S("</BinaryOp>")]
+                           )
+                         ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?Equal(_, _)
+
+  prettyprint-Operand :
+    Different(t1__, t2__) -> [ H(
+                                 [SOpt(HS(), "0")]
+                               , [S("<BinaryOp operator=\"&lt;&gt;\">")]
+                               )
+                             , t3__'
+                             , t1__'
+                             , t2__'
+                             , t4__'
+                             , H(
+                                 [SOpt(HS(), "0")]
+                               , [S("</BinaryOp>")]
+                               )
+                             ]
+    with t3__' := <pp-indent(|"2")> [S("<operands>")]
+    with t1__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t1__]
+    with t2__' := <pp-indent(|"4")> [<pp-one-Z(prettyprint-Operand)> t2__]
+    with t4__' := <pp-indent(|"2")> [S("</operands>")]
+
+  is-Operand =
+    ?Different(_, _)
+
+  prettyprint-Operand :
+    IdExpressionOp(t1__) -> [ H(
+                                [SOpt(HS(), "0")]
+                              , [t1__']
+                              )
+                            ]
+    with t1__' := <pp-one-Z(prettyprint-IdExpression)> t1__
+
+  is-Operand =
+    ?IdExpressionOp(_)
+
+  prettyprint-Operand :
+    LastVariable(t1__) -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [S("<Last>")]
+                            )
+                          , t2__'
+                          , t1__'
+                          , t3__'
+                          , H(
+                              [SOpt(HS(), "0")]
+                            , [S("</Last>")]
+                            )
+                          ]
+    with t2__' := <pp-indent(|"2")> [S("<variable>")]
+    with t1__' := <pp-indent(|"4")> [ S("<ConstVarRef name=\"")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t1__
+                                    , S("\"/>")
+                                    ]
+    with t3__' := <pp-indent(|"2")> [S("</variable>")]
+
+  is-Operand =
+    ?LastVariable(_)
+
+  prettyprint-Operand :
+    ConstValue(t1__) -> [ H(
+                            [SOpt(HS(), "0")]
+                          , [ S("<ConstValue value=\"")
+                            , t1__'
+                            , S("\"/>")
+                            ]
+                          )
+                        ]
+    with t1__' := <pp-one-Z(prettyprint-Value)> t1__
+
+  is-Operand =
+    ?ConstValue(_)
+
+  prettyprint-Operand :
+    CallExpression(t1__, t2__) -> [ H(
+                                      [SOpt(HS(), "0")]
+                                    , [S("<CallExpression>")]
+                                    )
+                                  , t1__'
+                                  , t2__'
+                                  , H(
+                                      [SOpt(HS(), "0")]
+                                    , [S("</CallExpression>")]
+                                    )
+                                  ]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-CallExpressionOperator)> t1__]
+    with t2__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-CallParameters)> t2__]
+
+  is-Operand =
+    ?CallExpression(_, _)
+
+  prettyprint-Operand :
+    CaseOp(t1__, t2__, t3__) -> [ H(
+                                    [SOpt(HS(), "0")]
+                                  , [ S("<CaseOp name=\"")
+                                    , t1__'
+                                    , S("\">")
+                                    ]
+                                  )
+                                , t2__'
+                                , t3__'
+                                , H(
+                                    [SOpt(HS(), "0")]
+                                  , [S("</CaseOp>")]
+                                  )
+                                ]
+    with t1__' := <pp-one-Z(prettyprint-PragmaId)> t1__
+    with t2__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Switch)> t2__]
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Cases)> t3__]
+
+  is-Operand =
+    ?CaseOp(_, _, _)
+
+  prettyprint-Operand :
+    IfThenElseOp(t1__, t2__, t3__, t4__) -> [ H(
+                                                [SOpt(HS(), "0")]
+                                              , [ S("<IfThenElseOp name=\"")
+                                                , t1__'
+                                                , S("\">")
+                                                ]
+                                              )
+                                            , t2__'
+                                            , t3__'
+                                            , t4__'
+                                            , H(
+                                                [SOpt(HS(), "0")]
+                                              , [S("</IfThenElseOp>")]
+                                              )
+                                            ]
+    with t1__' := <pp-one-Z(prettyprint-PragmaId)> t1__
+    with t2__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-If)> t2__]
+    with t3__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Then)> t3__]
+    with t4__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Else)> t4__]
+
+  is-Operand =
+    ?IfThenElseOp(_, _, _, _)
+
+  prettyprint-CallExpressionOperator :
+    CallExpressionOperator(t1__, t2__) -> [ H(
+                                              [SOpt(HS(), "0")]
+                                            , [S("<operator>")]
+                                            )
+                                          , t1__'
+                                          , t3__'
+                                          , t2__'
+                                          , t4__'
+                                          , t5__'
+                                          , H(
+                                              [SOpt(HS(), "0")]
+                                            , [S("</operator>")]
+                                            )
+                                          ]
+    with t1__' := <pp-indent(|"2")> [ S("<OpCall name=\"")
+                                    , <pp-one-Z(prettyprint-INT)> t1__
+                                    , S("\">")
+                                    ]
+    with t3__' := <pp-indent(|"4")> [S("<operator>")]
+    with t2__' := <pp-indent(|"6")> [ S("<OperatorRef name=\"")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t2__
+                                    , S("\"/>")
+                                    ]
+    with t4__' := <pp-indent(|"4")> [S("</operator>")]
+    with t5__' := <pp-indent(|"2")> [S("</OpCall>")]
+
+  is-CallExpressionOperator =
+    ?CallExpressionOperator(_, _)
+
+  prettyprint-CallParameters :
+    CallParameters(t1__) -> [ H(
+                                [SOpt(HS(), "0")]
+                              , [S("<callParameters>")]
+                              )
+                            , t1__'
+                            , H(
+                                [SOpt(HS(), "0")]
+                              , [S("</callParameters>")]
+                              )
+                            ]
+    with t1__' := <pp-indent(|"2")> [<pp-H-list(prettyprint-IdExpression)> t1__]
+
+  is-CallParameters =
+    ?CallParameters(_)
+
+  prettyprint-Switch :
+    Switch(t1__) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("<switch>")]
+                      )
+                    , t1__'
+                    , t2__'
+                    ]
+    with t1__' := <pp-indent(|"6")> [<pp-one-Z(prettyprint-IdExpression)> t1__]
+    with t2__' := <pp-indent(|"4")> [S("</switch>")]
+
+  is-Switch =
+    ?Switch(_)
+
+  prettyprint-Cases :
+    Cases(t1__) -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("<cases>")]
+                     )
+                   , t1__'
+                   , H(
+                       [SOpt(HS(), "0")]
+                     , [S("</cases>")]
+                     )
+                   ]
+    with t1__' := <pp-indent(|"2")> [<pp-H-list(prettyprint-Case)> t1__]
+
+  is-Cases =
+    ?Cases(_)
+
+  prettyprint-Case :
+    Case(t1__, t2__) -> [ H(
+                            [SOpt(HS(), "0")]
+                          , [ S("<Case pattern=\"")
+                            , t1__'
+                            , S("\">")
+                            ]
+                          )
+                        , t3__'
+                        , t2__'
+                        , t4__'
+                        , t5__'
+                        ]
+    with t1__' := <pp-one-Z(prettyprint-PragmaId)> t1__
+    with t3__' := <pp-indent(|"4")> [S("<flow>")]
+    with t2__' := <pp-indent(|"10")> [<pp-one-Z(prettyprint-IdExpression)> t2__]
+    with t4__' := <pp-indent(|"7")> [S("</flow>")]
+    with t5__' := <pp-indent(|"3")> [S("</Case>")]
+
+  is-Case =
+    ?Case(_, _)
+
+  prettyprint-IdExpression :
+    IdExpression(t1__) -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [S("<IdExpression>")]
+                            )
+                          , t2__'
+                          , t1__'
+                          , t3__'
+                          , H(
+                              [SOpt(HS(), "0")]
+                            , [S("</IdExpression>")]
+                            )
+                          ]
+    with t2__' := <pp-indent(|"2")> [S("<path>")]
+    with t1__' := <pp-indent(|"4")> [ S("<ConstVarRef name=\"")
+                                    , <pp-one-Z(prettyprint-PragmaId)> t1__
+                                    , S("\"/>")
+                                    ]
+    with t3__' := <pp-indent(|"2")> [S("</path>")]
+
+  is-IdExpression =
+    ?IdExpression(_)
+
+  prettyprint-If :
+    If(t1__) -> [ H(
+                    [SOpt(HS(), "0")]
+                  , [S("<if>")]
+                  )
+                , t1__'
+                , H(
+                    [SOpt(HS(), "0")]
+                  , [S("</if>")]
+                  )
+                ]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-IdExpression)> t1__]
+
+  is-If =
+    ?If(_)
+
+  prettyprint-Then :
+    Then(t1__) -> [ H(
+                      [SOpt(HS(), "0")]
+                    , [S("<then>")]
+                    )
+                  , t1__'
+                  , H(
+                      [SOpt(HS(), "0")]
+                    , [S("</then>")]
+                    )
+                  ]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-ListExpression)> t1__]
+
+  is-Then =
+    ?Then(_)
+
+  prettyprint-Else :
+    Else(t1__) -> [ H(
+                      [SOpt(HS(), "0")]
+                    , [S("<else>")]
+                    )
+                  , t1__'
+                  , H(
+                      [SOpt(HS(), "0")]
+                    , [S("</else>")]
+                    )
+                  ]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-ListExpression)> t1__]
+
+  is-Else =
+    ?Else(_)
+
+  prettyprint-ListExpression :
+    ListExpression(t1__) -> [ H(
+                                [SOpt(HS(), "0")]
+                              , [S("<ListExpression>")]
+                              )
+                            , t2__'
+                            , t1__'
+                            , t3__'
+                            , t4__'
+                            ]
+    with t2__' := <pp-indent(|"4")> [S("<items>")]
+    with t1__' := <pp-indent(|"8")> [<pp-one-Z(prettyprint-IdExpression)> t1__]
+    with t3__' := <pp-indent(|"4")> [S("</items>")]
+    with t4__' := <pp-indent(|"2")> [S("</ListExpression>")]
+
+  is-ListExpression =
+    ?ListExpression(_)
+
+  is-Boolean =
+    fail
+
+  is-Event =
+    fail
+
+  is-Operand =
+    fail
+
+  is-CallExpressionOperator =
+    fail
+
+  is-CallParameters =
+    fail
+
+  is-Switch =
+    fail
+
+  is-Cases =
+    fail
+
+  is-Case =
+    fail
+
+  is-IdExpression =
+    fail
+
+  is-If =
+    fail
+
+  is-Then =
+    fail
+
+  is-Else =
+    fail
+
+  is-ListExpression =
+    fail

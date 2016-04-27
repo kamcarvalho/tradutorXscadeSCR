@@ -1,0 +1,36 @@
+
+module src-gen/completions/Assertion-esv
+
+imports
+  src-gen/completions/Common-esv
+  src-gen/completions/Operand-esv
+
+completions
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_PragmaId\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_" <PragmaId:PragmaId> "\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_mSpeed_min\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_mSpeed_min\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_mSpeed_max\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_mSpeed_max\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_tDesiredSpeed_min\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_tDesiredSpeed_min\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_tDesiredSpeed_max\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_tDesiredSpeed_max\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_L_in_mSpeed_min\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_L_in_mSpeed_min\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_L_in_mSpeed_max\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_L_in_mSpeed_max\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_L_last_tDesiredSpeed_min\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_L_last_tDesiredSpeed_min\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_L_last_tDesiredSpeed_max\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_L_last_tDesiredSpeed_max\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_L_in_tDesiredSpeed_min\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_L_in_tDesiredSpeed_min\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Assertion : "<Assertion kind=\"guarantee\" name=\"G_L_in_tDesiredSpeed_max\"> <definition> Operand </definition> Pragmas </Assertion>" =
+    "<Assertion kind=\"guarantee\" name=\"G_L_in_tDesiredSpeed_max\">\n\t<definition>\n\t\t" <Operand:Operand> "\n\t</definition>\n\t\t" <Pragmas:Pragmas> "\n</Assertion>" (blank)  
+  completion template Pragmas : "<pragmas> <ed:Assertion oid=\"!ed/guarantee/min/PragmaId/PragmaId\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Assertion oid=\"!ed/guarantee/min/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "\"/>\n</pragmas>" (blank)  
+  completion template Pragmas : "<pragmas> <ed:Assertion oid=\"!ed/guarantee/max/PragmaId/PragmaId\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Assertion oid=\"!ed/guarantee/max/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "\"/>\n</pragmas>" (blank)  
+  completion template Pragmas : "<pragmas> <ed:Assertion oid=\"!ed/guarantee/PragmaId\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Assertion oid=\"!ed/guarantee/" <PragmaId:PragmaId> "\"/>\n</pragmas>" (blank)  

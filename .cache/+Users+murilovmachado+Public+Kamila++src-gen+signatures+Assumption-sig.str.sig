@@ -1,0 +1,1 @@
+Module("src-gen/signatures/Assumption-sig",[Imports([(),()]),Signature([Constructors([OpDecl("Assumption",FunType([ConstType(SortNoArgs("PragmaId")),ConstType(SortNoArgs("Operand")),ConstType(SortNoArgs("Pragmas"))],ConstType(SortNoArgs("Assumption")))),OpDecl("pragma",FunType([ConstType(SortNoArgs("PragmaId"))],ConstType(SortNoArgs("Pragmas"))))])])])

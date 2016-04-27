@@ -1,0 +1,22 @@
+
+module src-gen/completions/Equation-esv
+
+imports
+  src-gen/completions/Common-esv
+  src-gen/completions/Operand-esv
+
+completions
+  completion template Equation : "<Equation> Lefts Right Pragma </Equation>" =
+    "<Equation>\n\t" <Lefts:Lefts> "\n\t" <Right:Right> "\n\t" <Pragma:Pragma> "\n</Equation>" (blank)  
+  completion template Lefts : "<lefts> <VariableRef name=\"PragmaId\"/> </lefts>" =
+    "<lefts>\n\t<VariableRef name=\"" <PragmaId:PragmaId> "\"/>\n</lefts>" (blank)  
+  completion template Right : "<right> Operand </right>" =
+    "<right>\n\t" <Operand:Operand> "\n</right>" (blank)                                      
+  completion template Pragma : "<pragmas> <ed:Equation oid=\"!ed/Expr/PragmaId/PragmaId\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Equation oid=\"!ed/Expr/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "\"/>\n</pragmas>" (blank)  
+  completion template Pragma : "<pragmas> <ed:Equation oid=\"!ed/PragmaId/PragmaId\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Equation oid=\"!ed/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "\"/>\n</pragmas>" (blank)  
+  completion template Pragma : "<pragmas> <ed:Equation oid=\"!ed/PragmaId/PragmaId/PragmaId/INT\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Equation oid=\"!ed/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "/" <PragmaId:PragmaId> "/" <INT:INT> "\"/>\n</pragmas>" (blank)  
+  completion template Pragma : "<pragmas> <ed:Variable oid=\"!ed/tOverridden/IF/2\"/> </pragmas>" =
+    "<pragmas>\n\t<ed:Variable oid=\"!ed/tOverridden/IF/2\"/>\n</pragmas>" (blank)  

@@ -1,0 +1,1 @@
+Module("src-gen/pp/Assumption-pp",[Imports([(),(),()]),Imports([(),()]),Imports([(),()]),Strategies([SDefT("prettyprint-example",[],[],[]),SDefT("prettyprint-example",[],[],[]),SDefT("prettyprint-Assumption",[],[],[]),SDefT("is-Assumption",[],[],[]),SDefT("prettyprint-Pragmas",[],[],[]),SDefT("is-Pragmas",[],[],[]),SDefT("is-Assumption",[],[],[]),SDefT("is-Pragmas",[],[],[])])])

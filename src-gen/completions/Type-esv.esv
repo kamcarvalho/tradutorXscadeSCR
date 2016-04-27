@@ -1,0 +1,10 @@
+
+module src-gen/completions/Type-esv
+
+imports
+  src-gen/completions/Common-esv
+  src-gen/completions/NamedType-esv
+
+completions
+  completion template Type : "<Type name=\"PragmaId\"> <definition> NamedType </definition> <pragmas> <ed:Type oid=\"!ed/type/PragmaId\" /> </pragmas> </Type>" =
+    "<Type name=\"" <PragmaId:PragmaId> "\">\n\t<definition>\n\t\t" <NamedType:NamedType> "\n\t</definition>\n\t<pragmas>\n\t\t<ed:Type oid=\"!ed/type/" <PragmaId:PragmaId> "\" />\n\t</pragmas>\n</Type>" (blank)  

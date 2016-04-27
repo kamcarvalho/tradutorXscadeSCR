@@ -1,0 +1,1 @@
+Module("src-gen/pp/Type-pp",[Imports([(),(),()]),Imports([(),()]),Imports([(),()]),Strategies([SDefT("prettyprint-example",[],[],[]),SDefT("prettyprint-Type",[],[],[]),SDefT("is-Type",[],[],[]),SDefT("is-Type",[],[],[])])])

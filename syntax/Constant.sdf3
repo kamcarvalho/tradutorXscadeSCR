@@ -1,0 +1,38 @@
+module Constant
+
+imports
+ Common
+ NamedType
+ 
+ context-free syntax
+ 	Constant.Constant = [
+		<Constant name="[ID]">
+			<type>
+				[NamedType]
+			</type>
+			<value>
+				<ConstValue value="[Value]"/>
+			</value>
+			<pragmas>
+				<ed:Constant oid="!ed/Constant/[ID]"/>
+			</pragmas>
+		</Constant>
+	]
+	
+		Constant.Constant2 = [
+		<Constant name="[ID]">
+			<type>
+				[NamedType]
+			</type>
+			<value>
+				<UnaryOp operator="-">
+					<operand>
+						<ConstValue value="[Value]"/>
+					</operand>
+				</UnaryOp>
+			</value>
+			<pragmas>
+				<ed:Constant oid="!ed/Constant/[ID]"/>
+			</pragmas>
+		</Constant>
+	]

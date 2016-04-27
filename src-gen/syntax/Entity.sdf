@@ -1,0 +1,12 @@
+module Entity
+imports Common Package Java
+
+exports
+  context-free start-symbols
+    Start
+
+  context-free syntax
+    Package -> Start {cons("Main")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Start {cons("COMPLETION-Start")}

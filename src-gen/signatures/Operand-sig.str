@@ -1,0 +1,45 @@
+module src-gen/signatures/Operand-sig
+
+imports
+  src-gen/signatures/Common-sig
+
+
+signature
+  constructors
+    True                   : Boolean
+    False                  : Boolean
+    Event                  : Operand * Operand -> Event
+    EventOp                : Event -> Operand
+    AndEvent               : Event * Operand -> Operand
+    OrEvent                : Event * Operand -> Operand
+    Event3                 : Operand * Operand -> Operand
+    And                    : List(Operand) -> Operand
+    Or                     : List(Operand) -> Operand
+    Imply                  : Operand * Operand -> Operand
+    Negative               : Operand -> Operand
+    Xor                    : Operand * Operand -> Operand
+    NotOperand             : Operand -> Operand
+    GreaterThan            : Operand * Operand -> Operand
+    GreaterThanOrEqual     : Operand * Operand -> Operand
+    LessThan               : Operand * Operand -> Operand
+    LessThanOrEqual        : Operand * Operand -> Operand
+    Addiction              : Operand * Operand -> Operand
+    Subtraction            : Operand * Operand -> Operand
+    Equal                  : Operand * Operand -> Operand
+    Different              : Operand * Operand -> Operand
+    IdExpressionOp         : IdExpression -> Operand
+    LastVariable           : PragmaId -> Operand
+    ConstValue             : Value -> Operand
+    CallExpression         : CallExpressionOperator * CallParameters -> Operand
+    CaseOp                 : PragmaId * Switch * Cases -> Operand
+    IfThenElseOp           : PragmaId * If * Then * Else -> Operand
+    CallExpressionOperator : INT * PragmaId -> CallExpressionOperator
+    CallParameters         : List(IdExpression) -> CallParameters
+    Switch                 : IdExpression -> Switch
+    Cases                  : List(Case) -> Cases
+    Case                   : PragmaId * IdExpression -> Case
+    IdExpression           : PragmaId -> IdExpression
+    If                     : IdExpression -> If
+    Then                   : ListExpression -> Then
+    Else                   : ListExpression -> Else
+    ListExpression         : IdExpression -> ListExpression

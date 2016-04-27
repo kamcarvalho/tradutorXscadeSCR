@@ -1,0 +1,1 @@
+Module("generate",[Imports([(),(),(),(),()]),Rules([SDefT("generate-java",[],[],[]),SDefT("generate-scr",[],[],[])]),Rules([SDefT("to-scr",[],[],[]),SDefT("to-package",[],[],[]),SDefT("to-declarations",[],[],[])])])

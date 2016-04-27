@@ -1,0 +1,73 @@
+
+module src-gen/completions/Operand-esv
+
+imports
+  src-gen/completions/Common-esv
+
+completions
+  completion template Event : "<NAryOp operator=\"and\"> <operands> <UnaryOp operator=\"not\"> <operand> Operand </operand> </UnaryOp> Operand </operands> </NAryOp>" =
+    "<NAryOp operator=\"and\">\n\t<operands>\n\t\t<UnaryOp operator=\"not\">\n\t\t\t<operand>\n\t\t\t\t" <Operand:Operand> "\n\t\t\t</operand>\n\t\t</UnaryOp>\n\t\t" <Operand:Operand> "\n\t</operands>\n</NAryOp>" (blank)                        
+  completion template Operand : "<NAryOp operator=\"and\"> <operands> Event Operand </operands> </NAryOp>" =
+    "<NAryOp operator=\"and\">\n\t\t\t<operands>\n\t\t\t\t" <Event:Event> "\n\t\t" <Operand:Operand> "\n\t\t\t</operands>\n</NAryOp>" (blank)                                                                                                                                                                  
+  completion template Operand : "<NAryOp operator=\"or\"> <operands> Event Operand </operands> </NAryOp>" =
+    "<NAryOp operator=\"or\">\n\t\t\t<operands>\n\t\t\t\t" <Event:Event> "\n\t\t" <Operand:Operand> "\n\t\t\t</operands>\n</NAryOp>" (blank)                                                                                                                                                                    
+  completion template Operand : "<NAryOp operator=\"and\"> <operands> <UnaryOp operator=\"not\"> <operand> <UnaryOp operator=\"not\"> <operand> Operand </operand> </UnaryOp> </operand> </UnaryOp> <UnaryOp operator=\"not\"> <operand> Operand </operand> </UnaryOp> </operands> </NAryOp>" =
+    "<NAryOp operator=\"and\">\n\t<operands>\n\t\t<UnaryOp operator=\"not\">\n\t\t\t<operand>\n\t\t\t\t<UnaryOp operator=\"not\">\n\t\t\t\t\t<operand>\n\t\t\t\t\t\t" <Operand:Operand> "\n\t\t\t\t\t</operand>\n\t\t\t\t</UnaryOp>\n\t\t\t</operand>\n\t\t</UnaryOp>\n\t\t<UnaryOp operator=\"not\">\n\t\t\t<operand>\n\t\t\t\t" <Operand:Operand> "\n\t\t\t</operand>\n\t\t</UnaryOp>\n\t</operands>\n</NAryOp>" (blank)  
+  completion template Operand : "<NAryOp operator=\"and\"> <operands> </operands> </NAryOp>" =
+    "<NAryOp operator=\"and\">\n\t<operands>\n\t\t" (cursor) "\n\t</operands>\n</NAryOp>" (blank)                                                                                                                                                                                                                            
+  completion template Operand : "<NAryOp operator=\"or\"> <operands> </operands> </NAryOp>" =
+    "<NAryOp operator=\"or\">\n\t<operands>\n\t\t" (cursor) "\n\t</operands>\n</NAryOp>" (blank)                                                                                                                                                                                                                              
+  completion template Operand : "<NAryOp operator=\"or\"> <operands> <UnaryOp operator=\"not\"> <operand> Operand </operand> </UnaryOp> Operand </operands> </NAryOp>" =
+    "<NAryOp operator=\"or\">\n\t<operands>\n\t\t<UnaryOp operator=\"not\">\n\t\t\t<operand>\n\t\t\t\t" <Operand:Operand> "\n\t\t\t </operand>\n\t\t</UnaryOp>\n\t\t\t" <Operand:Operand> "\n\t</operands>\n</NAryOp>" (blank)                     
+  completion template Operand : "<UnaryOp operator=\"-\"> <operand> Operand </operand> </UnaryOp>" =
+    "<UnaryOp operator=\"-\">\n\t<operand>\n\t\t" <Operand:Operand> "\n\t</operand>\n</UnaryOp>" (blank)                                                                                                                                                                                                               
+  completion template Operand : "<UnaryOp operator=\"not\"> <operand> <NAryOp operator=\"xor\"> <operands> Operand Operand </operands> </NAryOp> </operand> </UnaryOp> " =
+    "<UnaryOp operator=\"not\">\n\t<operand>\n\t\t<NAryOp operator=\"xor\">\n\t\t\t\t<operands>\n\t\t\t\t\t" <Operand:Operand> "\n\t\t\t\t\t" <Operand:Operand> "\n\t\t\t\t</operands>\n\t\t</NAryOp>\n\t</operand>\n</UnaryOp>\n" (blank)       
+  completion template Operand : "<UnaryOp operator=\"not\"> <operand> Operand </operand> </UnaryOp>" =
+    "<UnaryOp operator=\"not\">\n\t<operand>\n\t\t" <Operand:Operand> "\n\t</operand>\n</UnaryOp>" (blank)                                                                                                                                                                                                           
+  completion template Operand : "<BinaryOp operator=\"&gt;\"> <operands> Operand Operand </operands> </BinaryOp>" =
+    "<BinaryOp operator=\"&gt;\">\n\t<operands>\n\t\t" <Operand:Operand> "\n\t\t" <Operand:Operand> "\n\t</operands>\n</BinaryOp>" (blank)                                                                                                                                                              
+  completion template Operand : "<BinaryOp operator=\"&gt;=\"> <operands> Operand Operand </operands> </BinaryOp>" =
+    "<BinaryOp operator=\"&gt;=\">\n\t<operands>\n\t\t" <Operand:Operand> "\n\t\t" <Operand:Operand> "\n\t</operands>\n</BinaryOp>" (blank)                                                                                                                                                            
+  completion template Operand : "<BinaryOp operator=\"&lt;\"> <operands> Operand Operand </operands> </BinaryOp>" =
+    "<BinaryOp operator=\"&lt;\">\n\t<operands>\n\t\t" <Operand:Operand> "\n\t\t" <Operand:Operand> "\n\t</operands>\n</BinaryOp>" (blank)                                                                                                                                                              
+  completion template Operand : "<BinaryOp operator=\"&lt;=\"> <operands> Operand Operand </operands> </BinaryOp>" =
+    "<BinaryOp operator=\"&lt;=\">\n\t<operands>\n\t\t" <Operand:Operand> "\n\t\t" <Operand:Operand> "\n\t</operands>\n</BinaryOp>" (blank)                                                                                                                                                            
+  completion template Operand : "<NAryOp operator=\"+\"> <operands> Operand Operand </operands> </NAryOp>" =
+    "<NAryOp operator=\"+\">\n\t<operands>\n\t\t" <Operand:Operand> "\n\t\t" <Operand:Operand> "\n\t\t\t</operands>\n</NAryOp>" (blank)                                                                                                                                                                        
+  completion template Operand : "<BinaryOp operator=\"-\"> <operands> Operand Operand </operands> </BinaryOp>" =
+    "<BinaryOp operator=\"-\">\n\t<operands>\n\t\t" <Operand:Operand> "\n\t\t" <Operand:Operand> "\n\t</operands>\n</BinaryOp>" (blank)                                                                                                                                                                    
+  completion template Operand : "<BinaryOp operator=\"=\"> <operands> Operand Operand </operands> </BinaryOp>" =
+    "<BinaryOp operator=\"=\">\n\t<operands>\n\t\t" <Operand:Operand> "\n\t\t" <Operand:Operand> "\n\t</operands>\n</BinaryOp>" (blank)                                                                                                                                                                    
+  completion template Operand : "<BinaryOp operator=\"&lt;&gt;\"> <operands> Operand Operand </operands> </BinaryOp>" =
+    "<BinaryOp operator=\"&lt;&gt;\">\n\t<operands>\n\t\t" <Operand:Operand> "\n\t\t" <Operand:Operand> "\n\t</operands>\n</BinaryOp>" (blank)                                                                                                                                                      
+  completion template Operand : "<Last> <variable> <ConstVarRef name=\"PragmaId\"/> </variable> </Last>" =
+    "<Last>\n\t<variable>\n\t\t<ConstVarRef name=\"" <PragmaId:PragmaId> "\"/>\n\t</variable>\n</Last>" (blank)                                                                                                                                                                                                  
+  completion template Operand : "<ConstValue value=\"Value\"/>" =
+    "<ConstValue value=\"" <Value:Value> "\"/>" (blank)                                                                                                                                                                                                                                                                                                   
+  completion template Operand : "<CallExpression> CallExpressionOperator CallParameters </CallExpression>" =
+    "<CallExpression>\n\t" <CallExpressionOperator:CallExpressionOperator> "\n\t" <CallParameters:CallParameters> "\n</CallExpression>" (blank)                                                                                                                                                                
+  completion template Operand : "<CaseOp name=\"PragmaId\"> Switch Cases </CaseOp>" =
+    "<CaseOp name=\"" <PragmaId:PragmaId> "\">\n\t" <Switch:Switch> "\n\t" <Cases:Cases> "\n</CaseOp>" (blank)                                                                                                                                                                                                                        
+  completion template Operand : "<IfThenElseOp name=\"PragmaId\"> If Then Else </IfThenElseOp>" =
+    "<IfThenElseOp name=\"" <PragmaId:PragmaId> "\">\n\t" <If:If> "\n\t" <Then:Then> "\n\t" <Else:Else> "\n</IfThenElseOp>" (blank)                                                                                                                                                                                       
+  completion template CallExpressionOperator : "<operator> <OpCall name=\"INT\"> <operator> <OperatorRef name=\"PragmaId\"/> </operator> </OpCall> </operator>" =
+    "<operator>\n\t<OpCall name=\"" <INT:INT> "\">\n\t\t<operator>\n\t\t\t<OperatorRef name=\"" <PragmaId:PragmaId> "\"/>\n\t\t</operator>\n\t</OpCall>\n</operator>" (blank)                                                                             
+  completion template CallParameters : "<callParameters> </callParameters>" =
+    "<callParameters>\n\t" (cursor) "\n</callParameters>" (blank)                                                                                                                                                                                                                                                                             
+  completion template Switch : "<switch> IdExpression </switch>" =
+    "<switch>\n\t\t\t" <IdExpression:IdExpression> "\n\t\t</switch>" (blank)                                                                                                                                                                                                                                                                             
+  completion template Cases : "<cases> </cases>" =
+    "<cases>\n\t" (cursor) "\n</cases>" (blank)                                                                                                                                                                                                                                                                                                                          
+  completion template Case : "<Case pattern=\"PragmaId\"> <flow> IdExpression </flow> </Case>" =
+    "<Case pattern=\"" <PragmaId:PragmaId> "\">\n\t\t<flow>\n\t\t\t\t\t" <IdExpression:IdExpression> "\n\t\t\t </flow>\n\t </Case>" (blank)                                                                                                                                                                                
+  completion template IdExpression : "<IdExpression> <path> <ConstVarRef name=\"PragmaId\"/> </path> </IdExpression>" =
+    "<IdExpression>\n\t<path>\n\t\t<ConstVarRef name=\"" <PragmaId:PragmaId> "\"/>\n\t</path>\n</IdExpression>" (blank)                                                                                                                                                                             
+  completion template If : "<if> IdExpression </if>" =
+    "<if>\n\t" <IdExpression:IdExpression> "\n</if>" (blank)                                                                                                                                                                                                                                                                                                         
+  completion template Then : "<then> ListExpression </then>" =
+    "<then>\n\t" <ListExpression:ListExpression> "\n</then>" (blank)                                                                                                                                                                                                                                                                                         
+  completion template Else : "<else> ListExpression </else>" =
+    "<else>\n\t" <ListExpression:ListExpression> "\n</else>" (blank)                                                                                                                                                                                                                                                                                         
+  completion template ListExpression : "<ListExpression> <items> IdExpression </items> </ListExpression>" =
+    "<ListExpression>\n\t\t<items>\n\t\t\t\t" <IdExpression:IdExpression> "\n\t\t</items>\n\t</ListExpression>" (blank)                                                                                                                                                                                         

@@ -1,0 +1,18 @@
+module Type
+
+imports
+ Common
+ NamedType
+ 
+ context-free syntax
+ 	Type.Type = [
+		<Type name="[PragmaId]">
+			<definition>
+				[NamedType]
+			</definition>
+			<pragmas>
+				<ed:Type oid="!ed/type/[PragmaId]" />
+			</pragmas>
+		</Type>
+	]
+	

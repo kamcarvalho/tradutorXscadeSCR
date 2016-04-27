@@ -1,0 +1,14 @@
+module src-gen/signatures/NamedType-sig
+
+imports
+  src-gen/signatures/Common-sig
+
+
+signature
+  constructors
+    Int        : NamedType
+    Bool       : NamedType
+    Real       : NamedType
+    CustomType : PragmaId * IgnoreSpace -> NamedType
+    Enum       : List(EnumValue) -> NamedType
+    EnumValue  : PragmaId * PragmaId -> EnumValue

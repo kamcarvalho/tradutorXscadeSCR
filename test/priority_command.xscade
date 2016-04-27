@@ -1,0 +1,2558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<File xmlns="http://www.esterel-technologies.com/ns/scade/3" xmlns:ed="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3" xmlns:kcg="http://www.esterel-technologies.com/ns/scade/pragmas/codegen/1">
+<declarations>
+	<Package name="the_priority_logic_function">
+	<declarations>
+		
+		
+		<Operator kind="node" name="c__the_command_in_control_output">
+			<inputs> 
+				<Variable name="c_cond__the_command_in_control_output"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="int"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c__the_command_in_control_output_c_cond__the_command_in_control_output"/>
+					</pragmas>
+				</Variable>
+				<Variable name="c_event__the_command_in_control_output"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="int"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c__the_command_in_control_output_c_event__the_command_in_control_output"/>
+					</pragmas>
+				</Variable>
+				<Variable name="c__the_command_in_control_output"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="int"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c__the_command_in_control_output_c__the_command_in_control_output"/>
+					</pragmas>
+				</Variable>
+				
+			</inputs>
+			<outputs>
+				<Variable name="out_c__the_command_in_control_output"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="int"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c__the_command_in_control_output_out_c__the_command_in_control_output"/>
+					</pragmas>
+				</Variable>
+				
+			</outputs>
+			<locals> 
+				<Variable name="L_c__the_command_in_control_output_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c__the_command_in_control_output/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c__the_command_in_control_output_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c__the_command_in_control_output/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c__the_command_in_control_output_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c__the_command_in_control_output/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c__the_command_in_control_output_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c__the_command_in_control_output/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c__the_command_in_control_output_Choice_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c__the_command_in_control_output/Choice/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c__the_command_in_control_output_True_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c__the_command_in_control_output/True/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c__the_command_in_control_output_IF_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c__the_command_in_control_output/IF/2"/>
+				</pragmas>
+				</Variable>
+				
+				
+				
+			</locals>
+			<data> 
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c__the_command_in_control_output_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c__the_command_in_control_output_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c__the_command_in_control_output_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c__the_command_in_control_output_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c__the_command_in_control_output_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c__the_command_in_control_output/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c__the_command_in_control_output_Choice_0"/>
+					</lefts>
+					<right>
+						<BinaryOp operator="&lt;&gt;">
+							<operands> 
+						  	<Last>
+						  		<variable>
+						  			<ConstVarRef name="c_cond__the_command_in_control_output"/>
+						  		</variable>
+						  	</Last>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="c_cond__the_command_in_control_output"/>
+							</path>
+							</IdExpression>
+						</operands>
+						</BinaryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c__the_command_in_control_output/Choice/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c__the_command_in_control_output_True_0"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="c_cond__the_command_in_control_output"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c__the_command_in_control_output/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c__the_command_in_control_output_IF_1"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c__the_command_in_control_output_1">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c__the_command_in_control_output_Choice_1"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c__the_command_in_control_output_True_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c__the_command_in_control_output_IF_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c__the_command_in_control_output/ifThenElse/1"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c__the_command_in_control_output_Choice_1"/>
+					</lefts>
+					<right>
+						<BinaryOp operator="&lt;&gt;">
+							<operands> 
+						  	<Last>
+						  		<variable>
+						  			<ConstVarRef name="c_event__the_command_in_control_output"/>
+						  		</variable>
+						  	</Last>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="c_event__the_command_in_control_output"/>
+							</path>
+							</IdExpression>
+						</operands>
+						</BinaryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c__the_command_in_control_output/Choice/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c__the_command_in_control_output_True_1"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="c_event__the_command_in_control_output"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c__the_command_in_control_output/True/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c__the_command_in_control_output_IF_2"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="c__the_command_in_control_output"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c__the_command_in_control_output/IF/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="out_c__the_command_in_control_output"/>
+				</lefts>
+				<right>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="L_c__the_command_in_control_output_IF_0"/>
+						</path>
+					</IdExpression>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c__the_command_in_control_output/IF/0"/>
+				</pragmas>
+				</Equation>
+				
+			</data>
+			<pragmas>
+				<ed:Operator oid="!ed/op_c__the_command_in_control_output">
+					<diagrams> 
+						<TextDiagram name="diagram_c__the_command_in_control_output" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/c__the_command_in_control_output">
+							<presentationElements>
+								<FlowTE presentable="!ed/Expr/c__the_command_in_control_output/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/c__the_command_in_control_output/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/c__the_command_in_control_output/True/0"/> 
+								<FlowTE presentable="!ed/Expr/c__the_command_in_control_output/ifThenElse/1"/> 
+								<FlowTE presentable="!ed/Expr/c__the_command_in_control_output/Choice/1"/>
+								<FlowTE presentable="!ed/Expr/c__the_command_in_control_output/True/1"/> 
+								<FlowTE presentable="!ed/Expr/c__the_command_in_control_output/IF/2"/>
+								<FlowTE presentable="!ed/Expr/c__the_command_in_control_output/IF/0"/>
+							</presentationElements>
+						</TextDiagram>
+					</diagrams>
+				</ed:Operator>
+			</pragmas>
+		</Operator>
+		<Operator kind="function" name="c_cond__the_command_in_control_output">
+			<inputs> 
+				<Variable name="m__the_right_command"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_cond__the_command_in_control_output_m__the_right_command"/>
+					</pragmas>
+				</Variable>
+				<Variable name="m__the_left_command"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_cond__the_command_in_control_output_m__the_left_command"/>
+					</pragmas>
+				</Variable>
+				<Variable name="m__the_right_priority_button"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_cond__the_command_in_control_output_m__the_right_priority_button"/>
+					</pragmas>
+				</Variable>
+				<Variable name="m__the_left_priority_button"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_cond__the_command_in_control_output_m__the_left_priority_button"/>
+					</pragmas>
+				</Variable>
+				<Variable name="c_cond__the_command_in_control_output"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="int"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_cond__the_command_in_control_output_c_cond__the_command_in_control_output"/>
+					</pragmas>
+				</Variable>
+				
+			</inputs>
+			<outputs>
+				<Variable name="out_c_cond__the_command_in_control_output"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="int"/>
+							</type>
+						</NamedType>
+					</type> 
+					
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_cond__the_command_in_control_output_out_c_cond__the_command_in_control_output"/>
+					</pragmas>
+				</Variable>
+				
+			</outputs>
+			<locals> 
+				<Variable name="L_c_cond__the_command_in_control_output_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_Choice_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/Choice/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_True_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/True/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_IF_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/IF/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_Choice_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/Choice/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_True_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/True/2"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_IF_3">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/IF/3"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_Choice_3">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/Choice/3"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_True_3">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/True/3"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_IF_4">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/IF/4"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_Choice_4">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/Choice/4"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_True_4">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/True/4"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_IF_5">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/IF/5"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_Choice_5">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/Choice/5"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_True_5">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/True/5"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_cond__the_command_in_control_output_IF_6">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_cond__the_command_in_control_output/IF/6"/>
+				</pragmas>
+				</Variable>
+				
+				
+				
+				
+				
+				
+				
+			</locals>
+			<data> 
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c_cond__the_command_in_control_output_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c_cond__the_command_in_control_output_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c_cond__the_command_in_control_output_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<NAryOp operator="and">
+								<operands>
+								<NAryOp operator="and">
+									<operands>
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_right_command"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_left_command"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+								</operands>
+								</NAryOp>
+								<UnaryOp operator="not">
+									<operand>
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_right_priority_button"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+								</operand>
+								</UnaryOp>
+							</operands>
+							</NAryOp>
+							<UnaryOp operator="not">
+								<operand>
+								<BinaryOp operator="=">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="m__the_left_priority_button"/>
+										</path>
+										</IdExpression>
+									<ConstValue value="true"/>
+								</operands>
+								</BinaryOp>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/Choice/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_True_0"/>
+					</lefts>
+					<right>
+						<ConstValue value="0"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c_cond__the_command_in_control_output_IF_1"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c_cond__the_command_in_control_output_1">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c_cond__the_command_in_control_output_Choice_1"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_True_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_IF_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/1"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_Choice_1"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<NAryOp operator="and">
+								<operands>
+								<NAryOp operator="and">
+									<operands>
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_right_command"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+									<UnaryOp operator="not">
+										<operand>
+										<BinaryOp operator="=">
+											<operands>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="m__the_left_command"/>
+												</path>
+												</IdExpression>
+											<ConstValue value="true"/>
+										</operands>
+										</BinaryOp>
+									</operand>
+									</UnaryOp>
+								</operands>
+								</NAryOp>
+								<UnaryOp operator="not">
+									<operand>
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_right_priority_button"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+								</operand>
+								</UnaryOp>
+							</operands>
+							</NAryOp>
+							<UnaryOp operator="not">
+								<operand>
+								<BinaryOp operator="=">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="m__the_left_priority_button"/>
+										</path>
+										</IdExpression>
+									<ConstValue value="true"/>
+								</operands>
+								</BinaryOp>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/Choice/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_True_1"/>
+					</lefts>
+					<right>
+						<ConstValue value="1"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/True/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c_cond__the_command_in_control_output_IF_2"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c_cond__the_command_in_control_output_2">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c_cond__the_command_in_control_output_Choice_2"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_True_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_IF_3"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/2"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_Choice_2"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<NAryOp operator="and">
+								<operands>
+								<NAryOp operator="and">
+									<operands>
+									<UnaryOp operator="not">
+										<operand>
+										<BinaryOp operator="=">
+											<operands>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="m__the_right_command"/>
+												</path>
+												</IdExpression>
+											<ConstValue value="true"/>
+										</operands>
+										</BinaryOp>
+									</operand>
+									</UnaryOp>
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_left_command"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+								</operands>
+								</NAryOp>
+								<UnaryOp operator="not">
+									<operand>
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_right_priority_button"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+								</operand>
+								</UnaryOp>
+							</operands>
+							</NAryOp>
+							<UnaryOp operator="not">
+								<operand>
+								<BinaryOp operator="=">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="m__the_left_priority_button"/>
+										</path>
+										</IdExpression>
+									<ConstValue value="true"/>
+								</operands>
+								</BinaryOp>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/Choice/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_True_2"/>
+					</lefts>
+					<right>
+						<ConstValue value="2"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/True/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c_cond__the_command_in_control_output_IF_3"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c_cond__the_command_in_control_output_3">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c_cond__the_command_in_control_output_Choice_3"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_True_3"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_IF_4"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/3"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_Choice_3"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<NAryOp operator="and">
+								<operands>
+								<NAryOp operator="and">
+									<operands>
+									<UnaryOp operator="not">
+										<operand>
+										<BinaryOp operator="=">
+											<operands>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="m__the_right_command"/>
+												</path>
+												</IdExpression>
+											<ConstValue value="true"/>
+										</operands>
+										</BinaryOp>
+									</operand>
+									</UnaryOp>
+									<UnaryOp operator="not">
+										<operand>
+										<BinaryOp operator="=">
+											<operands>
+												<IdExpression>
+													<path>
+														<ConstVarRef name="m__the_left_command"/>
+												</path>
+												</IdExpression>
+											<ConstValue value="true"/>
+										</operands>
+										</BinaryOp>
+									</operand>
+									</UnaryOp>
+								</operands>
+								</NAryOp>
+								<UnaryOp operator="not">
+									<operand>
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_right_priority_button"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+								</operand>
+								</UnaryOp>
+							</operands>
+							</NAryOp>
+							<UnaryOp operator="not">
+								<operand>
+								<BinaryOp operator="=">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="m__the_left_priority_button"/>
+										</path>
+										</IdExpression>
+									<ConstValue value="true"/>
+								</operands>
+								</BinaryOp>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/Choice/3"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_True_3"/>
+					</lefts>
+					<right>
+						<ConstValue value="3"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/True/3"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c_cond__the_command_in_control_output_IF_4"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c_cond__the_command_in_control_output_4">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c_cond__the_command_in_control_output_Choice_4"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_True_4"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_IF_5"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/4"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_Choice_4"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<UnaryOp operator="not">
+								<operand>
+								<BinaryOp operator="=">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="m__the_right_priority_button"/>
+										</path>
+										</IdExpression>
+									<ConstValue value="true"/>
+								</operands>
+								</BinaryOp>
+							</operand>
+							</UnaryOp>
+							<BinaryOp operator="=">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="m__the_left_priority_button"/>
+									</path>
+									</IdExpression>
+								<ConstValue value="true"/>
+							</operands>
+							</BinaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/Choice/4"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_True_4"/>
+					</lefts>
+					<right>
+						<ConstValue value="4"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/True/4"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c_cond__the_command_in_control_output_IF_5"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c_cond__the_command_in_control_output_5">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c_cond__the_command_in_control_output_Choice_5"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_True_5"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_cond__the_command_in_control_output_IF_6"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/5"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_Choice_5"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<BinaryOp operator="=">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="m__the_right_priority_button"/>
+									</path>
+									</IdExpression>
+								<ConstValue value="true"/>
+							</operands>
+							</BinaryOp>
+							<UnaryOp operator="not">
+								<operand>
+								<BinaryOp operator="=">
+									<operands>
+										<IdExpression>
+											<path>
+												<ConstVarRef name="m__the_left_priority_button"/>
+										</path>
+										</IdExpression>
+									<ConstValue value="true"/>
+								</operands>
+								</BinaryOp>
+							</operand>
+							</UnaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/Choice/5"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_True_5"/>
+					</lefts>
+					<right>
+						<ConstValue value="5"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/True/5"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_cond__the_command_in_control_output_IF_6"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="c_cond__the_command_in_control_output"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/IF/6"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="out_c_cond__the_command_in_control_output"/>
+				</lefts>
+				<right>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="L_c_cond__the_command_in_control_output_IF_0"/>
+						</path>
+					</IdExpression>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/IF/0"/>
+				</pragmas>
+				</Equation>
+				
+			</data>
+			<pragmas>
+				<ed:Operator oid="!ed/op_c_cond__the_command_in_control_output">
+					<diagrams> 
+						<TextDiagram name="diagram_c_cond__the_command_in_control_output" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/c_cond__the_command_in_control_output">
+							<presentationElements>
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/True/0"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/1"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/Choice/1"/>
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/True/1"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/2"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/Choice/2"/>
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/True/2"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/3"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/Choice/3"/>
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/True/3"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/4"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/Choice/4"/>
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/True/4"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/ifThenElse/5"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/Choice/5"/>
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/True/5"/> 
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/IF/6"/>
+								<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/IF/0"/>
+							</presentationElements>
+						</TextDiagram>
+					</diagrams>
+				</ed:Operator>
+			</pragmas>
+		</Operator>
+		<Operator kind="node" name="c_event__the_command_in_control_output">
+			<inputs> 
+				<Variable name="m__the_left_priority_button"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="false"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_event__the_command_in_control_output_m__the_left_priority_button"/>
+					</pragmas>
+				</Variable>
+				<Variable name="m__the_right_priority_button"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="bool"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="false"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_event__the_command_in_control_output_m__the_right_priority_button"/>
+					</pragmas>
+				</Variable>
+				<Variable name="c_event__the_command_in_control_output"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="int"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_event__the_command_in_control_output_c_event__the_command_in_control_output"/>
+					</pragmas>
+				</Variable>
+				
+			</inputs>
+			<outputs>
+				<Variable name="out_c_event__the_command_in_control_output"> 
+					<type>
+						<NamedType>
+							<type>
+								<TypeRef name="int"/>
+							</type>
+						</NamedType>
+					</type> 
+					<last>
+						<ConstValue value="0"/>
+					</last>
+					<pragmas>
+						<ed:Variable oid="!ed/varDecl/c_event__the_command_in_control_output_out_c_event__the_command_in_control_output"/>
+					</pragmas>
+				</Variable>
+				
+			</outputs>
+			<locals> 
+				<Variable name="L_c_event__the_command_in_control_output_IF_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_event__the_command_in_control_output/IF/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_event__the_command_in_control_output_Choice_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_event__the_command_in_control_output/Choice/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_event__the_command_in_control_output_True_0">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_event__the_command_in_control_output/True/0"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_event__the_command_in_control_output_IF_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_event__the_command_in_control_output/IF/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_event__the_command_in_control_output_Choice_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_event__the_command_in_control_output/Choice/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_event__the_command_in_control_output_True_1">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_event__the_command_in_control_output/True/1"/>
+				</pragmas>
+				</Variable>
+				
+				<Variable name="L_c_event__the_command_in_control_output_IF_2">
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type>
+				<pragmas>
+					<ed:Variable oid="!ed/c_event__the_command_in_control_output/IF/2"/>
+				</pragmas>
+				</Variable>
+				
+				
+				
+			</locals>
+			<data> 
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c_event__the_command_in_control_output_IF_0"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c_event__the_command_in_control_output_0">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c_event__the_command_in_control_output_Choice_0"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_event__the_command_in_control_output_True_0"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_event__the_command_in_control_output_IF_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_event__the_command_in_control_output/ifThenElse/0"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_event__the_command_in_control_output_Choice_0"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<NAryOp operator="and">
+								<operands>
+								<NAryOp operator="and">
+									<operands>
+								  	<UnaryOp operator="not">
+										<operand>
+											<BinaryOp operator="=">
+												<operands>
+													<Last>
+														<variable>
+															<ConstVarRef name="m__the_right_priority_button"/>
+														</variable>
+													</Last>
+												<ConstValue value="true"/>
+											</operands>
+											</BinaryOp>
+										</operand>
+									</UnaryOp>	
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_right_priority_button"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+								</operands>
+								</NAryOp>
+								<BinaryOp operator="=">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="m__the_left_priority_button"/>
+											</variable>
+										</Last>
+									<ConstValue value="true"/>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+							<BinaryOp operator="=">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="m__the_left_priority_button"/>
+									</path>
+									</IdExpression>
+								<ConstValue value="true"/>
+							</operands>
+							</BinaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_event__the_command_in_control_output/Choice/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_event__the_command_in_control_output_True_0"/>
+					</lefts>
+					<right>
+						<ConstValue value="4"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_event__the_command_in_control_output/True/0"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+					<VariableRef name="L_c_event__the_command_in_control_output_IF_1"/>
+				</lefts>
+				<right>
+					<IfThenElseOp name="ifThenElse_c_event__the_command_in_control_output_1">
+						<if>
+							<IdExpression>
+								<path>
+									<ConstVarRef name="L_c_event__the_command_in_control_output_Choice_1"/>
+								</path>
+							</IdExpression>
+						</if>
+						<then>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_event__the_command_in_control_output_True_1"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</then>
+						<else>
+							<ListExpression>
+								<items>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="L_c_event__the_command_in_control_output_IF_2"/>
+										</path>
+									</IdExpression>
+								</items>
+							</ListExpression>
+						</else>
+					</IfThenElseOp>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_event__the_command_in_control_output/ifThenElse/1"/>
+				</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_event__the_command_in_control_output_Choice_1"/>
+					</lefts>
+					<right>
+						<NAryOp operator="and">
+							<operands>
+							<NAryOp operator="and">
+								<operands>
+								<NAryOp operator="and">
+									<operands>
+								  	<UnaryOp operator="not">
+										<operand>
+											<BinaryOp operator="=">
+												<operands>
+													<Last>
+														<variable>
+															<ConstVarRef name="m__the_left_priority_button"/>
+														</variable>
+													</Last>
+												<ConstValue value="true"/>
+											</operands>
+											</BinaryOp>
+										</operand>
+									</UnaryOp>	
+									<BinaryOp operator="=">
+										<operands>
+											<IdExpression>
+												<path>
+													<ConstVarRef name="m__the_left_priority_button"/>
+											</path>
+											</IdExpression>
+										<ConstValue value="true"/>
+									</operands>
+									</BinaryOp>
+								</operands>
+								</NAryOp>
+								<BinaryOp operator="=">
+									<operands>
+										<Last>
+											<variable>
+												<ConstVarRef name="m__the_right_priority_button"/>
+											</variable>
+										</Last>
+									<ConstValue value="true"/>
+								</operands>
+								</BinaryOp>
+							</operands>
+							</NAryOp>
+							<BinaryOp operator="=">
+								<operands>
+									<IdExpression>
+										<path>
+											<ConstVarRef name="m__the_right_priority_button"/>
+									</path>
+									</IdExpression>
+								<ConstValue value="true"/>
+							</operands>
+							</BinaryOp>
+						</operands>
+						</NAryOp>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_event__the_command_in_control_output/Choice/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_event__the_command_in_control_output_True_1"/>
+					</lefts>
+					<right>
+						<ConstValue value="5"/>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_event__the_command_in_control_output/True/1"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="L_c_event__the_command_in_control_output_IF_2"/>
+					</lefts>
+					<right>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="c_event__the_command_in_control_output"/>
+						</path>
+						</IdExpression>
+					</right>
+					<pragmas>
+						<ed:Equation oid="!ed/Expr/c_event__the_command_in_control_output/IF/2"/>
+					</pragmas>
+				</Equation>
+				<Equation>
+					<lefts>
+						<VariableRef name="out_c_event__the_command_in_control_output"/>
+				</lefts>
+				<right>
+					<IdExpression>
+						<path>
+							<ConstVarRef name="L_c_event__the_command_in_control_output_IF_0"/>
+						</path>
+					</IdExpression>
+				</right>
+				<pragmas>
+					<ed:Equation oid="!ed/Expr/c_event__the_command_in_control_output/IF/0"/>
+				</pragmas>
+				</Equation>
+				
+			</data>
+			<pragmas>
+				<ed:Operator oid="!ed/op_c_event__the_command_in_control_output">
+					<diagrams> 
+						<TextDiagram name="diagram_c_event__the_command_in_control_output" landscape="true" format="A4 (210 297)" oid="!ed/TextDiagram/c_event__the_command_in_control_output">
+							<presentationElements>
+								<FlowTE presentable="!ed/Expr/c_event__the_command_in_control_output/ifThenElse/0"/> 
+								<FlowTE presentable="!ed/Expr/c_event__the_command_in_control_output/Choice/0"/>
+								<FlowTE presentable="!ed/Expr/c_event__the_command_in_control_output/True/0"/> 
+								<FlowTE presentable="!ed/Expr/c_event__the_command_in_control_output/ifThenElse/1"/> 
+								<FlowTE presentable="!ed/Expr/c_event__the_command_in_control_output/Choice/1"/>
+								<FlowTE presentable="!ed/Expr/c_event__the_command_in_control_output/True/1"/> 
+								<FlowTE presentable="!ed/Expr/c_event__the_command_in_control_output/IF/2"/>
+								<FlowTE presentable="!ed/Expr/c_event__the_command_in_control_output/IF/0"/>
+							</presentationElements>
+						</TextDiagram>
+					</diagrams>
+				</ed:Operator>
+			</pragmas>
+		</Operator>
+		
+		<Operator kind="node" name="the_priority_logic_function">
+		<inputs>
+			<Variable name="m__the_right_priority_button"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="false"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/the_priority_logic_function_m__the_right_priority_button"/>
+				</pragmas>
+			</Variable>
+			<Variable name="m__the_right_command"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="true"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/the_priority_logic_function_m__the_right_command"/>
+				</pragmas>
+			</Variable>
+			<Variable name="m__the_left_priority_button"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="false"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/the_priority_logic_function_m__the_left_priority_button"/>
+				</pragmas>
+			</Variable>
+			<Variable name="m__the_left_command"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="bool"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="true"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/input/the_priority_logic_function_m__the_left_command"/>
+				</pragmas>
+			</Variable>
+			 
+		</inputs>
+		<outputs>
+			<Variable name="c__the_command_in_control_output"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="0"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/output/the_priority_logic_function_c__the_command_in_control_output"/>
+				</pragmas>
+			</Variable>
+			<Variable name="c_cond__the_command_in_control_output"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="0"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/output/the_priority_logic_function_c_cond__the_command_in_control_output"/>
+				</pragmas>
+			</Variable>
+			<Variable name="c_event__the_command_in_control_output"> 
+				<type>
+					<NamedType>
+						<type>
+							<TypeRef name="int"/>
+						</type>
+					</NamedType>
+				</type> 
+				<last>
+					<ConstValue value="0"/>
+				</last>
+				<pragmas>
+					<ed:Variable oid="!ed/output/the_priority_logic_function_c_event__the_command_in_control_output"/>
+				</pragmas>
+			</Variable>
+			 
+		</outputs>
+		<locals>
+			
+			
+			<Variable name="L_in_m__the_right_priority_button">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="bool"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/m__the_right_priority_button"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_m__the_right_command">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="bool"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/m__the_right_command"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_m__the_left_priority_button">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="bool"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/m__the_left_priority_button"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_m__the_left_command">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="bool"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/m__the_left_command"/>
+			</pragmas>
+			</Variable>
+			 
+			<Variable name="L_last_c__the_command_in_control_output">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="int"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/last/c__the_command_in_control_output"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_last_c_cond__the_command_in_control_output">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="int"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/last/c_cond__the_command_in_control_output"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_last_c_event__the_command_in_control_output">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="int"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/last/c_event__the_command_in_control_output"/>
+			</pragmas>
+			</Variable>
+			
+			 
+			
+			<Variable name="L_in_c__the_command_in_control_output">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="int"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/c__the_command_in_control_output"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_c_cond__the_command_in_control_output">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="int"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/c_cond__the_command_in_control_output"/>
+			</pragmas>
+			</Variable>
+			<Variable name="L_in_c_event__the_command_in_control_output">
+			<type>
+				<NamedType>
+					<type>
+						<TypeRef name="int"/>
+					</type>
+				</NamedType>
+			</type>
+			<pragmas>
+				<ed:Variable oid="!ed/Local/in/c_event__the_command_in_control_output"/>
+			</pragmas>
+			</Variable>
+			
+		</locals>
+		<data>
+			<Equation>
+			<lefts>
+				<VariableRef name="L_in_m__the_right_priority_button"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="m__the_right_priority_button"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_m__the_right_priority_button/m__the_right_priority_button"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="L_in_m__the_right_command"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="m__the_right_command"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_m__the_right_command/m__the_right_command"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="L_in_m__the_left_priority_button"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="m__the_left_priority_button"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_m__the_left_priority_button/m__the_left_priority_button"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="L_in_m__the_left_command"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="m__the_left_command"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_in_m__the_left_command/m__the_left_command"/>
+			</pragmas>
+			</Equation>
+			
+			<Equation>
+				<lefts>
+				<VariableRef name="L_last_c__the_command_in_control_output"/>
+			</lefts>
+			<right>
+				<Last>
+					<variable>
+						<ConstVarRef name="c__the_command_in_control_output"/>
+					</variable>
+				</Last>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_last_c__the_command_in_control_output/c__the_command_in_control_output"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+				<VariableRef name="L_last_c_cond__the_command_in_control_output"/>
+			</lefts>
+			<right>
+				<Last>
+					<variable>
+						<ConstVarRef name="c_cond__the_command_in_control_output"/>
+					</variable>
+				</Last>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_last_c_cond__the_command_in_control_output/c_cond__the_command_in_control_output"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+				<VariableRef name="L_last_c_event__the_command_in_control_output"/>
+			</lefts>
+			<right>
+				<Last>
+					<variable>
+						<ConstVarRef name="c_event__the_command_in_control_output"/>
+					</variable>
+				</Last>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/L_last_c_event__the_command_in_control_output/c_event__the_command_in_control_output"/>
+			</pragmas>
+			</Equation>
+			 
+			<Equation>
+			<lefts>
+				<VariableRef name="c__the_command_in_control_output"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="L_in_c__the_command_in_control_output"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/c__the_command_in_control_output/L_in_c__the_command_in_control_output"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="c_cond__the_command_in_control_output"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="L_in_c_cond__the_command_in_control_output"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/c_cond__the_command_in_control_output/L_in_c_cond__the_command_in_control_output"/>
+			</pragmas>
+			</Equation>
+			<Equation>
+			<lefts>
+				<VariableRef name="c_event__the_command_in_control_output"/>
+			</lefts>
+			<right>
+				<IdExpression>
+					<path>
+						<ConstVarRef name="L_in_c_event__the_command_in_control_output"/>
+					</path>
+				</IdExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/Expr/c_event__the_command_in_control_output/L_in_c_event__the_command_in_control_output"/>
+			</pragmas>
+			</Equation>
+			
+			<Equation>
+				<lefts>
+					<VariableRef name="L_in_c__the_command_in_control_output"/>
+			</lefts>
+			<right>
+				<CallExpression>
+					<operator>
+						<OpCall name="1">
+							<operator>
+								<OperatorRef name="the_priority_logic_function::c__the_command_in_control_output"/>
+							</operator>
+						</OpCall>
+					</operator>
+					<callParameters>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_c_cond__the_command_in_control_output"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_c_event__the_command_in_control_output"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_last_c__the_command_in_control_output"/>
+						</path>
+						</IdExpression> 
+						
+					</callParameters>
+				</CallExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/fEq/c__the_command_in_control_output"/> 
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+					<VariableRef name="L_in_c_cond__the_command_in_control_output"/>
+			</lefts>
+			<right>
+				<CallExpression>
+					<operator>
+						<OpCall name="1">
+							<operator>
+								<OperatorRef name="the_priority_logic_function::c_cond__the_command_in_control_output"/>
+							</operator>
+						</OpCall>
+					</operator>
+					<callParameters>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_m__the_right_command"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_m__the_left_command"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_m__the_right_priority_button"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_m__the_left_priority_button"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_last_c_cond__the_command_in_control_output"/>
+						</path>
+						</IdExpression> 
+						
+					</callParameters>
+				</CallExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/fEq/c_cond__the_command_in_control_output"/> 
+			</pragmas>
+			</Equation>
+			<Equation>
+				<lefts>
+					<VariableRef name="L_in_c_event__the_command_in_control_output"/>
+			</lefts>
+			<right>
+				<CallExpression>
+					<operator>
+						<OpCall name="1">
+							<operator>
+								<OperatorRef name="the_priority_logic_function::c_event__the_command_in_control_output"/>
+							</operator>
+						</OpCall>
+					</operator>
+					<callParameters>
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_m__the_left_priority_button"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_in_m__the_right_priority_button"/>
+						</path>
+						</IdExpression> 
+						<IdExpression>
+							<path>
+								<ConstVarRef name="L_last_c_event__the_command_in_control_output"/>
+						</path>
+						</IdExpression> 
+						
+					</callParameters>
+				</CallExpression>
+			</right>
+			<pragmas>
+				<ed:Equation oid="!ed/fEq/c_event__the_command_in_control_output"/> 
+			</pragmas>
+			</Equation>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			 
+			
+		</data>
+		<pragmas>
+			<ed:Operator oid="!ed/MainOper/the_priority_logic_function" xmlns="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3">
+		  	<diagrams>
+				<TextDiagram name="textDiagram_the_priority_logic_function" landscape="true" format="A4 (210 297)" oid="!ed/Pragma/the_priority_logic_function">
+					<presentationElements>
+						<FlowTE presentable="!ed/Expr/L_in_m__the_right_priority_button/m__the_right_priority_button"/> 
+						<FlowTE presentable="!ed/Expr/L_in_m__the_right_command/m__the_right_command"/> 
+						<FlowTE presentable="!ed/Expr/L_in_m__the_left_priority_button/m__the_left_priority_button"/> 
+						<FlowTE presentable="!ed/Expr/L_in_m__the_left_command/m__the_left_command"/> 
+						 
+						<FlowTE presentable="!ed/Expr/L_last_c__the_command_in_control_output/c__the_command_in_control_output"/>
+						<FlowTE presentable="!ed/Expr/c__the_command_in_control_output/L_in_c__the_command_in_control_output"/> 
+						<FlowTE presentable="!ed/Expr/L_last_c_cond__the_command_in_control_output/c_cond__the_command_in_control_output"/>
+						<FlowTE presentable="!ed/Expr/c_cond__the_command_in_control_output/L_in_c_cond__the_command_in_control_output"/> 
+						<FlowTE presentable="!ed/Expr/L_last_c_event__the_command_in_control_output/c_event__the_command_in_control_output"/>
+						<FlowTE presentable="!ed/Expr/c_event__the_command_in_control_output/L_in_c_event__the_command_in_control_output"/> 
+						 
+						<FlowTE presentable="!ed/fEq/c__the_command_in_control_output"/>
+						<FlowTE presentable="!ed/fEq/c_cond__the_command_in_control_output"/>
+						<FlowTE presentable="!ed/fEq/c_event__the_command_in_control_output"/>
+						
+						 
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					</presentationElements>
+				</TextDiagram>
+			</diagrams>
+		</ed:Operator>
+		</pragmas> 
+		</Operator>
+	</declarations>
+	<pragmas>
+		<ed:Package oid="!ed/package/the_priority_logic_function" xmlns="http://www.esterel-technologies.com/ns/scade/pragmas/editor/3">
+			<diagrams>
+				<TreeDiagram landscape="true" format="A4 (210 297)"	oid="!ed/package/constants/the_priority_logic_function" blockKind="constants" />
+				<TreeDiagram landscape="true" format="A4 (210 297)" oid="!ed/package/types/the_priority_logic_function" blockKind="types" />
+				<TreeDiagram landscape="true" format="A4 (210 297)" oid="!ed/package/sensors/the_priority_logic_function" blockKind="sensors"/>
+			</diagrams>
+		</ed:Package>
+	</pragmas>
+</Package>
+</declarations>
+</File>

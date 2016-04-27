@@ -1,0 +1,12 @@
+
+module src-gen/completions/Constant-esv
+
+imports
+  src-gen/completions/Common-esv
+  src-gen/completions/NamedType-esv
+
+completions
+  completion template Constant : "<Constant name=\"ID\"> <type> NamedType </type> <value> <ConstValue value=\"Value\"/> </value> <pragmas> <ed:Constant oid=\"!ed/Constant/ID\"/> </pragmas> </Constant>" =
+    "<Constant name=\"" <ID:ID> "\">\n\t<type>\n\t\t" <NamedType:NamedType> "\n\t</type>\n\t<value>\n\t\t<ConstValue value=\"" <Value:Value> "\"/>\n\t</value>\n\t<pragmas>\n\t\t<ed:Constant oid=\"!ed/Constant/" <ID:ID> "\"/>\n\t</pragmas>\n</Constant>" (blank)  
+  completion template Constant : "<Constant name=\"ID\"> <type> NamedType </type> <value> <UnaryOp operator=\"-\"> <operand> <ConstValue value=\"Value\"/> </operand> </UnaryOp> </value> <pragmas> <ed:Constant oid=\"!ed/Constant/ID\"/> </pragmas> </Constant>" =
+    "<Constant name=\"" <ID:ID> "\">\n\t<type>\n\t\t" <NamedType:NamedType> "\n\t</type>\n\t<value>\n\t\t<UnaryOp operator=\"-\">\n\t\t\t<operand>\n\t\t\t\t<ConstValue value=\"" <Value:Value> "\"/>\n\t\t\t</operand>\n\t\t</UnaryOp>\n\t</value>\n\t<pragmas>\n\t\t<ed:Constant oid=\"!ed/Constant/" <ID:ID> "\"/>\n\t</pragmas>\n</Constant>" (blank)  
